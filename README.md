@@ -1,6 +1,5 @@
 # Coela.dev Website
-
-[![CI Build]()]()[![pages-build-deployment]()]()
+[![CI](https://github.com/coelacant1/coela.dev/actions/workflows/ci.yaml/badge.svg)](https://github.com/coelacant1/coela.dev/actions/workflows/ci.yaml)[![pages-build-deployment](https://github.com/coelacant1/coela.dev/actions/workflows/pages/pages-build-deployment/badge.svg)](https://github.com/coelacant1/coela.dev/actions/workflows/pages/pages-build-deployment)
 
 
 
