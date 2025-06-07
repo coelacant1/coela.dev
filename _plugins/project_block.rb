@@ -9,6 +9,7 @@ module Jekyll
       data = YAML.safe_load(raw) || {}
 
       payload = {
+        "name" => data["name"],
         "summary" => data["summary"],
         "links" => data["links"] || [],
         "dates" => data["dates"],

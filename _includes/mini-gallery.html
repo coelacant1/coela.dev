@@ -19,23 +19,21 @@
       {%- for slide in slides -%}
         <div class="slide{% if forloop.first %} active{% endif %}" data-type="{{ slide.type }}" data-caption="{{ slide.caption | escape }}">
           {% if slide.type == "video" %}
-            <iframe
-              id="yt-player-{{ forloop.index0 }}"
-              src="https://www.youtube.com/embed/{{ slide.video_id }}?rel=0&enablejsapi=1"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              loading="lazy"
-              allowfullscreen>
-            </iframe>
+            <div class="video-container">
+              <iframe
+                id="yt-player-{{ include.name }}-{{ forloop.index0 }}"
+                src="https://www.youtube.com/embed/{{ slide.video_id }}?rel=0&enablejsapi=1"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                loading="lazy"
+                allowfullscreen>
+              </iframe>
+            </div>
           {% elsif slide.type == "pdf" %}
-            <div class="pdf-container" style="width:100%; height:100%; overflow:hidden;">
+            <div class="pdf-container">
               <iframe
                 data-src="{{ slide.src }}"
-                type="application/pdf"
-                width="100%" height="100%"
-                style="border:none;"
-                loading="lazy"
-              >
-                <p>Your browser doesn't support PDFs. <a href="{{ slide.src }}">Download PDF</a>.</p>
+                data-type="pdf"
+                loading="lazy">
               </iframe>
             </div>
           {% else %}

@@ -11,6 +11,8 @@ Engineer and developer who solves problems with hardware, software, and automati
 ## **Software and Embedded Systems Development**
 <!-- ProtoTracer -->
 {% project %}
+name: ProtoTracer
+
 summary: "ProtoTracer: Embedded 3D Rendering Engine"
 
 links:
@@ -24,7 +26,7 @@ dates: "2020 - Current"
 contributors: "Contributors Listed on GitHub"
 
 description: |-
-  ProtoTracer is a C++ based 3D rendering engine optimized for microcontrollers. It calculates dynamic 3D scenes in real time, reacting to sensor or user inputs to adapt the output. This software is designed to be modular for use in other projects.
+  ProtoTracer is a C++ based 3D rendering engine optimized for microcontrollers. It calculates dynamic 3D scenes in real-time, reacting to sensor or user inputs to adapt the output. This software is designed to be modular for use in other projects.
   
   This includes features such as: 
   - Keyframed animations with support for automated easing
@@ -129,6 +131,8 @@ slides:
 
 <!-- AetherControl -->
 {% project %}
+name: AetherControl
+
 summary: "AetherControl: Optimized CNC Firmware"
 
 links:
@@ -140,7 +144,7 @@ dates: "2023 - Current"
 contributors: "Solo Project"
 
 description: |-
-  AetherControl is a modular, C++ based motion-control firmware optimized for simplicity and modularity by focusing on real-time G-code parsing, motion planning, kinematics, and stepper-motor drive. Supporting advanced kinematics like Stewart platforms, CoreXY machines, and Cartesian robots with dynamic trajectory planning optimized for smooth, accurate real-time operation.
+  AetherControl is a streamlined and modular, C++ based motion-control firmware. It is built for real-time G-code parsing, motion planning, kinematics, and stepper-motor drive. Supports advanced kinematics like Stewart platforms, CoreXY machines, and Cartesian robots with dynamic trajectory planning.
 
   Implementations:
   - High-Speed CoreXY pick-and-place machine
@@ -184,6 +188,8 @@ slides:
 
 <!-- ProxmoxScripts -->
 {% project %}
+name: ProxmoxScripts
+
 summary: "ProxmoxScripts for Automated Infrastracture Management"
 
 links:
@@ -197,7 +203,7 @@ dates: "2024 - Current"
 contributors: "Contributors Listed on GitHub"
 
 description: |-
-  ProxmoxScripts is a collection of Bash scripts for streamlining and automating the management of Proxmox Virtual Environment (PVE) clusters. This was developed to help manage and automate Proxmox virtualization infrastructure. The scripts accessible via a console-based menu system for quick navigation and execution. Users are able to read help information for each script as well as get a detailed description of required parameters.
+  ProxmoxScripts is a collection of Bash scripts for streamlining and automating the management of Proxmox Virtual Environment (PVE) clusters. This was developed to help manage and automate Proxmox virtualization infrastructure. The scripts are accessible via a console-based menu for overview, navigation, and execution. Users can read help information for each script as well as get a description of required parameters.
 
   Features include: 
   - Cluster configuration tools
@@ -284,6 +290,8 @@ slides:
 
 <!-- OpenDACT -->
 {% project %}
+name: OpenDACT
+
 summary: "OpenDACT: Automatic Delta Kinematics Calibration Software"
 
 links:
@@ -295,7 +303,7 @@ dates: "2014 - 2017"
 contributors: "Contributors Listed on GitHub"
 
 description: |-
-  OpenDACT (Open-source Delta Automatic Calibration Tool) is a calibration tool for delta robots. It calibrates generic delta robots and fully automates calibration of Repetier-firmware-controlled delta robots (primarily 3D printers). Calibration uses forward and inverse kinematics measurements. It takes Z-height readings at key XY points on a flat plate (print bed) to iteratively compute hardware offsets. Users can manually adjust hardware or apply software offsets to correct for imperfections.
+  OpenDACT (Open-source Delta Automatic Calibration Tool) is a calibration tool for delta robots. It calibrates generic delta robots and automates calibration of Repetier-firmware-controlled delta robots (primarily 3D printers). The calibration uses forward and inverse kinematics measurements to make adjustments. It takes Z-height readings at key XY points on a flat plate (print bed) to iteratively calculate hardware offsets. Users can manually adjust hardware or apply software offsets to correct for imperfections.
 
   This software solves for the following mechanical offsets:
   - Diagonal rod lengths
@@ -326,6 +334,8 @@ slides:
 
 <!-- Proxmox Load Balancer -->
 {% project %}
+name: PVELoadBalancer
+
 summary: "Proxmox VE Load Balancer"
 
 links:
@@ -337,10 +347,10 @@ dates: "2025 - Current"
 contributors: "Solo Project"
 
 description: |-
-  ProxmoxLoadBalancer is a Python tool that balances memory across Proxmox VE cluster nodes. It offers two primary modes of operation:
+  ProxmoxLoadBalancer is a Python tool that balances memory across Proxmox VE cluster nodes. It has two modes of operation:
 
   - Simulation Mode: Test and visualize load-balancing algorithms in a controlled environment without touching the live cluster.
-  - Live Mode: Uses the Proxmox API to monitor memory usage and migrate VMs in real time to balance load.
+  - Live Mode: Uses the Proxmox API to monitor memory usage and migrate VMs to balance load.
 
   This software is built as a stand-in until ProxmoxVE ships with a built-in cluster load balancer.
 
@@ -368,6 +378,8 @@ slides:
 
 <!-- Teensy WebHID -->
 {% project %}
+name: WebHID
+
 summary: "Teensy WebHID Firmware Loader"
 
 dates: "2025 - Current"
@@ -415,6 +427,8 @@ slides:
 
 <!-- Proxmox GPU Passthrough Optimizations -->
 {% project %}
+name: ProxmoxGPU
+
 summary: "Proxmox GPU Passthrough for Workstations"
 
 links:
@@ -440,6 +454,8 @@ slides:
 ## **Product Prototyping and Engineering**
 <!-- Stewart Platform -->
 {% project %}
+name: StewartPlatform
+
 summary: "Stewart Platform - Firmware and Hardware for Flight Simulator"
 
 dates: "2020 - Current"
@@ -451,7 +467,7 @@ links:
     url: https://github.com/coelacant1/StewartPlatformIK
 
 description: |-
-  The Stewart Platform project began as an adaptation of a commercial system. The machine originally shipped with MDBox motion controllers, controlled via ethernet. Because of high latency it was adapted with a custom controller, upgraded 1000W AC servos for the linear actuators, and custom firmware and software. This was the start of the AetherControl project detailed above. The attached repository contains the interface code that takes target XYZ Cartesian coordinates and Euler rotations, then computes the six actuator lengths for AetherControl. The goal of the project was to adapt the system to handle high-frequency vibration and high-speed motion for research on flight dynamics.
+  The Stewart Platform project is an adaptation of a commercial system. The machine originally shipped with MDBox motion controllers, controlled via ethernet. Because of high latency it was adapted with a custom controller, upgraded 1000W AC servos for the linear actuators, and custom firmware and software. This was the start of the AetherControl project detailed above. The attached repository contains the interface code that takes target XYZ Cartesian coordinates and Euler rotations, then computes the six actuator lengths for AetherControl. The goal of the project was to adapt the system to handle high-frequency vibration and high-speed motion for research on flight dynamics.
 
   The inverse kinematics repository allows for custom user-defined configuration parameters, taking in:
   - Base Plate Radius
@@ -480,7 +496,7 @@ slides:
   - type: image
     src: /assets/images/StewartPlatform2.jpg
     thumb: /assets/images/thumbs/StewartPlatform2.jpg
-    caption: "Updated controller, switched from slow MDBox controllers (100ms max update rate) to 6x 1000W AC servos for realtime control"
+    caption: "Updated controller, switched from slow MDBox controllers (100ms max update rate) to 6x 1000W AC servos for real-time control"
   - type: image
     src: /assets/images/StewartPlatform1.jpg
     thumb: /assets/images/thumbs/StewartPlatform1.jpg
@@ -489,7 +505,9 @@ slides:
 
 <!-- Pick n Place -->
 {% project %}
-summary: "Custom High-Speed CoreXY Pick and Place"
+name: PicknPlace
+
+summary: "Custom High-Speed CoreXY Pick-and-Place"
 
 dates: "2021 - current"
 
@@ -500,7 +518,7 @@ links:
     url: https://github.com/coelacant1/CoelaPNP
 
 description: |-
-  This project started from a requirement to create a small yet capable Pick-and-Place machine. This machine has been used to manufacture several hundred RGB LED displays which each have over 500 LEDs, power distribution boards, custom LED control electronics, etc.
+  This project started was to create a small yet capable Pick-and-Place machine. This machine has been used to manufacture RGB LED displays which each have over 500 LEDs, power distribution boards, custom LED control electronics, etc.
   
   Features:
   - OpenPNP for software control
@@ -605,6 +623,8 @@ slides:
 
 <!-- Delta 3D Printer -->
 {% project %}
+name: Delta3D
+
 summary: "Custom High-Speed Delta 3D Printer"
 
 dates: "2014 - 2019"
@@ -612,7 +632,7 @@ dates: "2014 - 2019"
 contributors: "Solo Project"
 
 description: |-
-  This project started in the era of the Prusa Mendel/i3 designs. As a challenge, I wanted to start developing a platform that could handle significantly faster print times than 3D printers that were available in the market.
+  This project started in the era of the Prusa Mendel/i3 designs. Required faster print times than available 3D printers in the market, designed and built this system to solve that problem.
 
   Features:
   - 270mm build diameter
@@ -663,6 +683,8 @@ slides:
 
 <!-- 4-Axis Cutter + Fusion Post Processor -->
 {% project %}
+name: 4AxisCutter
+
 summary: "Custom 4-Axis Machines and Fusion 360 Post Processors"
 
 links:
@@ -702,6 +724,8 @@ slides:
 
 <!-- 4-Axis Automated Gimbal -->
 {% project %}
+name: 4AxisGimbal
+
 summary: "4-Axis Automated Gimbal for MEMS-Based Motion Processor Testing"
 
 links:
@@ -746,6 +770,8 @@ slides:
 
 <!-- Custom Electronics Design -->
 {% project %}
+name: CustomElectronics
+
 summary: "Power Electronics and Control Systems"
 
 dates: "2014 - Current"
@@ -753,7 +779,7 @@ dates: "2014 - Current"
 contributors: "Solo Projects"
 
 description: |-
-  I've designed and built custom power-conversion, motion‑control systems, and other electronics:
+  Designed and built custom power-conversion, motion‑control systems, and other electronics:
   - Custom Buck Power Regulators: Gallium nitride-based buck converters stepping 60 V down to 5 V at up to 20 A
   - LoRa Remote Firework Igniter: 12-channel, 2 A LoRa-based firework-igniter controller prototype
   - Haptics Research Motor Driver: DC motor driver with sensor feedback for inverted-pendulum and force-feedback experiments
@@ -868,7 +894,9 @@ slides:
 
 <!-- High-Speed CoreXY 3D Printer -->
 {% project %}
-summary: "Customized High-Speed CoreXY 3D Printer"
+name: CustomVoron
+
+summary: "Customized Voron CoreXY 3D Printer"
 
 links:
   - name: Github
@@ -879,11 +907,11 @@ dates: "2019 - 2021"
 contributors: "Solo Project"
 
 description: |-
-  A custom 3D printer derived from the Voron project, designed to explore the limits of FDM additive manufacturing.
+  A custom 3D printer derived from the Voron project, built to explore the limits of FDM additive manufacturing.
 
   - Extrusion and Motion Hardware
-    - BondTech LGX extruder with Mosquito Magnum hotend for ultra‑high flow
-    - 48V powered stepper drivers with accelerations up to 2g (20m/s^2) and travel speeds near 600 mm/s.=
+    - BondTech LGX extruder with Mosquito Magnum hotend for high flow
+    - 48V powered stepper drivers with accelerations up to 2g (20m/s^2) and travel speeds near 600 mm/s
   - Reinforced Structure
     - Continuous carbon‑fiber-reinforced parts printed on the Markforged Mk2, plus a custom carbon‑fiber X‑gantry
   - Firmware and Calibration
@@ -922,6 +950,8 @@ slides:
 
 <!-- Wearable 3D Designs -->
 {% project %}
+name: Wearable3D
+
 summary: "Wearable 3D Printed Designs with Integrated Electronics"
 
 links:
@@ -933,9 +963,9 @@ dates: "2020 - Current"
 contributors: "Solo Project"
 
 description: |-
-  I design and build 3D-printable cosplay hardware-currently have six designs in total. For the Beta, Delta, Epsilon, and Sigma, each model is available on GitHub as STL files optimized for common 3D printers. Every project includes an electronics wiring guide, custom ProtoTracer firmware binaries, and source code.
+  Designed and built 3D-printable cosplay hardware-currently have six designs in total. For the Beta, Delta, Epsilon, and Sigma, each model is available on GitHub as STL files optimized for common 3D printers. Every project includes an electronics wiring guide, custom ProtoTracer firmware binaries, and source code.
 
-  My Alpha and Gamma prototypes use real-time stereoscopic passthrough vision with a custom lens stack and display module. I've modified the vision-systems software (running on a Raspberry Pi CM4) to reduce latency to about 15 ms and support the stereoscopic live synchronized display. This leaves as much area as possible for the LED displays. Each uses two synchronized microcontrollers to render live 3D graphics on the full-face displays. Integrated front-facing distance sensors and a 9-axis IMU modify the animation pipeline, so animations react instantly to motion and proximity.
+  The Alpha and Gamma prototypes use real-time stereoscopic passthrough vision with a custom lens stack and display module. The vision-systems use modified software (running on a Raspberry Pi CM4) to reduce latency to about 15 ms and support the stereoscopic live synchronized display. This leaves as much area as possible for the LED displays. Each uses two synchronized microcontrollers to render live 3D graphics on the full-face displays. Integrated front-facing distance sensors and a 9-axis IMU modify the animation pipeline, so animations react instantly to motion and proximity.
 
 slides:
   - type: video
@@ -1018,6 +1048,8 @@ slides:
 
 <!-- Dual Tilt Quadcopter -->
 {% project %}
+name: DTQuadcopter
+
 summary: "Dual-Tilt Rotor Quadcopter"
 
 dates: "2018 - 2019"
@@ -1029,7 +1061,7 @@ links:
     url: https://github.com/coelacant1/Dual-Tilt-Rotor-Quadcopter
 
 description: |-
-  This project is a fully integrated control system for a quadcopter with independently tilting rotors. Each motor can pivot on two axes, letting the quadcopter perform advanced maneuvers and fly at any angle. This was designed as a system to allow the quadcopter act as a gimbal to allow for a larger statically mounted camera while having a full 360 degree view.
+  This project is an integrated control system for a quadcopter with independently tilting rotors. Each motor can pivot on two axes, letting the quadcopter perform complex maneuvers and fly at any angle. This was designed as a system to allow the quadcopter act as a gimbal to allow for a larger statically mounted camera while having a full 360 degree view.
 
   Software Stack:
   - Control algorithms in C++ for real-time dynamics
@@ -1054,6 +1086,8 @@ slides:
 
 <!-- Other Projects-->
 {% project %}
+name: OtherProjects
+
 summary: "Other Product Prototyping, Engineering, and Software"
 
 links:
@@ -1144,6 +1178,8 @@ slides:
 ## **Advanced Manufacturing**
 <!-- Advanced Manufacturing Technologies -->
 {% project %}
+name: AdditiveManufacturing
+
 summary: "Advanced Additive Manufacturing Technologies"
 
 dates: "2022 - Current"
@@ -1151,9 +1187,9 @@ dates: "2022 - Current"
 contributors: "Collaboration with Co-Worker"
 
 description: |-
-  Operator and technician for additive manufacturing platforms. I share responsibility for hands‑on testing, day‑to‑day operation, and performing preventative maintenance and repairs.
+  Operator and technician for additive manufacturing platforms. Sharing responsibility for hands‑on testing, day‑to‑day operation, and performing preventative maintenance and repairs.
   
-  Key systems I help manage include:
+  Key systems managed:
   - Xact XM200G (DMLS) - Metal powder handling, build chamber calibration, and print configuration/support creation
   - Stratasys Objet 260 (PolyJet) - Multi‑material jetting setup, print head maintenance, and resin reservoir management
   - Sinterit Lisa and Lisa X (Nylon SLS) - Powder bed preparation, laser power calibration, part depowdering workflows, and periodic chamber cleaning
@@ -1239,6 +1275,8 @@ slides:
 
 <!-- Pick and Place Line -->
 {% project %}
+name: PicknPlaceLine
+
 summary: "Installation and Operation of Automated Pick-and-Place Assembly Line"
 
 dates: "2019 - 2021"
@@ -1246,7 +1284,7 @@ dates: "2019 - 2021"
 contributors: "Solo Project | Assistance with Moving Equipment"
 
 description: |-
-  I led the installation, configuration, and operation of an automated pick-and-place assembly line, overseeing the import of the equipment and integrating it within our facility. This project also required infrastructure planning, and teardown/rebuild of machinery to match our requirements.
+  Led the installation, configuration, and operation of an automated pick-and-place assembly line, overseeing the import of the equipment and integrating it within our facility. This project required infrastructure planning, and teardown/rebuild of machinery to match our requirements.
 
   The final setup included:
   - Semi-Automatic Solder Paste Screen Printer (KAYO-5088)
@@ -1291,7 +1329,9 @@ slides:
 
 <!-- Large Scale 3d Printing -->
 {% project %}
-summary: "Design and Creation of Large-Scale Custom Printers (Delta and Cartesian)"
+name: LargePrinter
+
+summary: "Design and Creation of Large-Scale Custom Printers"
 
 dates: "2015 - Current"
 
@@ -1300,7 +1340,7 @@ contributors: "Design/Software | Project with Two Co-Workers"
 description: |-
   Collaborated with two engineers to build a large-format Delta 3D printer prototype (10ft tall x 6ft wide) in 45 days. Although intended as a proof of concept, it produced usable parts up to 6ft tall.
   
-  My contributions:
+  Contributions:
   - Kinematic Calibration: Leveraged OpenDACT to compute all machine kinematic parameters (arm lengths, endstop offsets, carriage geometry) for a 4 ft‑diameter bed
   - Prototype Mechanical Design: Co‑designed structural linkages, custom brackets, and frame supports; specified and validated actuators and carriage assemblies
   - Motion and Slicer Tuning: Developed and refined slicing profiles and motion parameters (speeds, accelerations, jerk limits)
@@ -1320,6 +1360,8 @@ slides:
 
 <!-- Print Farm Implementation and Management -->
 {% project %}
+name: PrintFarm
+
 summary: "Print Farm Implementation and Management"
 
 dates: "2023 - Current"
@@ -1327,7 +1369,7 @@ dates: "2023 - Current"
 contributors: "Implemented with Co-Worker"
 
 description: |-
-  Worked with a co-worker to implement and operator of a 30x BambuLab (P1S, X1 Series X1C and H2D, A1/A1 Mini) and 30x Prusa (MK4S, XL, MK3S, Mini) 3D printer farm, I helped optimize most aspects of our additive manufacturing workflow:
+  Worked with a co-worker to implement and operate a 30x BambuLab (P1S, X1 Series X1C and H2D, A1/A1 Mini) and 30x Prusa (MK4S, XL, MK3S, Mini) 3D printer farm, I helped optimize most aspects of our additive manufacturing workflow:
   - Deployment and Configuration: Deployed and networked 30 BambuLab machines, standardizing slicer settings, and filament profiles to ensure consistent performance across P1S, X1C, H2D, A1, and A1 Minis. As well as an additional 30 Prusa machines, some offline and some managed by PrusaConnect
   - Process Optimization: Tuned print profiles (temperatures, speeds, etc) for various materials-PLA, PETG, ASA, and composites
   - Preventive Maintenance: Managed maintenance routines (lubrication, nozzle swaps)
@@ -1351,6 +1393,8 @@ slides:
 
 <!-- Custom Tooling -->
 {% project %}
+name: CustomTooling
+
 summary: "Injection Molding, Vacuum Forming, and Specialized Tooling Design"
 
 dates: "2011 - Current"
@@ -1358,8 +1402,8 @@ dates: "2011 - Current"
 contributors: "Face Shields with Co-Worker | Rest are Solo Projects"
 
 description: |-
-  I've developed end‑to‑end tooling solutions-from CAD to high‑volume production-for injection molding, vacuum forming, and jig creation for repeated tasks:
-  - Injection‑Molded Face Shield Frames: Designed parts optimized for automated injection molding; tooling produced over 6,000 units
+  Developed tooling solutions for injection molding, vacuum forming, and jig creation for repeated tasks:
+  - Injection‑Molded Face Shield Frames: Designed parts optimized for automated injection molding; tooling produced over 6,000 units for local clinics and hospitals
   - Custom Vacuum‑Forming Bucks: Engineered master forms (bucks) for thermoforming complex geometries
   - Visor‑Cutting Jigs: Created fixtures to hold and index vacuum-formed visors for manual and automated trimming
   - PCB Stenciling Fixtures: Developed alignment jigs that secure PCBs for solder‑paste application
@@ -1487,12 +1531,16 @@ slides:
 
 <!-- Other Manufacturing Expertise -->
 {% project %}
+name: OtherManufacturing
+
 summary: "Other Manufacturing Technology Expertise"
 
 dates: "2020 - Current"
 
+contributors: "Share with Co-Worker"
+
 description: |-
-  I operate, program, and maintain a variety of manufacturing tools:
+  Operator, programmer, and technician for a variety of manufacturing tools:
   - 2X 3/4‑Axis CNC Milling with a Tormach 1100MX and 1X Tormach 440MX
   - Engraving and cutting with BossLaser Fiber (1X) and CO₂ Lasers (2X) + Rotary
   - CNC plasma cutting with a Tormach 1300PL
@@ -1557,6 +1605,8 @@ slides:
 ## **High-Performance Computing and Systems Infrastructure**
 <!-- Hyper-Converged Infrastructure -->
 {% project %}
+name: Server Infrastructure
+
 summary: "Hyper-Converged Infrastructure (HCI) Design and Implementation"
 
 dates: "2019 - Current"
@@ -1566,25 +1616,26 @@ contributors: "Solo Implementation, Management, and Operation"
 description: |-
   Designed and implemented 20-node hyper-converged ProxmoxVE cluster, concurrently hosting up to 3,000-4,000 virtual machines and containers:
 
-  Here are some specifications for this infrastructure:
+  Specifications for this infrastructure:
   - Scalable Compute Resources:
+    - Aggregate Capacity: 1,464 CPU cores and 10.8TiB RAM
     - Per-Node: Up to 80 CPU cores and 784GiB RAM
     - Accelerators: Select nodes equipped with NVIDIA RTX 8000 GPUs for GPU-accelerated tasks
-    - Aggregate Capacity: 1,464 CPU cores and 10.8TiB RAM
     - Customization: Users can request private compute infrastructures of up to 20-nodes, with Slurm-ready configurations
-  - High-Speed Networking:
-    - Bandwidth: Two 25 GbE links per server (50 GbE aggregate) configured with 802.3ad LACP and MC-LAG for redundancy
-    - Features:  RDMA, SDN, jumbo frames, and traffic prioritization
   - Tiered Storage Solutions:
     - Ceph-backed dynamic scaling across three performance tiers:
       - SSD Base
       - SSD Low-Latency
       - HDD Base
     - Total Capacity: ~211.52TiB with automated data distribution and resilience
+  - High-Speed Networking:
+    - Bandwidth: Two 25 GbE links per server (50 GbE aggregate) configured with 802.3ad LACP and MC-LAG for redundancy
+    - Features:  RDMA, SDN, jumbo frames, and traffic prioritization
   - Customization and security:
-    - Full control over the software stack and container or VM images
+    - Full user control over the software stack and container/VM images
     - Software-defined networking with per-instance firewall rules
     - Support for external network hosting and user-deployed firewalls
+    - Customized firewall rules per virtual instance depending on requirements
   - Reliability and availability:
     - Live scaling to adapt to workload demands without downtime
     - Redundant network paths and daily backup/snapshot schedules
@@ -1661,6 +1712,8 @@ slides:
 
 <!-- Networking and Security -->
 {% project %}
+name: NetworkingSecurity
+
 summary: "Networking and Security"
 
 dates: "2020 - Current"
@@ -1668,13 +1721,13 @@ dates: "2020 - Current"
 contributors: "Solo Management and Operation"
 
 description: |-
-  I've managed a variety of network configurations and their supporting software:
+  Managed a variety of network configurations and their supporting software:
 
   - Firewall Configuration and Management
     - OPNSense / PFSense / SonicWall
-      - Deployed in active-active or active-standby high-availability pairs
+      - Deployed in active-active and active-standby high-availability pairs
       - Application-aware filtering, IDS/IPS integration
-      - Role-based administration, audit logging to SIEM
+      - Role-based administration with audit logging
       - Geo-IP blocking
   - Linux Networking Configuration and Management
     - VLAN trunking configuration, LACP setup, and network performance optimizations
@@ -1685,22 +1738,21 @@ description: |-
     - OpenVPN Hosting
       - Centralized server deployments for user and service tunnels
       - RADIUS/LDAP integration for authentication
-      - Per-client policy enforcement and dynamic IP assignment
     - Site-to-Site VPN Experience
       - OPNSense ↔ OPNSense, OPNSense ↔ Palo Alto, SonicWall ↔ Palo Alto
   - Networking Hardware Ecosystem
     - MC-LAG with ECS Aggregation Switches
       - Active/active link aggregation across top-of-rack and spine layers for redundancy
-      - VLAN segmentation and access control lists for tenant isolation
-    - Deployment of Wi-Fi 7 networks
+    - VLAN segmentation and access control lists for tenant isolation
+    - Deployment of Wi-Fi 7 and Wi-Fi 6/6E networks
     - IP Security Cameras and NVR Integration
       - PoE/PoE+ power delivery
-      - Centralized NVR for video recording with time-sync and automated archival
+      - Centralized NVR for video recording
   - Software-Defined Networking for Cluster Overlays
     - Custom L2/L3 overlays
       - Proxmox SDN module enabling per-tenant virtual networks within the cluster
     - Performance Monitoring with NetFlow
-      - Real-time flow telemetry to identify congestion and optimize traffic paths
+      - Flow telemetry to identify congestion with traffic paths
   - Cloudflare Zero Trust
     - Email-Based Access Controls
       - Secure web application access using one-time email verification links
@@ -1731,6 +1783,8 @@ slides:
 
 <!-- Active Directory Management -->
 {% project %}
+name: ActiveDirectory
+
 summary: "Active Directory Management"
 
 dates: "2019 - Current"
@@ -1747,13 +1801,13 @@ description: |-
     - Scheduled scans of user accounts and group memberships to detect inactive or orphaned objects
     - Automated reports on password-policy compliance and access entitlements
   - Scalability and Concurrency
-    - Supports around 500 concurrent users without performance degradation
+    - Supports ~500 users without performance degradation
     - High-availability domain controllers and load-balanced authentication
   - AD-Backed Network Access
     - Wi-Fi Access: 802.1X authentication against AD for per-user connectivity
     - VPN Access: AD credential validation for remote-user tunnels
   - Group-Based Policy Management
-    - Role and department-based groups management and network VLAN assignments
+    - Role and department-based group management and network VLAN assignments
     - Dynamic group memberships allow policies to follow users as they change roles
   - Group Provisioning
     - Integration with HR/authoritative systems to import new users and remove old users
@@ -1767,6 +1821,7 @@ slides:
 
 {% endproject %}
 
+<!-- Tools and Platforms -->
 ## **Tools and Platforms**
 - Electronics and CAD: Altium Designer, KiCad, Autodesk Fusion 360, MATLAB
 - Server and Virtualization: Proxmox VE, Ceph, VMWare vSphere, Windows Server, Hyper-V, Ansible, PDQ Deploy
@@ -1774,8 +1829,11 @@ slides:
 - Environments and Administration: Linux and Windows administration, embedded platforms (ARM, RISC), GitHub Automation
 - Miscellaneous: Blender, Adobe Suite (Photoshop, Illustrator, After Effects, Substance Painter), GIMP/Inkscape
 
+<!-- This Website-->
 ### **Information on coela.dev**
 {% project %}
+name: CoelaDev
+
 summary: "Coela.dev Website"
 
 dates: "2025 - Current"
@@ -1785,6 +1843,6 @@ links:
     url: https://github.com/coelacant1/coela.dev
 
 description: |-
-  The site's backend uses Ruby and Jekyll to compile Markdown and Liquid templates into a static site on push. A GitHub CI workflow automatically rebuilds and deploys the site on changes to the main branch. On the front end, an HTML5 Canvas script animates sine-wave effects, and CSS with JavaScript handles glitch-text animations for headings.
+  The site's backend uses Ruby and Jekyll to compile Markdown and Liquid templates into a static site on push. A GitHub CI workflow rebuilds and deploys the site on changes to the main branch. On the front end, an HTML5 Canvas script animates sine-wave effects, and CSS with JavaScript handles glitch-text animations for headings.
 
 {% endproject %}

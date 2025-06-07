@@ -16,7 +16,10 @@ module Jekyll
         File.join(context.registers[:site].source, "_includes", "mini-gallery.html")
       )
 
-      payload = { "slides" => slides }
+      payload = {
+        "slides" => slides,
+        "name" => name
+      }
       Liquid::Template.parse(partial).render!(payload, registers: context.registers)
     end
   end
