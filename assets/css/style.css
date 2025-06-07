@@ -8,6 +8,27 @@
 /* Borders */
 /* 3) MIXINS */
 /* ------------------------------------------------------------------------- */
+@media (max-width: 700px) {
+  .project-details table {
+    display: block;
+    width: 100%;
+    border-spacing: 0;
+  }
+  .project-details table tr {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border-spacing: 0;
+  }
+  .project-details table td {
+    flex: 1 1 150px;
+    min-width: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+    border: 1px solid #404a52;
+    text-align: left;
+  }
+}
 /* 4) GLOBAL RESETS / BASE STYLES */
 /* ------------------------------------------------------------------------- */
 * {
@@ -29,7 +50,7 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
   font-size: 1rem;
   line-height: 1.25;
   color: #aaa;
@@ -88,8 +109,8 @@ a:hover {
 }
 .btn:hover {
   text-decoration: none;
-  color: rgba(255, 255, 255, 0.7);
-  background-color: rgba(255, 255, 255, 0.08);
+  color: rgba(248, 85, 136, 0.7);
+  background-color: rgba(54, 27, 36, 0.08);
   border-color: rgba(255, 255, 255, 0.2);
 }
 .btn + .btn {
@@ -102,17 +123,18 @@ a:hover {
 }
 @media screen and (min-width: 42em) and (max-width: 64em) {
   .btn {
-    padding: 0.6rem 0.9rem;
-    font-size: 0.9rem;
+    padding: 0.5rem 0.75rem;
+    font-size: 0.85rem;
+    margin-bottom: 0.75rem;
   }
 }
 @media screen and (max-width: 42em) {
   .btn {
-    padding: 0.75rem;
-    font-size: 0.9rem;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.8rem;
+    margin-bottom: 0.5rem;
   }
   .btn + .btn {
-    margin-top: 1rem;
     margin-left: 0;
   }
 }
@@ -162,9 +184,23 @@ a:hover {
 
 header.wave-header {
   position: relative;
-  height: 300px;
   background: #191919;
   overflow: hidden;
+}
+@media screen and (min-width: 64em) {
+  header.wave-header {
+    height: 300px;
+  }
+}
+@media screen and (min-width: 42em) and (max-width: 64em) {
+  header.wave-header {
+    height: 250px;
+  }
+}
+@media screen and (max-width: 42em) {
+  header.wave-header {
+    height: 200px;
+  }
 }
 
 header.wave-header canvas {
@@ -258,7 +294,7 @@ header.wave-header .content {
 .main-content table td {
   min-width: 0;
   overflow-x: auto;
-  padding: 0.5rem 0.5rem;
+  padding: 1rem 1rem;
   border: 1px solid #404a52;
 }
 .main-content hr {
@@ -316,13 +352,13 @@ header.wave-header .content {
 .mini-gallery .slider .slides {
   position: relative;
   width: 100%;
-  height: 40em;
+  max-height: 40em;
+  aspect-ratio: 16/9;
 }
 
 .mini-gallery .slide {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
   opacity: 0;
@@ -366,7 +402,8 @@ header.wave-header .content {
 
 .mini-gallery .thumbnails {
   margin: 0.5em;
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
   grid-auto-rows: auto;
   justify-content: center;
@@ -403,12 +440,31 @@ header.wave-header .content {
 /* PROJECT/GLITCH HEADER */
 /* ------------------------------------------------------------------------- */
 .project-tagline {
-  margin-top: 1rem;
-  margin-bottom: 2rem;
   font-size: 1.5rem;
   font-weight: normal;
   color: #ccc;
   background-color: transparent;
+}
+@media screen and (min-width: 64em) {
+  .project-tagline {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+  }
+}
+@media screen and (min-width: 42em) and (max-width: 64em) {
+  .project-tagline {
+    font-size: 1.2rem;
+    margin-top: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+}
+@media screen and (max-width: 42em) {
+  .project-tagline {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+  }
 }
 
 @keyframes gradient-shift {
@@ -423,15 +479,35 @@ header.wave-header .content {
   }
 }
 .project-name {
-  margin-top: 2rem;
   position: relative;
   display: inline-block;
-  font-size: 4rem;
   font-weight: bold;
   background: white;
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
+}
+@media screen and (min-width: 64em) {
+  .project-name {
+    margin-top: 2rem;
+    font-size: 4rem;
+  }
+}
+@media screen and (min-width: 42em) and (max-width: 64em) {
+  .project-name {
+    margin-top: 1.5rem;
+    font-size: 3rem;
+  }
+}
+@media screen and (max-width: 42em) {
+  .project-name {
+    margin-top: 1rem;
+    font-size: 2.5rem;
+    display: block;
+    white-space: normal;
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
 }
 
 .project-name.glitch::before,
