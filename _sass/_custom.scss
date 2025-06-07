@@ -47,6 +47,28 @@ $hr-border-color: #eff0f1 !default;
   }
 }
 
+@media (max-width: 700px) {
+  .project-details table {
+    display: block;
+    width: 100%;
+    border-spacing: 0;
+  }
+  .project-details table tr {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border-spacing: 0;
+  }
+  .project-details table td {
+    flex: 1 1 150px;
+    min-width: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+    border: 1px solid $table-border-color;
+    text-align: left;
+  }
+}
+
 /* 4) GLOBAL RESETS / BASE STYLES */
 /* ------------------------------------------------------------------------- */
 * {
@@ -68,7 +90,8 @@ html {
 body {
   margin: 0;
   padding: 0;
-  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Helvetica Neue", Arial, sans-serif;
   font-size: 1rem;
   line-height: 1.25;
   color: $body-text-color;
@@ -129,8 +152,8 @@ a {
 
   &:hover {
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.7);
-    background-color: rgba(255, 255, 255, 0.08);
+    color: rgba(248, 85, 136, 0.7);
+    background-color: rgba(54, 27, 36, 0.08);
     border-color: rgba(255, 255, 255, 0.2);
   }
 
@@ -143,16 +166,17 @@ a {
   }
 
   @include medium {
-    padding: .6rem 0.9rem;
-    font-size: .9rem;
+    padding: .5rem 0.75rem;
+    font-size: .85rem;
+    margin-bottom: 0.75rem;
   }
 
   @include small {
-    padding: .75rem;
-    font-size: .9rem;
+    padding: .4rem 0.6rem;
+    font-size: .8rem;
+    margin-bottom: 0.5rem;
 
     + .btn {
-      margin-top: 1rem;
       margin-left: 0;
     }
   }
@@ -208,9 +232,20 @@ a {
 
 header.wave-header {
   position: relative;
-  height: 300px;
   background: #191919;
   overflow: hidden;
+
+  @include large {
+    height: 300px;
+  }
+
+  @include medium {
+    height: 250px;
+  }
+
+  @include small {
+    height: 200px;
+  }
 }
 
 header.wave-header canvas {
@@ -290,19 +325,21 @@ header.wave-header .content {
     margin-bottom: 1em;
   }
 
-
-
   table {
+    display: table;
     border-collapse: collapse;
     border-spacing: 0;
-    display: block;
-    width: 100%;
-    overflow: auto;
-    word-break: keep-all;
+    width: auto;
+    max-width: 100%;
+    min-width: 0;
+    overflow-x: auto;
+    word-break: break-word;
     -webkit-overflow-scrolling: touch;
 
     td {
-      padding: .5rem 1rem;
+      min-width: 0;
+      overflow-x: auto;
+      padding: 1.0rem 1.0rem;
       border: 1px solid $table-border-color;
     }
   }
@@ -357,11 +394,13 @@ header.wave-header .content {
 }
 .mini-gallery .slider .slides {
   position: relative;
-  height: 40rem;
+  width: 100%;
+  max-height: 40em;
+  aspect-ratio: 16 / 9;
 }
 .mini-gallery .slide {
   position: absolute;
-  top: 0; left: 0;
+  inset: 0;
   width: 100%; height: 100%;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -393,8 +432,9 @@ header.wave-header .content {
 .mini-gallery .nav.next { right: .5em; }
 .mini-gallery .thumbnails {
   margin: .5em;
-  display: grid;
-  grid-template-columns: repeat(10, auto);
+  display: flex;
+  flex-wrap: wrap;
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
   grid-auto-rows: auto;
   justify-content: center;
   gap: .5em;
@@ -424,12 +464,28 @@ header.wave-header .content {
 /* PROJECT/GLITCH HEADER */
 /* ------------------------------------------------------------------------- */
 .project-tagline {
-  margin-top: 1rem;
-  margin-bottom: 2rem;
   font-size: 1.5rem;
   font-weight: normal;
   color: $section-headings-color;
   background-color: transparent;
+
+  @include large {
+    font-size: 1.5rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+  }
+
+  @include medium {
+    font-size: 1.2rem;
+    margin-top: 0.75rem;
+    margin-bottom: 1.5rem;
+  }
+
+  @include small {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 1.0rem;
+  }
 }
 
 @keyframes gradient-shift {
@@ -439,15 +495,33 @@ header.wave-header .content {
 }
 
 .project-name {
-  margin-top: 2rem;
   position: relative;
   display: inline-block;
-  font-size: 4rem;
   font-weight: bold;
   background: white;
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
+
+  @include large {
+    margin-top: 2rem;
+    font-size: 4rem;
+  }
+
+  @include medium {
+    margin-top: 1.5rem;
+    font-size: 3rem;
+  }
+
+  @include small {
+    margin-top: 1rem;
+    font-size: 2.5rem;
+
+    display: block;
+    white-space: normal;
+    max-width: 100%;
+    overflow-wrap: break-word;
+  }
 }
 
 .project-name.glitch::before,
@@ -588,12 +662,38 @@ header.wave-header .content {
 /* ------------------------------------------------------------------------- */
 .project-dates {
   text-align:right;
-  white-space:nowrap;
+  
+  @include large {
+    font-size: 1.2rem;
+  }
+
+  @include medium {
+    font-size: 1.1rem;
+  }
+
+  @include small {
+    font-size: .9rem;
+  }
 }
 
 .project-contributors {
   text-align:center;
-  white-space:nowrap;
+  
+  @include large {
+    font-size: 1.2rem;
+  }
+
+  @include medium {
+    font-size: 1.1rem;
+  }
+
+  @include small {
+    font-size: .9rem;
+  }
+}
+
+.project-details {
+  min-width: 0;
 }
 
 .project-details summary::-webkit-details-marker {

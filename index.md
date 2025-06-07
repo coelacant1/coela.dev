@@ -21,9 +21,9 @@ links:
   - name: GitHub
     url: https://github.com/coelacant1/ProtoTracer
 
-dates: "2020 - Current"
+dates: "2020 - Now"
 
-contributors: "Contributors Listed on GitHub"
+contributors: "Contributors on GitHub"
 
 description: |-
   ProtoTracer is a C++ based 3D rendering engine optimized for microcontrollers. It calculates dynamic 3D scenes in real-time, reacting to sensor or user inputs to adapt the output. This software is designed to be modular for use in other projects.
@@ -139,7 +139,7 @@ links:
   - name: GitHub
     url: https://github.com/coelacant1/AetherControl
 
-dates: "2023 - Current"
+dates: "2023 - Now"
 
 contributors: "Solo Project"
 
@@ -198,9 +198,9 @@ links:
   - name: GitHub
     url: https://github.com/coelacant1/ProxmoxScripts
 
-dates: "2024 - Current"
+dates: "2024 - Now"
 
-contributors: "Contributors Listed on GitHub"
+contributors: "Contributors on GitHub"
 
 description: |-
   ProxmoxScripts is a collection of Bash scripts for streamlining and automating the management of Proxmox Virtual Environment (PVE) clusters. This was developed to help manage and automate Proxmox virtualization infrastructure. The scripts are accessible via a console-based menu for overview, navigation, and execution. Users can read help information for each script as well as get a description of required parameters.
@@ -300,7 +300,7 @@ links:
 
 dates: "2014 - 2017"
 
-contributors: "Contributors Listed on GitHub"
+contributors: "Contributors on GitHub"
 
 description: |-
   OpenDACT (Open-source Delta Automatic Calibration Tool) is a calibration tool for delta robots. It calibrates generic delta robots and automates calibration of Repetier-firmware-controlled delta robots (primarily 3D printers). The calibration uses forward and inverse kinematics measurements to make adjustments. It takes Z-height readings at key XY points on a flat plate (print bed) to iteratively calculate hardware offsets. Users can manually adjust hardware or apply software offsets to correct for imperfections.
@@ -342,7 +342,7 @@ links:
   - name: GitHub
     url: https://github.com/coelacant1/ProxmoxLoadBalancer
 
-dates: "2025 - Current"
+dates: "2025 - Now"
 
 contributors: "Solo Project"
 
@@ -382,7 +382,7 @@ name: WebHID
 
 summary: "Teensy WebHID Firmware Loader"
 
-dates: "2025 - Current"
+dates: "2025 - Now"
 
 contributors: "Solo Project"
 
@@ -435,7 +435,7 @@ links:
   - name: GitHub
     url: https://github.com/coelacant1/PVEGPUPassthroughGuide
 
-dates: "2025 - Current"
+dates: "2025 - Now"
 
 contributors: "Solo Project"
 
@@ -458,7 +458,7 @@ name: StewartPlatform
 
 summary: "Stewart Platform - Firmware and Hardware for Flight Simulator"
 
-dates: "2020 - Current"
+dates: "2020 - Now"
 
 contributors: "Hardware/Software Solo | Research by Co-workers"
 
@@ -774,7 +774,7 @@ name: CustomElectronics
 
 summary: "Power Electronics and Control Systems"
 
-dates: "2014 - Current"
+dates: "2014 - Now"
 
 contributors: "Solo Projects"
 
@@ -898,10 +898,6 @@ name: CustomVoron
 
 summary: "Customized Voron CoreXY 3D Printer"
 
-links:
-  - name: Github
-    url: https://github.com/coelacant1/CoelaPNP
-
 dates: "2019 - 2021"
 
 contributors: "Solo Project"
@@ -958,7 +954,7 @@ links:
   - name: Github
     url: https://github.com/coelacant1/Protogen-3D-Prints
 
-dates: "2020 - Current"
+dates: "2020 - Now"
 
 contributors: "Solo Project"
 
@@ -1182,7 +1178,7 @@ name: AdditiveManufacturing
 
 summary: "Advanced Additive Manufacturing Technologies"
 
-dates: "2022 - Current"
+dates: "2022 - Now"
 
 contributors: "Collaboration with Co-Worker"
 
@@ -1333,7 +1329,7 @@ name: LargePrinter
 
 summary: "Design and Creation of Large-Scale Custom Printers"
 
-dates: "2015 - Current"
+dates: "2015 - Now"
 
 contributors: "Design/Software | Project with Two Co-Workers"
 
@@ -1364,7 +1360,7 @@ name: PrintFarm
 
 summary: "Print Farm Implementation and Management"
 
-dates: "2023 - Current"
+dates: "2023 - Now"
 
 contributors: "Implemented with Co-Worker"
 
@@ -1397,7 +1393,7 @@ name: CustomTooling
 
 summary: "Injection Molding, Vacuum Forming, and Specialized Tooling Design"
 
-dates: "2011 - Current"
+dates: "2011 - Now"
 
 contributors: "Face Shields with Co-Worker | Rest are Solo Projects"
 
@@ -1535,7 +1531,7 @@ name: OtherManufacturing
 
 summary: "Other Manufacturing Technology Expertise"
 
-dates: "2020 - Current"
+dates: "2020 - Now"
 
 contributors: "Share with Co-Worker"
 
@@ -1609,7 +1605,7 @@ name: Server Infrastructure
 
 summary: "Hyper-Converged Infrastructure (HCI) Design and Implementation"
 
-dates: "2019 - Current"
+dates: "2019 - Now"
 
 contributors: "Solo Implementation, Management, and Operation"
 
@@ -1716,7 +1712,7 @@ name: NetworkingSecurity
 
 summary: "Networking and Security"
 
-dates: "2020 - Current"
+dates: "2020 - Now"
 
 contributors: "Solo Management and Operation"
 
@@ -1787,7 +1783,7 @@ name: ActiveDirectory
 
 summary: "Active Directory Management"
 
-dates: "2019 - Current"
+dates: "2019 - Now"
 
 contributors: "Solo Management and Operation"
 
@@ -1836,7 +1832,7 @@ name: CoelaDev
 
 summary: "Coela.dev Website"
 
-dates: "2025 - Current"
+dates: "2025 - Now"
 
 links:
   - name: Github
