@@ -245,16 +245,20 @@ header.wave-header .content {
   margin-bottom: 1em;
 }
 .main-content table {
+  display: table;
   border-collapse: collapse;
   border-spacing: 0;
-  display: block;
-  width: 100%;
-  overflow: auto;
-  word-break: keep-all;
+  width: auto;
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  word-break: break-word;
   -webkit-overflow-scrolling: touch;
 }
 .main-content table td {
-  padding: 0.5rem 1rem;
+  min-width: 0;
+  overflow-x: auto;
+  padding: 0.5rem 0.5rem;
   border: 1px solid #404a52;
 }
 .main-content hr {
@@ -311,7 +315,8 @@ header.wave-header .content {
 
 .mini-gallery .slider .slides {
   position: relative;
-  height: 40rem;
+  width: 100%;
+  height: 40em;
 }
 
 .mini-gallery .slide {
@@ -362,7 +367,7 @@ header.wave-header .content {
 .mini-gallery .thumbnails {
   margin: 0.5em;
   display: grid;
-  grid-template-columns: repeat(10, auto);
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
   grid-auto-rows: auto;
   justify-content: center;
   gap: 0.5em;
@@ -677,12 +682,44 @@ header.wave-header .content {
 /* ------------------------------------------------------------------------- */
 .project-dates {
   text-align: right;
-  white-space: nowrap;
+}
+@media screen and (min-width: 64em) {
+  .project-dates {
+    font-size: 1.2rem;
+  }
+}
+@media screen and (min-width: 42em) and (max-width: 64em) {
+  .project-dates {
+    font-size: 1.1rem;
+  }
+}
+@media screen and (max-width: 42em) {
+  .project-dates {
+    font-size: 0.9rem;
+  }
 }
 
 .project-contributors {
   text-align: center;
-  white-space: nowrap;
+}
+@media screen and (min-width: 64em) {
+  .project-contributors {
+    font-size: 1.2rem;
+  }
+}
+@media screen and (min-width: 42em) and (max-width: 64em) {
+  .project-contributors {
+    font-size: 1.1rem;
+  }
+}
+@media screen and (max-width: 42em) {
+  .project-contributors {
+    font-size: 0.9rem;
+  }
+}
+
+.project-details {
+  min-width: 0;
 }
 
 .project-details summary::-webkit-details-marker {
