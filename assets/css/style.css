@@ -311,7 +311,7 @@ header.wave-header .content {
 
 .mini-gallery .slider .slides {
   position: relative;
-  height: 400px;
+  height: 40rem;
 }
 
 .mini-gallery .slide {
@@ -758,6 +758,19 @@ header.wave-header .content {
   border: 0;
   width: 100%;
   height: 100%;
+}
+
+.pdf-container {
+  border: none;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.video-container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 /* SELECTION BLOCKER */

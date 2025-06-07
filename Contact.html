@@ -253,7 +253,7 @@
             const vid = node.querySelector('iframe[data-src][allowfullscreen]');
             if (vid && !vid.src) vid.src = vid.dataset.src;
 
-            const pdf = node.querySelector('iframe[data-src][type="application/pdf"]');
+            const pdf = node.querySelector('iframe[data-src][data-type="pdf"]');
             if (pdf && !pdf.src) pdf.src = pdf.dataset.src;
           };
 
