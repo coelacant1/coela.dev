@@ -1,0 +1,4032 @@
+<!DOCTYPE html>
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8">
+<!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Portfolio | coela.dev</title>
+<meta name="generator" content="Jekyll v4.4.1" />
+<meta property="og:title" content="Portfolio" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Portfolio" />
+<meta property="og:description" content="Portfolio" />
+<meta property="og:site_name" content="coela.dev" />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Portfolio" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebSite","description":"Portfolio","headline":"Portfolio","name":"coela.dev","url":"/"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f85589">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="/assets/css/style.css?v=">
+    <link rel="icon" type="image/x-icon" href="/assets/coelabw.ico">
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header wave-header" role="banner">
+      <canvas id="wave-canvas"></canvas>
+      <div class="page-header__inner">
+        <br>
+        <div class="project-name glitch" data-text="coela.dev">
+          coela.dev
+          <span class="glitch-green">coela.dev</span>
+        </div>
+        <div class="project-tagline">Hardware and Software Developer</div>
+        <a href="./" class="btn">Portfolio</a>
+        <a href="/Contact" class="btn">Contact</a>
+      </div>
+    </header>
+
+    <script>
+      const header    = document.querySelector('.page-header');
+      const canvas    = document.getElementById('wave-canvas');
+      const ctx       = canvas.getContext('2d');
+      const lineCount = 6;
+      const baseColor = '#e891b4';
+
+      function hexToHSL(H) {
+        let r = 0, g = 0, b = 0;
+        if (H.length === 4) {
+          r = "0x" + H[1] + H[1];
+          g = "0x" + H[2] + H[2];
+          b = "0x" + H[3] + H[3];
+        } else if (H.length === 7) {
+          r = "0x" + H[1] + H[2];
+          g = "0x" + H[3] + H[4];
+          b = "0x" + H[5] + H[6];
+        }
+        r /= 255; g /= 255; b /= 255;
+        let cmin = Math.min(r,g,b),
+            cmax = Math.max(r,g,b),
+            delta = cmax - cmin,
+            h = 0, s = 0, l = 0;
+
+        if (delta === 0) h = 0;
+        else if (cmax === r) h = ((g - b) / delta) % 6;
+        else if (cmax === g) h = (b - r) / delta + 2;
+        else h = (r - g) / delta + 4;
+        h = Math.round(h * 60);
+        if (h < 0) h += 360;
+
+        l = (cmax + cmin) / 2;
+
+        s = delta === 0 ? 0 : delta / (1 - Math.abs(2*l -1));
+        s = +(s * 100).toFixed(1);
+        l = +(l * 100).toFixed(1);
+
+        return { h, s, l };
+      }
+
+      function hslToHex(h, s, l) {
+        s /= 100;
+        l /= 100;
+        let c = (1 - Math.abs(2*l - 1)) * s,
+            x = c * (1 - Math.abs((h / 60) % 2 - 1)),
+            m = l - c/2,
+            r = 0, g = 0, b = 0;
+
+        if (0 <= h && h < 60)      { r = c; g = x; b = 0; }
+        else if (60 <= h && h < 120) { r = x; g = c; b = 0; }
+        else if (120 <= h && h < 180) { r = 0; g = c; b = x; }
+        else if (180 <= h && h < 240) { r = 0; g = x; b = c; }
+        else if (240 <= h && h < 300) { r = x; g = 0; b = c; }
+        else { r = c; g = 0; b = x; }
+
+        r = Math.round((r + m) * 255);
+        g = Math.round((g + m) * 255);
+        b = Math.round((b + m) * 255);
+
+        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+      }
+
+      function hexToRGB(hex) {
+        let r = 0, g = 0, b = 0;
+        if (hex.length === 4) {
+          r = parseInt(hex[1] + hex[1], 16);
+          g = parseInt(hex[2] + hex[2], 16);
+          b = parseInt(hex[3] + hex[3], 16);
+        } else if (hex.length === 7) {
+          r = parseInt(hex[1] + hex[2], 16);
+          g = parseInt(hex[3] + hex[4], 16);
+          b = parseInt(hex[5] + hex[6], 16);
+        }
+        return [r, g, b];
+      }
+
+      let waves = [];
+      let lastTimestamp = 0;
+
+      function resizeCanvas() {
+        canvas.width  = header.clientWidth;
+        canvas.height = header.clientHeight;
+        initWaves();
+      }
+
+      window.addEventListener('DOMContentLoaded', resizeCanvas);
+      window.addEventListener('resize', resizeCanvas);
+
+      const alphaTop = 1.0;
+      const alphaBottom = 0.15;
+
+      function initWaves() {
+        const spacing = canvas.height / (lineCount + 1);
+        waves = [];
+
+        const baseHSL = hexToHSL(baseColor);
+
+        for (let i = 0; i < lineCount; i++) {
+          const satShift = (Math.random() * 30) - 15;
+          const lightShift = (Math.random() * 30) - 15;
+          const s = Math.min(100, Math.max(0, baseHSL.s + satShift));
+          const l = Math.min(100, Math.max(0, baseHSL.l + lightShift));
+          const baseHue = baseHSL.h + (Math.random() * 60 - 30) % 360;
+          const hueShiftSpeed = 0.072 + (Math.random() * 0.01 - 0.005);
+
+          const alpha = alphaTop + (alphaBottom - alphaTop) * (i / (lineCount - 1));
+
+          waves.push({
+            y:           spacing * (i + 1),
+            amplitude:   spacing * (0.4 + Math.random() * 0.3),
+            wavelength:  canvas.width / (2 + Math.random() * 6),
+            phase:       Math.random() * Math.PI * 2,
+            speed:       0.001 + Math.random() * 0.005,
+            thickness:   4 + (lineCount - i) * 2,
+            baseHue,
+            saturation:  s,
+            lightness:   l,
+            hueShiftSpeed,
+            alpha,
+            color:       ''
+          });
+        }
+      }
+
+      function drawFrame(timestamp = 0) {
+        if (!lastTimestamp) lastTimestamp = timestamp;
+        const elapsed = timestamp - lastTimestamp;
+        lastTimestamp = timestamp;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#121517';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.globalCompositeOperation = 'normal';
+
+        waves.forEach(w => {
+          const newHue = (w.baseHue + timestamp * w.hueShiftSpeed) % 360;
+          w.color = hslToHex(newHue, w.saturation, w.lightness);
+          w.rgb = hexToRGB(w.color);
+
+          drawSineWave(w);
+          w.phase += w.speed;
+        });
+
+        ctx.globalCompositeOperation = 'source-over';
+
+        requestAnimationFrame(drawFrame);
+      }
+
+      function drawSineWave({ y, amplitude, wavelength, phase, thickness, rgb, alpha }) {
+        ctx.beginPath();
+        const step = 10;
+        for (let x = 0; x <= canvas.width + step; x += step) {
+          const theta = (x / wavelength) + phase;
+          const yy    = y + Math.sin(theta) * amplitude;
+          x === 0 ? ctx.moveTo(x, yy) : ctx.lineTo(x, yy);
+        }
+
+        ctx.strokeStyle = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
+        ctx.lineWidth   = thickness;
+        ctx.lineCap     = 'round';
+        ctx.stroke();
+      }
+
+      requestAnimationFrame(drawFrame);
+    </script>
+
+    <main id="content" class="main-content" role="main">
+      <!-- # **Meet Coela**{: .typewriter } -->
+
+<p>Engineer and developer who solves problems with hardware, software, and automation. Building performant, modular, and reliable systems-from embedded devices and robotics to virtualization and infrastructure automation.</p>
+
+<h2 id="software-and-embedded-systems-development"><strong>Software and Embedded Systems Development</strong></h2>
+<!-- ProtoTracer -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    ProtoTracer: Embedded 3D Rendering Engine
+  </summary>
+
+  <table><tr><td><a href="https://coelacant.com/ProtoTracer/">Website</a></td><td><a href="https://github.com/coelacant1/ProtoTracer">GitHub</a></td><td class="project-contributors">
+            Contributors Listed on GitHub
+          </td><td class="project-dates">
+            2020 - Current
+          </td></tr><tr><td colspan="4"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="video" data-caption="ProtoTracer menu using multi-button RGB I2C Controller">
+          
+            <iframe id="yt-player-ProtoTracer-0" src="https://www.youtube.com/embed/ii_2rAg5L5c?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="3D shader running a 2D rasterizer that is then modified with simulated advection">
+          
+            <iframe id="yt-player-ProtoTracer-1" src="https://www.youtube.com/embed/xQfBLp0Ws1g?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Shader with multiply blend modes between two animated GIFs">
+          
+            <iframe id="yt-player-ProtoTracer-2" src="https://www.youtube.com/embed/C5WwMnbaJ34?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Simplex noise shader with blend mode mixing stripe shader">
+          
+            <iframe id="yt-player-ProtoTracer-3" src="https://www.youtube.com/embed/8uSgCMLcty8?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Spiral rainbow shader with multiply blend mode playing Bad Apple as a GIF">
+          
+            <iframe id="yt-player-ProtoTracer-4" src="https://www.youtube.com/embed/1AH0N9evXL4?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Dual spiral rainbow shader with lighten blend mode">
+          
+            <iframe id="yt-player-ProtoTracer-5" src="https://www.youtube.com/embed/SXp2C7LbiRM?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Example of a full keyframed animation">
+          
+            <iframe id="yt-player-ProtoTracer-6" src="https://www.youtube.com/embed/Yc67nFJwqYo?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="External sensor input for controlling the 3D model">
+          
+            <iframe id="yt-player-ProtoTracer-7" src="https://www.youtube.com/embed/TnoXMWCxYpc?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Rendering a 3D model with 2D textures">
+          
+            <iframe id="yt-player-ProtoTracer-8" src="https://www.youtube.com/embed/ucIHCd_vjGA?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Normal shader">
+          
+            <iframe id="yt-player-ProtoTracer-9" src="https://www.youtube.com/embed/ZJqEkMUVPH4?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Physics simulator with balls in a 3D box">
+          
+            <iframe id="yt-player-ProtoTracer-10" src="https://www.youtube.com/embed/orijCE6EDM4?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Example of a custom software build for a user">
+          
+            <iframe id="yt-player-ProtoTracer-11" src="https://www.youtube.com/embed/Xh3eKCqLIPc?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="pdf" data-caption="Controller guide for hardware optimized for ProtoTracer">
+          
+            <div class="pdf-container" style="width:100%; height:100%; overflow:hidden;">
+              <iframe data-src="/assets/pdfs/ProtogenControllerV2-0.pdf" style="border:none;" loading="lazy">
+              </iframe>
+            </div>
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="video">
+      <img src="https://img.youtube.com/vi/ii_2rAg5L5c/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="video">
+      <img src="https://img.youtube.com/vi/xQfBLp0Ws1g/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="video">
+      <img src="https://img.youtube.com/vi/C5WwMnbaJ34/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="video">
+      <img src="https://img.youtube.com/vi/8uSgCMLcty8/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="video">
+      <img src="https://img.youtube.com/vi/1AH0N9evXL4/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="5" data-type="video">
+      <img src="https://img.youtube.com/vi/SXp2C7LbiRM/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="6" data-type="video">
+      <img src="https://img.youtube.com/vi/Yc67nFJwqYo/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="7" data-type="video">
+      <img src="https://img.youtube.com/vi/TnoXMWCxYpc/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="8" data-type="video">
+      <img src="https://img.youtube.com/vi/ucIHCd_vjGA/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="9" data-type="video">
+      <img src="https://img.youtube.com/vi/ZJqEkMUVPH4/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="10" data-type="video">
+      <img src="https://img.youtube.com/vi/orijCE6EDM4/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="11" data-type="video">
+      <img src="https://img.youtube.com/vi/Xh3eKCqLIPc/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="12" data-type="pdf">
+      <img src="/assets/icons/pdf-icon.png" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>ProtoTracer is a C++ based 3D rendering engine optimized for microcontrollers. It calculates dynamic 3D scenes in real time, reacting to sensor or user inputs to adapt the output. This software is designed to be modular for use in other projects.</p>
+
+<p>This includes features such as:</p>
+<ul>
+  <li>Keyframed animations with support for automated easing</li>
+  <li>Display of custom converted FBX, OBJ 3D Models with support for textures using any static image format as well as support for animated GIFs</li>
+  <li>Custom camera definitions and parameters for specialized display shapes and 3D outputs</li>
+  <li>Support for driving HUB75, WS2812, and APA102 based LED displays, with controller definitions making it easy to create other interfaces</li>
+  <li>Raster-based 3D rendering as well as Raytraced rendering
+    <ul>
+      <li>Segmented-rendering optimization using quadtrees</li>
+      <li>Custom rendering pipeline optimized for high frame rates on constrained hardware
+        <ul>
+          <li>Enables PS1-level graphics rendering</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Custom static and animated shader materials
+    <ul>
+      <li>Simplex Noise Shaders</li>
+      <li>Audio Reactive Shaders (Oscilloscope/Spectrum Analyzer)</li>
+      <li>TV Static emulation</li>
+      <li>Gradient/Normal/UV Tiled/Depth Materials</li>
+    </ul>
+  </li>
+  <li>Audio Analysis
+    <ul>
+      <li>Voice analysis for matching vowel sounds to viseme shapes
+        <ul>
+          <li>Allows user calibration for custom formant maps</li>
+        </ul>
+      </li>
+      <li>Fourier Transform for analysis/spectrum analyzer display</li>
+      <li>Filtering and automatic scaling for background noise</li>
+      <li>Filters: FFT/Kalman/Peak/Ramp/Running Average</li>
+    </ul>
+  </li>
+  <li>Physics Simulator</li>
+  <li>Hardware Support for:
+    <ul>
+      <li>SSD1306 Status Display/HUD</li>
+      <li>Communication with secondary controller for wireless control</li>
+      <li>PWM Fan Controls through a user menu</li>
+      <li>APDS9960 Color/Distance Sensing</li>
+      <li>BNO055 Quaternion input for space-mouse like control</li>
+      <li>MMC56X3 Magnetometer input</li>
+      <li>SHARPGP2Y Distance Sensing</li>
+      <li>MAX9814/SPW2430 Microphone Input</li>
+    </ul>
+  </li>
+  <li>Screenspace Shaders for manipulating 3D rendered frames with 2D modifications
+    <ul>
+      <li>Fisheye distortion</li>
+      <li>Glitch distortion</li>
+      <li>Box/Radial blur</li>
+      <li>Magnetic Lens distortion</li>
+      <li>Phase Shifting</li>
+    </ul>
+  </li>
+  <li>Live object manipulation
+    <ul>
+      <li>Position/Scale/Rotation</li>
+      <li>Distortion with custom object deformer
+        <ul>
+          <li>Modifies 3D space via transformation functions</li>
+          <li>Perspective Deform</li>
+          <li>Sinusoidal Deform</li>
+          <li>Dropwave Deform</li>
+        </ul>
+      </li>
+      <li>Automatic 3D object alignment
+        <ul>
+          <li>Allows alignment of center of volume or mass to a target coordinate</li>
+          <li>Fit alignment to a plane
+            <ul>
+              <li>Allows users to rapidly add their own model with any scale/rotation and it will autofit to a target size and plane</li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Custom Optimized Math Library
+    <ul>
+      <li>Rotation library with support for Axis Angles, Direction Angles(Custom), Euler Angles, Quaternions, Rotation Matrices, Yaw-Pitch-Roll</li>
+      <li>Vector2D and Vector3D Library</li>
+      <li>Quaternion Library</li>
+      <li>Kalman and Running Average Filters for Quaternion Space, Cartesian Space</li>
+    </ul>
+  </li>
+  <li>Automated Testing to verify custom math libary</li>
+</ul>
+
+<p>Doxygen genereated documentation from sourcecode:</p>
+<div class="project-iframe" style="margin: 1em 0;">
+            <iframe src="https://coelacant.com/ProtoTracer/" height="400" allowfullscreen="">
+            </iframe>
+          </div></td>
+    </tr>
+  </table>
+</details>
+
+<!-- AetherControl -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    AetherControl: Optimized CNC Firmware
+  </summary>
+
+  <table><tr><td><a href="https://github.com/coelacant1/AetherControl">GitHub</a></td><td class="project-contributors">
+            Solo Project
+          </td><td class="project-dates">
+            2023 - Current
+          </td></tr><tr><td colspan="3"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="video" data-caption="AetherControl on a CoreXY Pick n Place Machine">
+          
+            <iframe id="yt-player-AetherControl-0" src="https://www.youtube.com/embed/4LFMXw97F7c?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="image" data-caption="Example configuration for the AB motors of the Pick n Place">
+          
+            <img src="/assets/images/AetherControl1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="video" data-caption="Second example of AetherControl on the CoreXY Pick n Place assembling a PCB">
+          
+            <iframe id="yt-player-AetherControl-2" src="https://www.youtube.com/embed/nXmGRJHBArY?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="image" data-caption="Example configuration for the Z and R motors of the Pick n Place - end effector controller">
+          
+            <img src="/assets/images/AetherControl2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="video" data-caption="AetherControl controlling a 6-Axis 425mm stroke Stewart Platform">
+          
+            <iframe id="yt-player-AetherControl-4" src="https://www.youtube.com/embed/DOIEZTeIsqk?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="image" data-caption="Configuration file for the Stewart Platform">
+          
+            <img src="/assets/images/AetherControl3.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="video">
+      <img src="https://img.youtube.com/vi/4LFMXw97F7c/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/AetherControl1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="video">
+      <img src="https://img.youtube.com/vi/nXmGRJHBArY/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/AetherControl2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="video">
+      <img src="https://img.youtube.com/vi/DOIEZTeIsqk/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="5" data-type="image">
+      <img src="/assets/images/thumbs/AetherControl3.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>AetherControl is a modular, C++ based motion-control firmware optimized for simplicity and modularity by focusing on real-time G-code parsing, motion planning, kinematics, and stepper-motor drive. Supporting advanced kinematics like Stewart platforms, CoreXY machines, and Cartesian robots with dynamic trajectory planning optimized for smooth, accurate real-time operation.</p>
+
+<p>Implementations:</p>
+<ul>
+  <li>High-Speed CoreXY pick-and-place machine</li>
+  <li>High-Speed 6x 1000W AC Servo based 6-axis Stewart platform used as a flight simulator</li>
+</ul>
+
+<p>This includes features such as:</p>
+<ul>
+  <li>Support for Stewart platform, Cartesian, CoreXY, and custom kinematics configurations</li>
+  <li>Dynamic trajectory planning with velocity and acceleration constraints</li>
+  <li>G-code parsing and execution for CNC command interpretation</li>
+  <li>Real-time multi-axis synchronization and motion coordination</li>
+  <li>Multi-Controller synchronization</li>
+  <li>Layered modular architecture for easy customization and extension</li>
+  <li>Support for sensor calibration and automated testing routines</li>
+  <li>Optimized for ARM Cortex-M microcontrollers with efficient resource use</li>
+  <li>Custom PathPlanner optimizing for up to the number of GPIO pins available to drive the system</li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- ProxmoxScripts -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    ProxmoxScripts for Automated Infrastracture Management
+  </summary>
+
+  <table><tr><td><a href="https://coelacant.com/ProxmoxScripts/">Website</a></td><td><a href="https://github.com/coelacant1/ProxmoxScripts">GitHub</a></td><td class="project-contributors">
+            Contributors Listed on GitHub
+          </td><td class="project-dates">
+            2024 - Current
+          </td></tr><tr><td colspan="4"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="Screenshot of the custom terminal user interface for CCPVE">
+          
+            <img src="/assets/images/ProxmoxScripts5.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Example of running a command/script available through CCPVE">
+          
+            <img src="/assets/images/ProxmoxScripts4.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Example of automatically cloning, SSHing to the Windows VM, configuring the IP and cloning the next VM">
+          
+            <img src="/assets/images/ProxmoxScripts2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Example of batch cloning with CCPVE">
+          
+            <img src="/assets/images/ProxmoxScripts1.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/ProxmoxScripts5.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/ProxmoxScripts4.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="image">
+      <img src="/assets/images/thumbs/ProxmoxScripts2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/ProxmoxScripts1.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>ProxmoxScripts is a collection of Bash scripts for streamlining and automating the management of Proxmox Virtual Environment (PVE) clusters. This was developed to help manage and automate Proxmox virtualization infrastructure. The scripts accessible via a console-based menu system for quick navigation and execution. Users are able to read help information for each script as well as get a detailed description of required parameters.</p>
+
+<p>Features include:</p>
+<ul>
+  <li>Cluster configuration tools
+    <ul>
+      <li>Adding Nodes - Remote configuration with IP</li>
+      <li>Cluster Creation - From list of IPs</li>
+      <li>Cluster Deletion - Separating all nodes from cluster</li>
+    </ul>
+  </li>
+  <li>Firewall management
+    <ul>
+      <li>Bulk LXC/VM Firewall Management</li>
+      <li>Automated host default firewall configuration</li>
+    </ul>
+  </li>
+  <li>High Availability
+    <ul>
+      <li>Create HA Group and add nodes</li>
+      <li>Bulk add LXC/VMs to HA group</li>
+    </ul>
+  </li>
+  <li>Host Automation and Configuration
+    <ul>
+      <li>Remove local-lvm storage and expand local storage (for Hyper-Converged setups)</li>
+      <li>Bulk Microcode configuration/Timezone Configuration/Upgrades</li>
+      <li>Generic PWM and Dell IPMI hardware fan control adapting to CPU temperatures</li>
+      <li>Enable CPU Scaling Governer</li>
+      <li>Enable GPU Passthrough to VM</li>
+      <li>Enable IOMMU</li>
+      <li>Enable GPU Sharing with LXC</li>
+      <li>Optimize for X3D hardware</li>
+      <li>Live memory testing</li>
+      <li>System optimization for nested virtualization</li>
+    </ul>
+  </li>
+  <li>LXC and VM Configuration and Management</li>
+  <li>Networking
+    <ul>
+      <li>Bulk adding network bonds</li>
+      <li>List all VM/LXC IDs with their associated MAC address</li>
+      <li>Bulk set DNS on cluster</li>
+      <li>Find VM ID from MAC address</li>
+      <li>Automated host-to-host network speed test</li>
+      <li>Bulk update network interface names</li>
+      <li>Bulk host uplink speed test</li>
+    </ul>
+  </li>
+  <li>Remote VM/LXC Management
+    <ul>
+      <li>Integration with Apache Guacamole
+        <ul>
+          <li>Bulk add/delete RDP connections</li>
+          <li>Bulk add/remove SFTP server to RDP connections</li>
+          <li>Bulk list RDP configuration</li>
+          <li>Bulk update/remove drive redirection</li>
+          <li>Pull Guacamole authentication token</li>
+        </ul>
+      </li>
+      <li>Configuration of virtual machine static IPs over SSH for Debian/Ubuntu/Windows</li>
+    </ul>
+  </li>
+  <li>Generate a resource report for all VMs/LXCs</li>
+  <li>Automated penetration testing/port scanning</li>
+  <li>Storage Automation
+    <ul>
+      <li>Ceph Configuration
+        <ul>
+          <li>Bulk create OSDs</li>
+          <li>Edit crushmap (decompiles, prints directory, allows user edit, then recompile)</li>
+          <li>Bulk restart managers/monitors/metadata servers/OSDs</li>
+          <li>Set pool to minimum size of 1 and to a size of 1 (testing/temporary data)</li>
+          <li>Create automated deep scrubbing with a chron job</li>
+          <li>Automate creating a single drive Ceph node (shares host OS and Ceph data)</li>
+          <li>Bulk OSD sparsify</li>
+          <li>Bulk start stopped disks</li>
+          <li>Full data wipe on specified disk (clear Ceph and all remnants of user data)</li>
+        </ul>
+      </li>
+      <li>Disk Benchmarking</li>
+      <li>Bulk VM disk deletion</li>
+      <li>Bulk VM disk deletion for disks with snapshots</li>
+      <li>Trim all filesystems of resources using Qemu Agent or LXC</li>
+      <li>Automate disk spin down</li>
+      <li>Pass host directory to LXC</li>
+      <li>Update stale mounts</li>
+    </ul>
+  </li>
+  <li>Custom User Interface library</li>
+</ul>
+<div class="project-iframe" style="margin: 1em 0;">
+            <iframe src="https://coelacant.com/ProxmoxScripts/" height="400" allowfullscreen="">
+            </iframe>
+          </div></td>
+    </tr>
+  </table>
+</details>
+
+<!-- OpenDACT -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    OpenDACT: Automatic Delta Kinematics Calibration Software
+  </summary>
+
+  <table><tr><td><a href="https://github.com/coelacant1/OpenDACT">Github</a></td><td class="project-contributors">
+            Contributors Listed on GitHub
+          </td><td class="project-dates">
+            2014 - 2017
+          </td></tr><tr><td colspan="3"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="User interface with example calibration of a delta 3D printer running Repetier firmware">
+          
+            <img src="/assets/images/OpenDACT1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="User interface showing deformation in the physical structure from ideal conditions - can be used to physically tune the machine">
+          
+            <img src="/assets/images/OpenDACT2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Full user interface while running a calibration">
+          
+            <img src="/assets/images/OpenDACT4.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/OpenDACT1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/OpenDACT2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="image">
+      <img src="/assets/images/thumbs/OpenDACT4.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>OpenDACT (Open-source Delta Automatic Calibration Tool) is a calibration tool for delta robots. It calibrates generic delta robots and fully automates calibration of Repetier-firmware-controlled delta robots (primarily 3D printers). Calibration uses forward and inverse kinematics measurements. It takes Z-height readings at key XY points on a flat plate (print bed) to iteratively compute hardware offsets. Users can manually adjust hardware or apply software offsets to correct for imperfections.</p>
+
+<p>This software solves for the following mechanical offsets:</p>
+<ul>
+  <li>Diagonal rod lengths</li>
+  <li>End effector radius</li>
+  <li>Horizontal radius</li>
+  <li>Endstop offsets</li>
+  <li>Angles of the ABC towers</li>
+</ul>
+
+<p>For Repetier based robots, these offsets are automatically saved on the controllers EEPROM upon a successful calibration. Z-bed distortion on a newly completed build could have offsets of +/- 2mm across the plate, this tool (assuming issues in the above offsets) can calibrate the systems down to 5-10 microns.</p>
+
+<p>This software has been tested and successfully used on small-form factor deltas (100mm plate diameter) and large-form factor deltas (1.5 meter plate diameter).</p>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- Proxmox Load Balancer -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Proxmox VE Load Balancer
+  </summary>
+
+  <table><tr><td><a href="https://github.com/coelacant1/ProxmoxLoadBalancer">GitHub</a></td><td class="project-contributors">
+            Solo Project
+          </td><td class="project-dates">
+            2025 - Current
+          </td></tr><tr><td colspan="3"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="Example simulated load balance of a 12-node ProxmoxVE cluster with different amounts of memory">
+          
+            <img src="/assets/images/PVELoadBalancer3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Example moves from the simulation to balance to equally shared memory">
+          
+            <img src="/assets/images/PVELoadBalancer1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Second example of a simulated load-balance but with more extremes in initial conditions">
+          
+            <img src="/assets/images/PVELoadBalancer2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Combined simulation of initial load, final load, and moves to get to final load">
+          
+            <img src="/assets/images/PVELoadBalancer4.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/PVELoadBalancer3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/PVELoadBalancer1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="image">
+      <img src="/assets/images/thumbs/PVELoadBalancer2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/PVELoadBalancer4.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>ProxmoxLoadBalancer is a Python tool that balances memory across Proxmox VE cluster nodes. It offers two primary modes of operation:</p>
+
+<ul>
+  <li>Simulation Mode: Test and visualize load-balancing algorithms in a controlled environment without touching the live cluster.</li>
+  <li>Live Mode: Uses the Proxmox API to monitor memory usage and migrate VMs in real time to balance load.</li>
+</ul>
+
+<p>This software is built as a stand-in until ProxmoxVE ships with a built-in cluster load balancer.</p>
+<div class="project-iframe" style="margin: 1em 0;">
+            <iframe src="https://coelacant.com/ProxmoxScripts/" height="400" allowfullscreen="">
+            </iframe>
+          </div></td>
+    </tr>
+  </table>
+</details>
+
+<!-- Teensy WebHID -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Teensy WebHID Firmware Loader
+  </summary>
+
+  <table><tr><td><a href="https://coelacant.com/Teensy-Loader-Javascript/Teensy-Loader-Example.html">Example Page</a></td><td><a href="https://github.com/coelacant1/Teensy-Loader-Javascript">Github</a></td><td class="project-contributors">
+            Solo Project
+          </td><td class="project-dates">
+            2025 - Current
+          </td></tr><tr><td colspan="4"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="Example of the Teensy WebHID loader integrated into a site for end user firmware updates">
+          
+            <img src="/assets/images/TeensyWebHID7.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="List of available .hex files to upload to the microcontroller">
+          
+            <img src="/assets/images/TeensyWebHID2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Device selection">
+          
+            <img src="/assets/images/TeensyWebHID3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Uploading firmware to a Teensy 4.0 microcontroller with the WS2812 3.5mm panel configuration">
+          
+            <img src="/assets/images/TeensyWebHID4.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Firmware upload completed">
+          
+            <img src="/assets/images/TeensyWebHID5.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Serial output from the microcontroller into the browser">
+          
+            <img src="/assets/images/TeensyWebHID6.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/TeensyWebHID7.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/TeensyWebHID2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="image">
+      <img src="/assets/images/thumbs/TeensyWebHID3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/TeensyWebHID4.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="image">
+      <img src="/assets/images/thumbs/TeensyWebHID5.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="5" data-type="image">
+      <img src="/assets/images/thumbs/TeensyWebHID6.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>The Teensy WebHID Loader is a Chromium-based firmware flasher replicating PJRC’s Teensy Loader. It parses and uploads HEX and BIN files to Teensy microcontrollers, manages serial connections, and lets end users update device firmware without installing any software.</p>
+<div class="project-iframe" style="margin: 1em 0;">
+            <iframe src="https://coelacant.com/Teensy-Loader-Javascript/Teensy-Loader-Example.html" height="400" allowfullscreen="">
+            </iframe>
+          </div></td>
+    </tr>
+  </table>
+</details>
+
+<!-- Proxmox GPU Passthrough Optimizations -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Proxmox GPU Passthrough for Workstations
+  </summary>
+
+  <table><tr><td><a href="https://github.com/coelacant1/PVEGPUPassthroughGuide">GitHub</a></td><td class="project-contributors">
+            Solo Project
+          </td><td class="project-dates">
+            2025 - Current
+          </td></tr><tr><td colspan="3"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="pdf" data-caption="The complete PDF guide from the Github markdown files">
+          
+            <div class="pdf-container" style="width:100%; height:100%; overflow:hidden;">
+              <iframe data-src="/assets/pdfs/PVEGPUPassthroughGuide.pdf" style="border:none;" loading="lazy">
+              </iframe>
+            </div>
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="pdf">
+      <img src="/assets/icons/pdf-icon.png" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>A guide to running Proxmox VE as the base operating system for a high-performance workstation. Covers GPU and USB controller passthrough; multi-NUMA-node CPU optimization; BIOS and GRUB tweaks; VFIO module setup and driver blacklisting; microcode updates and GPU ROMs; tuning CPU affinity; network-stack optimizations; Windows/QEMU adjustments for Easy Anti-Cheat compatibility; example VM setups; and benchmarking results.</p>
+
+<p>This enables users to run high-performance workstations in various configurations while keeping things easy to manage, since each VM can be tuned for its specific OS or software.</p>
+</td>
+    </tr>
+  </table>
+</details>
+
+<h2 id="product-prototyping-and-engineering"><strong>Product Prototyping and Engineering</strong></h2>
+<!-- Stewart Platform -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Stewart Platform - Firmware and Hardware for Flight Simulator
+  </summary>
+
+  <table><tr><td><a href="https://github.com/coelacant1/StewartPlatformIK">Github</a></td><td class="project-contributors">
+            Hardware/Software Solo | Research by Co-workers
+          </td><td class="project-dates">
+            2020 - Current
+          </td></tr><tr><td colspan="3"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="video" data-caption="Test motion of the stewart platform to validate controls">
+          
+            <iframe id="yt-player-StewartPlatform-0" src="https://www.youtube.com/embed/DOIEZTeIsqk?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Stewart platform tied to Microsoft flight simulator">
+          
+            <iframe id="yt-player-StewartPlatform-1" src="https://www.youtube.com/embed/CeZdBrVZPds?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Test motion of the stewart platform">
+          
+            <iframe id="yt-player-StewartPlatform-2" src="https://www.youtube.com/embed/xXMPqDMNq30?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="image" data-caption="Stewart platform in the default position prior to mounting the simulator seat">
+          
+            <img src="/assets/images/StewartPlatform3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Updated controller, switched from slow MDBox controllers (100ms max update rate) to 6x 1000W AC servos for realtime control">
+          
+            <img src="/assets/images/StewartPlatform2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Custom controller for controlling the previous MDBox controls as well as the new step/direction based input using a Teensy 4.1">
+          
+            <img src="/assets/images/StewartPlatform1.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="video">
+      <img src="https://img.youtube.com/vi/DOIEZTeIsqk/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="video">
+      <img src="https://img.youtube.com/vi/CeZdBrVZPds/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="video">
+      <img src="https://img.youtube.com/vi/xXMPqDMNq30/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/StewartPlatform3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="image">
+      <img src="/assets/images/thumbs/StewartPlatform2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="5" data-type="image">
+      <img src="/assets/images/thumbs/StewartPlatform1.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>The Stewart Platform project began as an adaptation of a commercial system. The machine originally shipped with MDBox motion controllers, controlled via ethernet. Because of high latency it was adapted with a custom controller, upgraded 1000W AC servos for the linear actuators, and custom firmware and software. This was the start of the AetherControl project detailed above. The attached repository contains the interface code that takes target XYZ Cartesian coordinates and Euler rotations, then computes the six actuator lengths for AetherControl. The goal of the project was to adapt the system to handle high-frequency vibration and high-speed motion for research on flight dynamics.</p>
+
+<p>The inverse kinematics repository allows for custom user-defined configuration parameters, taking in:</p>
+<ul>
+  <li>Base Plate Radius</li>
+  <li>Base Plate Mounting Angle</li>
+  <li>Platform Plate Radius</li>
+  <li>Platform Mounting Angle</li>
+  <li>Base Height</li>
+  <li>Maximum Actuator Length</li>
+</ul>
+
+<p>Users can input an XYZ cartesian coordinate and Yaw-Pitch-Roll to get a returned value of each of the 6 actuator lengths.</p>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- Pick n Place -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Custom High-Speed CoreXY Pick-and-Place
+  </summary>
+
+  <table><tr><td><a href="https://github.com/coelacant1/CoelaPNP">Github</a></td><td class="project-contributors">
+            Solo Project
+          </td><td class="project-dates">
+            2021 - current
+          </td></tr><tr><td colspan="3"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="video" data-caption="Vision system and part pick up test">
+          
+            <iframe id="yt-player-PicknPlace-0" src="https://www.youtube.com/embed/2Rnxu-sZ-2k?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Automatic 3D nozzle calibration and alignment">
+          
+            <iframe id="yt-player-PicknPlace-1" src="https://www.youtube.com/embed/c8iBtan-B90?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Homing sequence using optical endstops and an optical based precision alignment using a fiducial">
+          
+            <iframe id="yt-player-PicknPlace-2" src="https://www.youtube.com/embed/EPM9clNw89M?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Test assembly of a custom RGB led board">
+          
+            <iframe id="yt-player-PicknPlace-3" src="https://www.youtube.com/embed/wRKHLm215EY?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="3D calibration and close up to show precision of the machine">
+          
+            <iframe id="yt-player-PicknPlace-4" src="https://www.youtube.com/embed/moOtE-V9jf4?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Example assembly prior to tuning the vision system">
+          
+            <iframe id="yt-player-PicknPlace-5" src="https://www.youtube.com/embed/bi5gHuZIw6Y?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Testing the upgraded end effector">
+          
+            <iframe id="yt-player-PicknPlace-6" src="https://www.youtube.com/embed/LeFAltqtTKM?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="High speed and high acceleration motion testing - 40m/s2 acceleration and 600-700mm/s">
+          
+            <iframe id="yt-player-PicknPlace-7" src="https://www.youtube.com/embed/PrOzkztaJ80?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Prototype pick n place built with hardware from other projects">
+          
+            <iframe id="yt-player-PicknPlace-8" src="https://www.youtube.com/embed/5-n5m6Ypd6U?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="image" data-caption="Bottom of the PnP prior to wiring and air runs">
+          
+            <img src="/assets/images/PnP3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Boards that were assembled with the pick n place - WS2812 LED boards with 571 LEDs per board">
+          
+            <img src="/assets/images/PnP7.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Close up of the LED boards">
+          
+            <img src="/assets/images/PnP9.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Wiring and air runs completed on the pick n place">
+          
+            <img src="/assets/images/PnP20.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Validating the control signals for the motion system to check if impedance matching for wiring was correct">
+          
+            <img src="/assets/images/PnP10.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="HUB75 and WS2812 based RGB LED controllers assembled on pick n place">
+          
+            <img src="/assets/images/Electronics29.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Close up of the LED boards">
+          
+            <img src="/assets/images/Electronics24.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Close up of the Pick n Place controller">
+          
+            <img src="/assets/images/Electronics12.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Pick n Place frame assembly on first iteration">
+          
+            <img src="/assets/images/PnP4.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Pick n Place CoreXY belt mounting and end-effector">
+          
+            <img src="/assets/images/PnP14.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Upgraded Closed-Loop stepper motors driven at 48V for fast saturation and higher accelerations">
+          
+            <img src="/assets/images/PnP12.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Custom upgraded end effector controller for the pick n place">
+          
+            <img src="/assets/images/PnP15.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Assembled end effector controller for controlling the Z, rotation axis, as well as a USB 2.0 MSTP hub for the cameras and micro controller">
+          
+            <img src="/assets/images/PnP16.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="CAD of the first PnP iteration">
+          
+            <img src="/assets/images/PnP22.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="video">
+      <img src="https://img.youtube.com/vi/2Rnxu-sZ-2k/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="video">
+      <img src="https://img.youtube.com/vi/c8iBtan-B90/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="video">
+      <img src="https://img.youtube.com/vi/EPM9clNw89M/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="video">
+      <img src="https://img.youtube.com/vi/wRKHLm215EY/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="video">
+      <img src="https://img.youtube.com/vi/moOtE-V9jf4/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="5" data-type="video">
+      <img src="https://img.youtube.com/vi/bi5gHuZIw6Y/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="6" data-type="video">
+      <img src="https://img.youtube.com/vi/LeFAltqtTKM/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="7" data-type="video">
+      <img src="https://img.youtube.com/vi/PrOzkztaJ80/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="8" data-type="video">
+      <img src="https://img.youtube.com/vi/5-n5m6Ypd6U/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="9" data-type="image">
+      <img src="/assets/images/thumbs/PnP3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="10" data-type="image">
+      <img src="/assets/images/thumbs/PnP7.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="11" data-type="image">
+      <img src="/assets/images/thumbs/PnP9.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="12" data-type="image">
+      <img src="/assets/images/thumbs/PnP20.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="13" data-type="image">
+      <img src="/assets/images/thumbs/PnP10.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="14" data-type="image">
+      <img src="/assets/images/thumbs/Electronics29.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="15" data-type="image">
+      <img src="/assets/images/thumbs/Electronics24.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="16" data-type="image">
+      <img src="/assets/images/thumbs/Electronics12.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="17" data-type="image">
+      <img src="/assets/images/thumbs/PnP4.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="18" data-type="image">
+      <img src="/assets/images/thumbs/PnP14.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="19" data-type="image">
+      <img src="/assets/images/thumbs/PnP12.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="20" data-type="image">
+      <img src="/assets/images/thumbs/PnP15.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="21" data-type="image">
+      <img src="/assets/images/thumbs/PnP16.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="22" data-type="image">
+      <img src="/assets/images/thumbs/PnP22.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>This project started from a requirement to create a small yet capable Pick-and-Place machine. This machine has been used to manufacture several hundred RGB LED displays which each have over 500 LEDs, power distribution boards, custom LED control electronics, etc.</p>
+
+<p>Features:</p>
+<ul>
+  <li>OpenPNP for software control
+    <ul>
+      <li>This system supports most of the hardware calibration features provided by OpenPNP</li>
+    </ul>
+  </li>
+  <li>CoreXY design based on the Voron project’s motion system</li>
+  <li>Closed-loop AB motors for X and Y axes</li>
+  <li>Feedrates up to 800mm/s</li>
+  <li>Accelerations up to 40m/s^2</li>
+  <li>12 Pneumatic feeders</li>
+  <li>Dual controller design
+    <ul>
+      <li>Primary controller for controlling closed-loop AB motors for the CoreXY motion system</li>
+      <li>Secondary controller for integrated USB hub to connect cameras/controller, Z and rotation axis stepper motor control with TMC2209 stepper drivers</li>
+    </ul>
+  </li>
+  <li>120 fps cameras with fixed exposure and white-balance settings</li>
+  <li>Fiducial camera for alignment of X and Y positions as well as fine-tuning the motion system backlash and pick-up locations</li>
+  <li>Part camera for alignment of parts/components</li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- Delta 3D Printer -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Custom High-Speed Delta 3D Printer
+  </summary>
+
+  <table><tr><td class="project-contributors">
+            Solo Project
+          </td><td class="project-dates">
+            2014 - 2019
+          </td></tr><tr><td colspan="2"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="Picture of the Delta 3D printer alongside a 180mmx180mmx180mm 3D printer">
+          
+            <img src="/assets/images/Delta8.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Upgraded end-effector system with dual gear drive for the extruder">
+          
+            <img src="/assets/images/Delta7.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Force-Sensing Resistors for bed calibration, using built in sliders that constrain the motion and prevent the bed from falling off">
+          
+            <img src="/assets/images/Delta5.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Belt structure for the upgraded extruder">
+          
+            <img src="/assets/images/Delta3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Delta frame prior to upgrading the power system and wiring">
+          
+            <img src="/assets/images/Delta1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="video" data-caption="First test print with the upgraded delta">
+          
+            <iframe id="yt-player-Delta3D-5" src="https://www.youtube.com/embed/Am7Ycc9Rg_M?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Normal/low print speed test with the previous extruder design">
+          
+            <iframe id="yt-player-Delta3D-6" src="https://www.youtube.com/embed/k7pzi0IPiGI?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Test print of a vacuum forming buck">
+          
+            <iframe id="yt-player-Delta3D-7" src="https://www.youtube.com/embed/LGvfJACLQG8?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Final print at low-speed of the vacuum forming buck">
+          
+            <iframe id="yt-player-Delta3D-8" src="https://www.youtube.com/embed/7CEiR0AMyPc?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/Delta8.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/Delta7.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="image">
+      <img src="/assets/images/thumbs/Delta5.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/Delta3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="image">
+      <img src="/assets/images/thumbs/Delta1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="5" data-type="video">
+      <img src="https://img.youtube.com/vi/Am7Ycc9Rg_M/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="6" data-type="video">
+      <img src="https://img.youtube.com/vi/k7pzi0IPiGI/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="7" data-type="video">
+      <img src="https://img.youtube.com/vi/LGvfJACLQG8/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="8" data-type="video">
+      <img src="https://img.youtube.com/vi/7CEiR0AMyPc/hqdefault.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>This project started in the era of the Prusa Mendel/i3 designs. As a challenge, I wanted to start developing a platform that could handle significantly faster print times than 3D printers that were available in the market.</p>
+
+<p>Features:</p>
+<ul>
+  <li>270mm build diameter</li>
+  <li>~490mm build height</li>
+  <li>Printing travel speeds up to 500mm/s</li>
+  <li>Printing speeds with extrusion up to 150mm/s (layer height dependent)</li>
+  <li>Accelerations up to 10m/s^2</li>
+  <li>32-bit controller using Smoothieware/Marlin (previously 8-bit with Repetier)</li>
+  <li>Custom frame and design</li>
+  <li>Custom, compact end-effector and extruder combo</li>
+  <li>Automatic bed leveling using FSRs integrated into the bed mounts</li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- 4-Axis Cutter + Fusion Post Processor -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Custom 4-Axis Machines and Fusion 360 Post Processors
+  </summary>
+
+  <table><tr><td><a href="https://github.com/coelacant1/4-Axis-Fusion360-Post-Processor">Github</a></td><td class="project-contributors">
+            Solo Project
+          </td><td class="project-dates">
+            2023 - 2024
+          </td></tr><tr><td colspan="3"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="Final assembly of the 4-axis laser cutter">
+          
+            <img src="/assets/images/4Axis3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Rear-view of the laser cutter">
+          
+            <img src="/assets/images/4Axis1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Wiring for the laser cutter">
+          
+            <img src="/assets/images/4Axis2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="video" data-caption="Simulation using a custom Fusion 360 post processor">
+          
+            <iframe id="yt-player-4AxisCutter-3" src="https://www.youtube.com/embed/26WvXgYY3GE?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Testing the laser cutter (without power on the diode)">
+          
+            <iframe id="yt-player-4AxisCutter-4" src="https://www.youtube.com/embed/vq9g52vjKNk?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/4Axis3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/4Axis1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="image">
+      <img src="/assets/images/thumbs/4Axis2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="video">
+      <img src="https://img.youtube.com/vi/26WvXgYY3GE/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="video">
+      <img src="https://img.youtube.com/vi/vq9g52vjKNk/hqdefault.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>This project primarily is a custom-built Fusion 360 post-processor for multi-axis laser cutting and engraving. It was created to cut complex shapes into vacuum-formed plastic visors. The software is a Fusion 360 post-processor that uses the machine’s hardware configuration to convert 4-axis toolpaths into G-code for a custom 4-axis laser cutter.</p>
+
+<p>The machine is an XYZ motion system with an additional large rotary axis that has an integrated fume exhaust system.</p>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- 4-Axis Automated Gimbal -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    4-Axis Automated Gimbal for MEMS-Based Motion Processor Testing
+  </summary>
+
+  <table><tr><td><a href="https://github.com/coelacant1/GimbalSimulator">Github</a></td><td class="project-contributors">
+            Solo Project
+          </td><td class="project-dates">
+            2018 - 2020
+          </td></tr><tr><td colspan="3"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="video" data-caption="Homing sequence and test move with the assembled motion system">
+          
+            <iframe id="yt-player-4AxisGimbal-0" src="https://www.youtube.com/embed/eGvnqaCpQ50?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Live output of the 4 accelerometers and 4 gyroscopes - this data is captured for the calibration process">
+          
+            <iframe id="yt-player-4AxisGimbal-1" src="https://www.youtube.com/embed/KaQvgXYtTIc?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Rendered path of a travel move">
+          
+            <iframe id="yt-player-4AxisGimbal-2" src="https://www.youtube.com/embed/degD95T-_Mg?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="image" data-caption="Side view of the gimbal">
+          
+            <img src="/assets/images/Gimbal11.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="MPU6050 reading hardware">
+          
+            <img src="/assets/images/Gimbal9.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Quarter view of the gimbal">
+          
+            <img src="/assets/images/Gimbal8.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Top view">
+          
+            <img src="/assets/images/Gimbal7.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="video">
+      <img src="https://img.youtube.com/vi/eGvnqaCpQ50/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="video">
+      <img src="https://img.youtube.com/vi/KaQvgXYtTIc/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="video">
+      <img src="https://img.youtube.com/vi/degD95T-_Mg/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/Gimbal11.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="image">
+      <img src="/assets/images/thumbs/Gimbal9.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="5" data-type="image">
+      <img src="/assets/images/thumbs/Gimbal8.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="6" data-type="image">
+      <img src="/assets/images/thumbs/Gimbal7.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>The 4-axis gimbal is the primary tool in a larger project. This project required accurate calibration of low-cost MPU6050 motion sensors. To perform the calibration a custom 4-axis motion system (3 rotational axes and 1 linear axis) closely follows a path while capturing the data (acceleration/angular velocity and for some also the magnetic field) from multiple inertial measurement units. A separate tool-the linked GitHub repository-simulates the system and generates ideal theoretical sensor outputs. Comparing real and simulated data is used to calibrate the system and develop filters for the sensors adjusted outputs.</p>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- Custom Electronics Design -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Power Electronics and Control Systems
+  </summary>
+
+  <table><tr><td class="project-contributors">
+            Solo Projects
+          </td><td class="project-dates">
+            2014 - Current
+          </td></tr><tr><td colspan="2"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="video" data-caption="Pick n Place end effector controller controlling a Nema 8 and Nema 17 motor">
+          
+            <iframe id="yt-player-CustomElectronics-0" src="https://www.youtube.com/embed/Jkx1nAE-rY4?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="HUB75 and WS2812 RGB controller controlling PWM fans">
+          
+            <iframe id="yt-player-CustomElectronics-1" src="https://www.youtube.com/embed/pgWeXkJTqyQ?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Pick n Place controller testing the mosfets for the vacuum and air control system as well as controlling a stepper motor">
+          
+            <iframe id="yt-player-CustomElectronics-2" src="https://www.youtube.com/embed/SAm6Xv9psXs?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="image" data-caption="Close up of the end-effector controller for the PnP">
+          
+            <img src="/assets/images/Electronics27.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Assembled RGB HUB75 and WS2812 LED controllers">
+          
+            <img src="/assets/images/Electronics29.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="6-axis Stewart Platform controller with level shifting from 3.3V to 5V">
+          
+            <img src="/assets/images/Electronics28.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="View in KiCAD of the PnP end-effector controller">
+          
+            <img src="/assets/images/electronics10.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Transparent ayer view of the end-effector controller">
+          
+            <img src="/assets/images/electronics11.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Close up of the PnP controller">
+          
+            <img src="/assets/images/Electronics34.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Wireless environmental monitor using ESP8266 microcontrollers and a BME280">
+          
+            <img src="/assets/images/Electronics32.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="8-Channel WS2812 controller with support for wireless communication">
+          
+            <img src="/assets/images/Electronics30.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Close up of the HUB75 and 8-Channel WS2812 controller">
+          
+            <img src="/assets/images/Electronics25.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Board verification after assembly">
+          
+            <img src="/assets/images/Electronics19.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="12-Channel firework ignitor using LoRa">
+          
+            <img src="/assets/images/Electronics8.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Compact 5V 20A Buck Converter using Gallium Nitride FETs">
+          
+            <img src="/assets/images/Electronics5.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Electronics for a stroboscope">
+          
+            <img src="/assets/images/Electronics3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="">
+          
+            <img src="/assets/images/Electronics7.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Process for the PNP end-effector controller in Altium">
+          
+            <img src="/assets/images/PCBProcess1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Process for the PNP end-effector controller in Altium">
+          
+            <img src="/assets/images/PCBProcess2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="3D view for the PNP end-effector controller in Altium">
+          
+            <img src="/assets/images/PCBProcess3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Pick n Place controller in the machine">
+          
+            <img src="/assets/images/PnP19.jpg" alt="" />
+          
+        </div><div class="slide" data-type="pdf" data-caption="Layer view of the end-effector controller">
+          
+            <div class="pdf-container" style="width:100%; height:100%; overflow:hidden;">
+              <iframe data-src="/assets/pdfs/pnpeec.pdf" style="border:none;" loading="lazy">
+              </iframe>
+            </div>
+          
+        </div><div class="slide" data-type="pdf" data-caption="Schematic for the end-effector controller">
+          
+            <div class="pdf-container" style="width:100%; height:100%; overflow:hidden;">
+              <iframe data-src="/assets/pdfs/PNPEndEffector.pdf" style="border:none;" loading="lazy">
+              </iframe>
+            </div>
+          
+        </div><div class="slide" data-type="pdf" data-caption="Schematic for the stroboscope, simulated in Altium">
+          
+            <div class="pdf-container" style="width:100%; height:100%; overflow:hidden;">
+              <iframe data-src="/assets/pdfs/Stroboscope.pdf" style="border:none;" loading="lazy">
+              </iframe>
+            </div>
+          
+        </div><div class="slide" data-type="pdf" data-caption="8-Channel WS2812 controller schematic">
+          
+            <div class="pdf-container" style="width:100%; height:100%; overflow:hidden;">
+              <iframe data-src="/assets/pdfs/ProtoController.pdf" style="border:none;" loading="lazy">
+              </iframe>
+            </div>
+          
+        </div><div class="slide" data-type="pdf" data-caption="Pick n Place Controller schematic">
+          
+            <div class="pdf-container" style="width:100%; height:100%; overflow:hidden;">
+              <iframe data-src="/assets/pdfs/PNPController.pdf" style="border:none;" loading="lazy">
+              </iframe>
+            </div>
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="video">
+      <img src="https://img.youtube.com/vi/Jkx1nAE-rY4/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="video">
+      <img src="https://img.youtube.com/vi/pgWeXkJTqyQ/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="video">
+      <img src="https://img.youtube.com/vi/SAm6Xv9psXs/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/Electronics27.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="image">
+      <img src="/assets/images/thumbs/Electronics29.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="5" data-type="image">
+      <img src="/assets/images/thumbs/Electronics28.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="6" data-type="image">
+      <img src="/assets/images/thumbs/electronics10.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="7" data-type="image">
+      <img src="/assets/images/thumbs/electronics11.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="8" data-type="image">
+      <img src="/assets/images/thumbs/Electronics34.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="9" data-type="image">
+      <img src="/assets/images/thumbs/Electronics32.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="10" data-type="image">
+      <img src="/assets/images/thumbs/Electronics30.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="11" data-type="image">
+      <img src="/assets/images/thumbs/Electronics25.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="12" data-type="image">
+      <img src="/assets/images/thumbs/Electronics19.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="13" data-type="image">
+      <img src="/assets/images/thumbs/Electronics8.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="14" data-type="image">
+      <img src="/assets/images/thumbs/Electronics5.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="15" data-type="image">
+      <img src="/assets/images/thumbs/Electronics3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="16" data-type="image">
+      <img src="/assets/images/thumbs/Electronics7.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="17" data-type="image">
+      <img src="/assets/images/thumbs/PCBProcess1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="18" data-type="image">
+      <img src="/assets/images/thumbs/PCBProcess2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="19" data-type="image">
+      <img src="/assets/images/thumbs/PCBProcess3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="20" data-type="image">
+      <img src="/assets/images/thumbs/PnP19.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="21" data-type="pdf">
+      <img src="/assets/icons/pdf-icon.png" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="22" data-type="pdf">
+      <img src="/assets/icons/pdf-icon.png" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="23" data-type="pdf">
+      <img src="/assets/icons/pdf-icon.png" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="24" data-type="pdf">
+      <img src="/assets/icons/pdf-icon.png" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="25" data-type="pdf">
+      <img src="/assets/icons/pdf-icon.png" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>I’ve designed and built custom power-conversion, motion‑control systems, and other electronics:</p>
+<ul>
+  <li>Custom Buck Power Regulators: Gallium nitride-based buck converters stepping 60 V down to 5 V at up to 20 A</li>
+  <li>LoRa Remote Firework Igniter: 12-channel, 2 A LoRa-based firework-igniter controller prototype</li>
+  <li>Haptics Research Motor Driver: DC motor driver with sensor feedback for inverted-pendulum and force-feedback experiments</li>
+  <li>High‑Speed Pick‑and‑Place End-Effector Controller: High-speed pick-and-place end-effector controller: board with onboard power regulation, a 4-port USB hub for cameras and motion control, and two TMC2209 stepper drivers</li>
+  <li>Stroboscope: High‑frequency LED stroboscope for motion analysis and AC/DC motor testing.</li>
+  <li>Controller for High-Speed Pick‑and‑Place: CNC control board handling six stepper motors, twelve MOSFET channels for pneumatics, and integrated power regulation</li>
+  <li>8‑Channel HUB75 + WS2812 LED Matrix Driver: LED controller integrating HUB75 logic (row/column multiplexing) and 8-channel 500 count addressable strips</li>
+  <li>Wireless WS2812 LED Strip Controller: ESP32 and Teensy 4.0‑based 8-Channel LED Strip controller - able to drive up to 4,000 LEDs</li>
+  <li>ESP8266 + BME280 Environment Monitor: ESP8266 + BME280 environmental monitor: wireless temperature and humidity logger with web dashboard</li>
+  <li>SMT PCB Panelization Workflow: Panelized PCBs for small‑batch pick‑and‑place and reflow assembly</li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- High-Speed CoreXY 3D Printer -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Customized Voron CoreXY 3D Printer
+  </summary>
+
+  <table><tr><td><a href="https://github.com/coelacant1/CoelaPNP">Github</a></td><td class="project-contributors">
+            Solo Project
+          </td><td class="project-dates">
+            2019 - 2021
+          </td></tr><tr><td colspan="3"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="video" data-caption="Independent tower-leveling and bed calibration">
+          
+            <iframe id="yt-player-CustomVoron-0" src="https://www.youtube.com/embed/Vec_Udgmh2Y?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="First dry-run print">
+          
+            <iframe id="yt-player-CustomVoron-1" src="https://www.youtube.com/embed/G0I2Uv52RyM?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="image" data-caption="Mostly assembled gantry system">
+          
+            <img src="/assets/images/Voron1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Custom end-effector mount printed on the Markforge Mk2 with continuous carbon fiber reinforcement for stiffness">
+          
+            <img src="/assets/images/Voron2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Assembled end effector using a BondTech LGX and Mosquito Magnum extruder">
+          
+            <img src="/assets/images/Voron5.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Mounted end-effector">
+          
+            <img src="/assets/images/Voron7.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Wiring for the machine">
+          
+            <img src="/assets/images/Voron8.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="video">
+      <img src="https://img.youtube.com/vi/Vec_Udgmh2Y/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="video">
+      <img src="https://img.youtube.com/vi/G0I2Uv52RyM/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="image">
+      <img src="/assets/images/thumbs/Voron1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/Voron2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="image">
+      <img src="/assets/images/thumbs/Voron5.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="5" data-type="image">
+      <img src="/assets/images/thumbs/Voron7.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="6" data-type="image">
+      <img src="/assets/images/thumbs/Voron8.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>A custom 3D printer derived from the Voron project, designed to explore the limits of FDM additive manufacturing.</p>
+
+<ul>
+  <li>Extrusion and Motion Hardware
+    <ul>
+      <li>BondTech LGX extruder with Mosquito Magnum hotend for ultra‑high flow</li>
+      <li>48V powered stepper drivers with accelerations up to 2g (20m/s^2) and travel speeds near 600 mm/s.=</li>
+    </ul>
+  </li>
+  <li>Reinforced Structure
+    <ul>
+      <li>Continuous carbon‑fiber-reinforced parts printed on the Markforged Mk2, plus a custom carbon‑fiber X‑gantry</li>
+    </ul>
+  </li>
+  <li>Firmware and Calibration
+    <ul>
+      <li>Klipper firmware with computation offloaded to a Raspberry Pi</li>
+      <li>Custom-tuned to maximize performance within the system’s limits</li>
+    </ul>
+  </li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- Wearable 3D Designs -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Wearable 3D Printed Designs with Integrated Electronics
+  </summary>
+
+  <table><tr><td><a href="https://github.com/coelacant1/Protogen-3D-Prints">Github</a></td><td class="project-contributors">
+            Solo Project
+          </td><td class="project-dates">
+            2020 - Current
+          </td></tr><tr><td colspan="3"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="video" data-caption="Full-color RGB test of the display system - Gamma design">
+          
+            <iframe id="yt-player-Wearable3D-0" src="https://www.youtube.com/embed/dfjvdJtsRFg?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Internal stereoscopic vision system on the Gamma Design">
+          
+            <iframe id="yt-player-Wearable3D-1" src="https://www.youtube.com/embed/CoMETUpcQyA?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Display testing the vision system">
+          
+            <iframe id="yt-player-Wearable3D-2" src="https://www.youtube.com/embed/cp83inwCs3M?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Test of an assembled Delta design">
+          
+            <iframe id="yt-player-Wearable3D-3" src="https://www.youtube.com/embed/ii_2rAg5L5c?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Test of an assembled Beta design">
+          
+            <iframe id="yt-player-Wearable3D-4" src="https://www.youtube.com/embed/8PgzrYZm6BE?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Face display and close ups of the Gamma">
+          
+            <iframe id="yt-player-Wearable3D-5" src="https://www.youtube.com/embed/u2CADiNy3Wo?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Power testing with 25% max brightness - full white will draw over 100A at 5V">
+          
+            <iframe id="yt-player-Wearable3D-6" src="https://www.youtube.com/embed/h3FrI2zM1bI?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="First testing of the Alpha design with the RGB panels">
+          
+            <iframe id="yt-player-Wearable3D-7" src="https://www.youtube.com/embed/bU4lSFczVpw?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Testing of the Alpha design">
+          
+            <iframe id="yt-player-Wearable3D-8" src="https://www.youtube.com/embed/xQfBLp0Ws1g?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="image" data-caption="Side view of the Epsilon design">
+          
+            <img src="/assets/images/epsilon3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Side view of the assembled Epsilon">
+          
+            <img src="/assets/images/epsilon2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Epsilon split apart for manufacturing">
+          
+            <img src="/assets/images/epsilon4.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Internal view of the Alpha design">
+          
+            <img src="/assets/images/alpha.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Close up internal view of the Alpha">
+          
+            <img src="/assets/images/alpha3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Alpha design without RGB panels">
+          
+            <img src="/assets/images/alpha2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Rear view of the Alpha design without the RGB panels">
+          
+            <img src="/assets/images/alpha4.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Beta design">
+          
+            <img src="/assets/images/beta.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Beta design with rear door open">
+          
+            <img src="/assets/images/beta3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Delta design">
+          
+            <img src="/assets/images/delta1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Delta design rear view with the door open">
+          
+            <img src="/assets/images/delta3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Transparent rendering of the Delta to show the screw mounting for assembly">
+          
+            <img src="/assets/images/delta2.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="video">
+      <img src="https://img.youtube.com/vi/dfjvdJtsRFg/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="video">
+      <img src="https://img.youtube.com/vi/CoMETUpcQyA/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="video">
+      <img src="https://img.youtube.com/vi/cp83inwCs3M/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="video">
+      <img src="https://img.youtube.com/vi/ii_2rAg5L5c/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="video">
+      <img src="https://img.youtube.com/vi/8PgzrYZm6BE/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="5" data-type="video">
+      <img src="https://img.youtube.com/vi/u2CADiNy3Wo/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="6" data-type="video">
+      <img src="https://img.youtube.com/vi/h3FrI2zM1bI/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="7" data-type="video">
+      <img src="https://img.youtube.com/vi/bU4lSFczVpw/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="8" data-type="video">
+      <img src="https://img.youtube.com/vi/xQfBLp0Ws1g/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="9" data-type="image">
+      <img src="/assets/images/thumbs/epsilon3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="10" data-type="image">
+      <img src="/assets/images/thumbs/epsilon2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="11" data-type="image">
+      <img src="/assets/images/thumbs/epsilon4.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="12" data-type="image">
+      <img src="/assets/images/thumbs/alpha.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="13" data-type="image">
+      <img src="/assets/images/thumbs/alpha3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="14" data-type="image">
+      <img src="/assets/images/thumbs/alpha2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="15" data-type="image">
+      <img src="/assets/images/thumbs/alpha4.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="16" data-type="image">
+      <img src="/assets/images/thumbs/beta.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="17" data-type="image">
+      <img src="/assets/images/thumbs/beta3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="18" data-type="image">
+      <img src="/assets/images/thumbs/delta1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="19" data-type="image">
+      <img src="/assets/images/thumbs/delta3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="20" data-type="image">
+      <img src="/assets/images/thumbs/delta2.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>I design and build 3D-printable cosplay hardware-currently have six designs in total. For the Beta, Delta, Epsilon, and Sigma, each model is available on GitHub as STL files optimized for common 3D printers. Every project includes an electronics wiring guide, custom ProtoTracer firmware binaries, and source code.</p>
+
+<p>My Alpha and Gamma prototypes use real-time stereoscopic passthrough vision with a custom lens stack and display module. I’ve modified the vision-systems software (running on a Raspberry Pi CM4) to reduce latency to about 15 ms and support the stereoscopic live synchronized display. This leaves as much area as possible for the LED displays. Each uses two synchronized microcontrollers to render live 3D graphics on the full-face displays. Integrated front-facing distance sensors and a 9-axis IMU modify the animation pipeline, so animations react instantly to motion and proximity.</p>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- Dual Tilt Quadcopter -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Dual-Tilt Rotor Quadcopter
+  </summary>
+
+  <table><tr><td><a href="https://github.com/coelacant1/Dual-Tilt-Rotor-Quadcopter">GitHub</a></td><td class="project-contributors">
+            Software Solo | Hardware by Co-Workers
+          </td><td class="project-dates">
+            2018 - 2019
+          </td></tr><tr><td colspan="3"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="video" data-caption="Example of the control system simulation built in C++ with a C# front-end, this test found a few extremes which prevented consistent motion">
+          
+            <iframe id="yt-player-DTQuadcopter-0" src="https://www.youtube.com/embed/q7M9ar37VO4?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Older example of the simulation which had several additional failures that caused unpredictable paths">
+          
+            <iframe id="yt-player-DTQuadcopter-1" src="https://www.youtube.com/embed/Q-hpOqeRDjg?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="video">
+      <img src="https://img.youtube.com/vi/q7M9ar37VO4/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="video">
+      <img src="https://img.youtube.com/vi/Q-hpOqeRDjg/hqdefault.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>This project is a fully integrated control system for a quadcopter with independently tilting rotors. Each motor can pivot on two axes, letting the quadcopter perform advanced maneuvers and fly at any angle. This was designed as a system to allow the quadcopter act as a gimbal to allow for a larger statically mounted camera while having a full 360 degree view.</p>
+
+<p>Software Stack:</p>
+<ul>
+  <li>Control algorithms in C++ for real-time dynamics</li>
+  <li>C#-based physics simulation with a C++/CLI bridge and control-structure library for tilt-rotor modeling
+Hardware Integration:</li>
+  <li>Runs on a Raspberry Pi for onboard flight control</li>
+  <li>Uses a PCA9685 16-channel PWM driver to manage motor speed and tilt servos</li>
+  <li>TCA9548A I2C multiplexer with multiple IMUs (MPU6050/MPU9150) for attitude sensing
+Highlights:</li>
+  <li>Custom pipelines for planning aerial maneuvers and stabilizing flight</li>
+  <li>Sensor fusion and control loops for autonomous operation</li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- Other Projects-->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Other Product Prototyping, Engineering, and Software
+  </summary>
+
+  <table><tr><td colspan="1"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="Render of the stroboscope enclosure">
+          
+            <img src="/assets/images/CAD26.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="View of the internals of the stroboscope enclosure">
+          
+            <img src="/assets/images/CAD23.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Electronics of the stroboscope">
+          
+            <img src="/assets/images/Electronics3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Electronics and test fit in the stroboscope enclsoure">
+          
+            <img src="/assets/images/Electronics7.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Copper DMLS metal prints with integrated cooling channels">
+          
+            <img src="/assets/images/AdvancedAdditive1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="CAD for the Drives Hardware">
+          
+            <img src="/assets/images/CAD20.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="LoRa based remote firework controller">
+          
+            <img src="/assets/images/Electronics9.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Controllers for LED driving">
+          
+            <img src="/assets/images/Electronics29.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Environmental temperature monitors">
+          
+            <img src="/assets/images/Electronics32.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="End Effector Controller for the high speed pick and place">
+          
+            <img src="/assets/images/Electronics27.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Multi-material wheel printed on a polyjet for a robot platform">
+          
+            <img src="/assets/images/PolyJet1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="CAD for custom polishing device">
+          
+            <img src="/assets/images/CAD3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Gallium Nitride based 5V 20A Step-Down Converter">
+          
+            <img src="/assets/images/Electronics6.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="LED Controllers after pick-and-placing and reflow">
+          
+            <img src="/assets/images/Electronics24.jpg" alt="" />
+          
+        </div><div class="slide" data-type="pdf" data-caption="Guide for the open-source electronics for the 8-Channel LED Controller">
+          
+            <div class="pdf-container" style="width:100%; height:100%; overflow:hidden;">
+              <iframe data-src="/assets/pdfs/KS35_ElectronicKitGuide_V1-0.pdf" style="border:none;" loading="lazy">
+              </iframe>
+            </div>
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/CAD26.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/CAD23.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="image">
+      <img src="/assets/images/thumbs/Electronics3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/Electronics7.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="image">
+      <img src="/assets/images/thumbs/AdvancedAdditive1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="5" data-type="image">
+      <img src="/assets/images/thumbs/CAD20.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="6" data-type="image">
+      <img src="/assets/images/thumbs/Electronics9.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="7" data-type="image">
+      <img src="/assets/images/thumbs/Electronics29.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="8" data-type="image">
+      <img src="/assets/images/thumbs/Electronics32.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="9" data-type="image">
+      <img src="/assets/images/thumbs/Electronics27.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="10" data-type="image">
+      <img src="/assets/images/thumbs/PolyJet1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="11" data-type="image">
+      <img src="/assets/images/thumbs/CAD3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="12" data-type="image">
+      <img src="/assets/images/thumbs/Electronics6.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="13" data-type="image">
+      <img src="/assets/images/thumbs/Electronics24.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="14" data-type="pdf">
+      <img src="/assets/icons/pdf-icon.png" alt="" />
+    </div>
+  
+  </div>
+</div>
+<ul>
+  <li>Electrospinner: Designed and built an automated electrospinning device for researching polymer nanofibers (With Co-Worker)</li>
+  <li>Custom Print Farm: Designed and built custom compact and portable CoreXY stackable 3D printer farm (With Co-Workers)</li>
+  <li>Tripteron 3D Printer: Developed a Cartesian-parallel 3D printer prototype</li>
+  <li>Reflow Heater Controller: Created hardware and firmware for a reflow heater, featuring PID temperature control and programmable profiles</li>
+  <li>Printer Conversion for PEEK/Ultem: Modified a Stratasys FDM printer’s hot end, control electronics, and build chamber to print high-temperature materials (PEEK/Ultem/Polycarbonate)</li>
+  <li>Ozone Water Treatment System: Created a residential ozone generator for point-of-entry water sanitation, including ozone injection and feedback control with dissolved-ozone sensors</li>
+  <li>Environment Monitoring System: Built a networked sensor station (BME280 + ESP8266) for temperature, humidity, and pressure monitoring, with data upload to a cloud dashboard and low-power deep-sleep operation</li>
+  <li>Face Shield Production (COVID, 6,000+ units): Organized and scaled PETG face-shield fabrication using laser-cut visors, injection-molded frames, and die-cut elastic (with co-worker)</li>
+  <li>Battlebot: Designed and constructed a 3 lb combat robot featuring high-torque motors, LiPo power management, an all-wheel drivetrain optimized for speed and acceleration, and custom armor (with co-worker)</li>
+  <li>High-Speed USB Current Device: Created a portable measurement device capable of sampling voltage and current at kilohertz rates-ideal for reverse-engineering ongoing tasks on electronics</li>
+  <li>Medical Mattress Squeeze Table: Built a pneumatic squeeze-table assembly used in medical mattress manufacturing (with Co-Worker)</li>
+  <li>Medical Mattress/Pad Heater: Built custom heating apparatus for sealing seams on medical mattress pads (with Co-Worker)</li>
+  <li>Window Clip Manufacturing: Recreated obsolete window-clip parts via bulk additive manufacturing to replace thousands of failed components (with co-worker)</li>
+  <li>Multi-Color FDM Production: Designed prototype parts for a consumer product and managed printing and post-processing of 500 multi-color FDM components</li>
+  <li>Custom Drives Hardware: Designed and built drives electronics for three-phase AC motors, inductive motors, and DC motors in a single enclosure</li>
+  <li>Topographic Map: Designed and created 12’x5’ topographic map for education and research center (with Co-Worker)</li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
+<h2 id="advanced-manufacturing"><strong>Advanced Manufacturing</strong></h2>
+<!-- Advanced Manufacturing Technologies -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Advanced Additive Manufacturing Technologies
+  </summary>
+
+  <table><tr><td class="project-contributors">
+            Collaboration with Co-Worker
+          </td><td class="project-dates">
+            2022 - Current
+          </td></tr><tr><td colspan="2"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="video" data-caption="Direct-Metal Laser Sintering on an XACT XM200G">
+          
+            <iframe id="yt-player-AdditiveManufacturing-0" src="https://www.youtube.com/embed/uqiq7QweEDk?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Selective Laser Sintering on a Sinterit Lisa X, printing parts in Nylon">
+          
+            <iframe id="yt-player-AdditiveManufacturing-1" src="https://www.youtube.com/embed/fdjnXAUBCGc?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Selective Laser Sintering on a Sinterit Lisa, printing parts in Nylon">
+          
+            <iframe id="yt-player-AdditiveManufacturing-2" src="https://www.youtube.com/embed/dFCbU9youog?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Stratasys Objet 260 PolyJet printing a flexible mold with disolvable support">
+          
+            <iframe id="yt-player-AdditiveManufacturing-3" src="https://www.youtube.com/embed/BPy7IkN17Vo?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="ProJet 660 Pro BinderJet 3D printer printing multi-color designs">
+          
+            <iframe id="yt-player-AdditiveManufacturing-4" src="https://www.youtube.com/embed/pM5lK7U_KQc?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Post-Processing the BinderJet prints">
+          
+            <iframe id="yt-player-AdditiveManufacturing-5" src="https://www.youtube.com/embed/uj5rvHp6Iho?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="image" data-caption="A 3D printed Scooby-Doo prior to cleaning">
+          
+            <img src="/assets/images/Manufacturing2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Scooby-Doo after cleaning the print">
+          
+            <img src="/assets/images/Manufacturing4.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Bust for a client printed in 316 stainless steel">
+          
+            <img src="/assets/images/Manufacturing10.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Close up of the bust printed for a client">
+          
+            <img src="/assets/images/Manufacturing11.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Copper cooling channels printed on the XACT XM200G">
+          
+            <img src="/assets/images/AdvancedAdditive1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="CoreXY 3D printer end-effector frame with support structure in Markforged Eiger">
+          
+            <img src="/assets/images/AdvancedAdditive3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Internal structure of the continuous carbon-fiber reinforcement on the Markforged print">
+          
+            <img src="/assets/images/AdvancedAdditive9.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Test prints off of the Stratasys PolyJet">
+          
+            <img src="/assets/images/AdvancedAdditive6.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Flexible structure printed on the PolyJet">
+          
+            <img src="/assets/images/PolyJet2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Mixed-durometer materials with rubber and ABS-like resin on the PolyJet for product testing">
+          
+            <img src="/assets/images/PolyJet1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Full-color test on the ProJet 660 Pro BinderJet">
+          
+            <img src="/assets/images/BinderJet1.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="video">
+      <img src="https://img.youtube.com/vi/uqiq7QweEDk/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="video">
+      <img src="https://img.youtube.com/vi/fdjnXAUBCGc/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="video">
+      <img src="https://img.youtube.com/vi/dFCbU9youog/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="video">
+      <img src="https://img.youtube.com/vi/BPy7IkN17Vo/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="video">
+      <img src="https://img.youtube.com/vi/pM5lK7U_KQc/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="5" data-type="video">
+      <img src="https://img.youtube.com/vi/uj5rvHp6Iho/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="6" data-type="image">
+      <img src="/assets/images/thumbs/Manufacturing2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="7" data-type="image">
+      <img src="/assets/images/thumbs/Manufacturing4.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="8" data-type="image">
+      <img src="/assets/images/thumbs/Manufacturing10.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="9" data-type="image">
+      <img src="/assets/images/thumbs/Manufacturing11.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="10" data-type="image">
+      <img src="/assets/images/thumbs/AdvancedAdditive1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="11" data-type="image">
+      <img src="/assets/images/thumbs/AdvancedAdditive3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="12" data-type="image">
+      <img src="/assets/images/thumbs/AdvancedAdditive9.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="13" data-type="image">
+      <img src="/assets/images/thumbs/AdvancedAdditive6.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="14" data-type="image">
+      <img src="/assets/images/thumbs/PolyJet2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="15" data-type="image">
+      <img src="/assets/images/thumbs/PolyJet1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="16" data-type="image">
+      <img src="/assets/images/thumbs/BinderJet1.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>Operator and technician for additive manufacturing platforms. I share responsibility for hands‑on testing, day‑to‑day operation, and performing preventative maintenance and repairs.</p>
+
+<p>Key systems I help manage include:</p>
+<ul>
+  <li>Xact XM200G (DMLS) - Metal powder handling, build chamber calibration, and print configuration/support creation</li>
+  <li>Stratasys Objet 260 (PolyJet) - Multi‑material jetting setup, print head maintenance, and resin reservoir management</li>
+  <li>Sinterit Lisa and Lisa X (Nylon SLS) - Powder bed preparation, laser power calibration, part depowdering workflows, and periodic chamber cleaning</li>
+  <li>ProJet 660 Pro (Binder Jetting) - Binder delivery system checks, powder/agent replenishment, print tray realignment, and part post processing</li>
+  <li>Markforged Mark 2 (Composite) - Print parameter tuning, fiber reinforcement strategies, and routine nozzle and drive‑system upkeep</li>
+  <li>23X BambuLab P1S FDM</li>
+  <li>4X BambuLab A1 FDM</li>
+  <li>1X BambuLab X1C FDM</li>
+  <li>2X BambuLab H2D FDM</li>
+  <li>2X Prusa XL Multi-Toolhead FDM</li>
+  <li>2X Prusa i3 MK4 FDM</li>
+  <li>16X Prusa i3 MK3s FDM</li>
+  <li>10X Prusa Mini FDM</li>
+  <li>Formlabs Form 4 Resin</li>
+  <li>Other miscellaneous printers (~75 total)</li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- Pick and Place Line -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Installation and Operation of Automated Pick-and-Place Assembly Line
+  </summary>
+
+  <table><tr><td class="project-contributors">
+            Solo Project | Assistance with Moving Equipment
+          </td><td class="project-dates">
+            2019 - 2021
+          </td></tr><tr><td colspan="2"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="Final implementation of a Kayo SMT assembly line">
+          
+            <img src="/assets/images/AssemblyLine6.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Process of assembly for the Kayo Pick n Place">
+          
+            <img src="/assets/images/AssemblyLine1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Assembled frame for the Pick n Place">
+          
+            <img src="/assets/images/AssemblyLine3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Pick n Place assembled">
+          
+            <img src="/assets/images/AssemblyLine4.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Internal view of the pick n place">
+          
+            <img src="/assets/images/AssemblyLine7.jpg" alt="" />
+          
+        </div><div class="slide" data-type="video" data-caption="Testing the first head of the pick n place">
+          
+            <iframe id="yt-player-PicknPlaceLine-5" src="https://www.youtube.com/embed/dFcBl_joEPg?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Second Test of the pick n place head">
+          
+            <iframe id="yt-player-PicknPlaceLine-6" src="https://www.youtube.com/embed/o89Dq8lxETg?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/AssemblyLine6.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/AssemblyLine1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="image">
+      <img src="/assets/images/thumbs/AssemblyLine3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/AssemblyLine4.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="image">
+      <img src="/assets/images/thumbs/AssemblyLine7.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="5" data-type="video">
+      <img src="https://img.youtube.com/vi/dFcBl_joEPg/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="6" data-type="video">
+      <img src="https://img.youtube.com/vi/o89Dq8lxETg/hqdefault.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>I led the installation, configuration, and operation of an automated pick-and-place assembly line, overseeing the import of the equipment and integrating it within our facility. This project also required infrastructure planning, and teardown/rebuild of machinery to match our requirements.</p>
+
+<p>The final setup included:</p>
+<ul>
+  <li>Semi-Automatic Solder Paste Screen Printer (KAYO-5088)</li>
+  <li>Manual Screen Printer (KAYO-P1000)</li>
+  <li>Solder Paste Mixer (KAYO-500S)</li>
+  <li>Automatic PCB Unloader (KAYO-50S)</li>
+  <li>2X Inspection Conveyors (KAYO-ICO6)</li>
+  <li>Automatic Pick-and-Place Machine (KAYO-A4L)</li>
+  <li>Convection Reflow Oven (KAYO-RF430)</li>
+  <li>Automatic PCB Loader (KAYO-50P)</li>
+  <li>Post Inspection Station (Digital Microscope/Testing Hardware)</li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- Large Scale 3d Printing -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Design and Creation of Large-Scale Custom Printers (Delta and Cartesian)
+  </summary>
+
+  <table><tr><td class="project-contributors">
+            Design/Software | Project with Two Co-Workers
+          </td><td class="project-dates">
+            2015 - Current
+          </td></tr><tr><td colspan="2"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="10ft tall delta style 3D printer laying on it&#39;s side - had to be moved to a separate room to go vertical">
+          
+            <img src="/assets/images/10ftDelta.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="First test print of the large-format delta 3D printer">
+          
+            <img src="/assets/images/10ftDeltaTest.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/10ftDelta.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/10ftDeltaTest.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>Collaborated with two engineers to build a large-format Delta 3D printer prototype (10ft tall x 6ft wide) in 45 days. Although intended as a proof of concept, it produced usable parts up to 6ft tall.</p>
+
+<p>My contributions:</p>
+<ul>
+  <li>Kinematic Calibration: Leveraged OpenDACT to compute all machine kinematic parameters (arm lengths, endstop offsets, carriage geometry) for a 4 ft‑diameter bed</li>
+  <li>Prototype Mechanical Design: Co‑designed structural linkages, custom brackets, and frame supports; specified and validated actuators and carriage assemblies</li>
+  <li>Motion and Slicer Tuning: Developed and refined slicing profiles and motion parameters (speeds, accelerations, jerk limits)</li>
+  <li>Delivery: Helped all stages-from concept through calibration and test prints-within a 45‑day schedule, and ended with a production‑capable prototype</li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- Print Farm Implementation and Management -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Print Farm Implementation and Management
+  </summary>
+
+  <table><tr><td class="project-contributors">
+            Implemented with Co-Worker
+          </td><td class="project-dates">
+            2023 - Current
+          </td></tr><tr><td colspan="2"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="Bambu P1S Print Farm set up with back up UPS&#39;">
+          
+            <img src="/assets/images/PrintFarm1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Partially finished unboxing and validating printers">
+          
+            <img src="/assets/images/PrintFarm2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Print farm still in the boxes">
+          
+            <img src="/assets/images/PrintFarm5.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/PrintFarm1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/PrintFarm2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="image">
+      <img src="/assets/images/thumbs/PrintFarm5.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>Worked with a co-worker to implement and operator of a 30x BambuLab (P1S, X1 Series X1C and H2D, A1/A1 Mini) and 30x Prusa (MK4S, XL, MK3S, Mini) 3D printer farm, I helped optimize most aspects of our additive manufacturing workflow:</p>
+<ul>
+  <li>Deployment and Configuration: Deployed and networked 30 BambuLab machines, standardizing slicer settings, and filament profiles to ensure consistent performance across P1S, X1C, H2D, A1, and A1 Minis. As well as an additional 30 Prusa machines, some offline and some managed by PrusaConnect</li>
+  <li>Process Optimization: Tuned print profiles (temperatures, speeds, etc) for various materials-PLA, PETG, ASA, and composites</li>
+  <li>Preventive Maintenance: Managed maintenance routines (lubrication, nozzle swaps)</li>
+  <li>Quality Control and Troubleshooting: Diagnosed and resolved failures, and optimized processes for batch print jobs</li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- Custom Tooling -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Injection Molding, Vacuum Forming, and Specialized Tooling Design
+  </summary>
+
+  <table><tr><td class="project-contributors">
+            Face Shields with Co-Worker | Rest are Solo Projects
+          </td><td class="project-dates">
+            2011 - Current
+          </td></tr><tr><td colspan="2"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="Final STEP design sent to a local manufacturer to EDM the mold and begin production on ~6000 face shields">
+          
+            <img src="/assets/images/FaceShields0.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Test 3D print of the face shield head band">
+          
+            <img src="/assets/images/FaceShields3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Test 3D print of the face shield head band">
+          
+            <img src="/assets/images/FaceShields2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Test fit with the laser cut PETG face covering">
+          
+            <img src="/assets/images/FaceShields1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Partial pickup of the injection molded head bands">
+          
+            <img src="/assets/images/FaceShields6.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Custom die-cut rubber head straps">
+          
+            <img src="/assets/images/FaceShields11.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Assembly of the face shields">
+          
+            <img src="/assets/images/FaceShields8.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Packaging the face shields">
+          
+            <img src="/assets/images/FaceShields5.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="3D print optimized for parallel 3D printing ">
+          
+            <img src="/assets/images/epsilon4.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="3D print optimized for printing and assembly">
+          
+            <img src="/assets/images/Beta7.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Another 3D print optimized for printing and assembly">
+          
+            <img src="/assets/images/Beta9.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Batch of parts printed off several machines">
+          
+            <img src="/assets/images/Beta6.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Part optimized for 3D printing">
+          
+            <img src="/assets/images/CAD7.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Transparent diagram showing how the Delta is assembled">
+          
+            <img src="/assets/images/delta2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Vacuum forming buck just finished on the 3D printer">
+          
+            <img src="/assets/images/Visors3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Unsanded buck and sanded buck for two separate designs">
+          
+            <img src="/assets/images/Visors2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="First test-form, had to adjust the angle and temperature on the former (reduce the webbing)">
+          
+            <img src="/assets/images/Visors4.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Cutting guide for the visor, cut around the outside for the final shape">
+          
+            <img src="/assets/images/Visors1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Jig for holding PCBs for stenciling solder-paste">
+          
+            <img src="/assets/images/Tools1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Alternate view of the jig">
+          
+            <img src="/assets/images/Tools2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Custom printed jigs for holding glasses in a laser-cutter">
+          
+            <img src="/assets/images/Tools3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Close-up of the glass jig">
+          
+            <img src="/assets/images/Tools4.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Custom tool for cutting vacuum formed visors">
+          
+            <img src="/assets/images/4Axis3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Cutting guide for a vaccuum formed visor and frame for the custom vacuum forming table">
+          
+            <img src="/assets/images/vacuumformer4.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Visor after the dyeing process and installing magnets">
+          
+            <img src="/assets/images/VacuumFormer5.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Visor before the dyeing process">
+          
+            <img src="/assets/images/vacuumformer3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Dyed vacuum formed visor ">
+          
+            <img src="/assets/images/vacuumformer2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Static cutting guide for a formed visor">
+          
+            <img src="/assets/images/CAD19.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Custom polisher for polishing 3D printed resin parts">
+          
+            <img src="/assets/images/CAD3.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/FaceShields0.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/FaceShields3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="image">
+      <img src="/assets/images/thumbs/FaceShields2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/FaceShields1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="image">
+      <img src="/assets/images/thumbs/FaceShields6.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="5" data-type="image">
+      <img src="/assets/images/thumbs/FaceShields11.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="6" data-type="image">
+      <img src="/assets/images/thumbs/FaceShields8.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="7" data-type="image">
+      <img src="/assets/images/thumbs/FaceShields5.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="8" data-type="image">
+      <img src="/assets/images/thumbs/epsilon4.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="9" data-type="image">
+      <img src="/assets/images/thumbs/Beta7.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="10" data-type="image">
+      <img src="/assets/images/thumbs/Beta9.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="11" data-type="image">
+      <img src="/assets/images/thumbs/Beta6.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="12" data-type="image">
+      <img src="/assets/images/thumbs/CAD7.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="13" data-type="image">
+      <img src="/assets/images/thumbs/delta2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="14" data-type="image">
+      <img src="/assets/images/thumbs/Visors3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="15" data-type="image">
+      <img src="/assets/images/thumbs/Visors2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="16" data-type="image">
+      <img src="/assets/images/thumbs/Visors4.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="17" data-type="image">
+      <img src="/assets/images/thumbs/Visors1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="18" data-type="image">
+      <img src="/assets/images/thumbs/Tools1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="19" data-type="image">
+      <img src="/assets/images/thumbs/Tools2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="20" data-type="image">
+      <img src="/assets/images/thumbs/Tools3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="21" data-type="image">
+      <img src="/assets/images/thumbs/Tools4.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="22" data-type="image">
+      <img src="/assets/images/thumbs/4Axis3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="23" data-type="image">
+      <img src="/assets/images/thumbs/vacuumformer4.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="24" data-type="image">
+      <img src="/assets/images/thumbs/VacuumFormer5.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="25" data-type="image">
+      <img src="/assets/images/thumbs/vacuumformer3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="26" data-type="image">
+      <img src="/assets/images/thumbs/vacuumformer2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="27" data-type="image">
+      <img src="/assets/images/thumbs/CAD19.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="28" data-type="image">
+      <img src="/assets/images/thumbs/CAD3.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>I’ve developed end‑to‑end tooling solutions-from CAD to high‑volume production-for injection molding, vacuum forming, and jig creation for repeated tasks:</p>
+<ul>
+  <li>Injection‑Molded Face Shield Frames: Designed parts optimized for automated injection molding; tooling produced over 6,000 units</li>
+  <li>Custom Vacuum‑Forming Bucks: Engineered master forms (bucks) for thermoforming complex geometries</li>
+  <li>Visor‑Cutting Jigs: Created fixtures to hold and index vacuum-formed visors for manual and automated trimming</li>
+  <li>PCB Stenciling Fixtures: Developed alignment jigs that secure PCBs for solder‑paste application</li>
+  <li>Custom Production Centering Tools: Designed and fabricated fixtures for CO2 laser and fiber laser etching</li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- Other Manufacturing Expertise -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Other Manufacturing Technology Expertise
+  </summary>
+
+  <table><tr><td class="project-dates">
+            2020 - Current
+          </td></tr><tr><td colspan="1"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="video" data-caption="Cutting brass on a waterjet">
+          
+            <iframe id="yt-player-OtherManufacturing-0" src="https://www.youtube.com/embed/c9JMAAcL7XQ?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Laser etching brass">
+          
+            <iframe id="yt-player-OtherManufacturing-1" src="https://www.youtube.com/embed/5qvgw3AXIjw?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Cutting custom foam panels for a headset">
+          
+            <iframe id="yt-player-OtherManufacturing-2" src="https://www.youtube.com/embed/fTPXXytuasA?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Installed and configured two Tormach 1100MX machines with tool changers">
+          
+            <iframe id="yt-player-OtherManufacturing-3" src="https://www.youtube.com/embed/62ABiiJnl1c?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="video" data-caption="Plasma cutting 3/8 mild steel plates">
+          
+            <iframe id="yt-player-OtherManufacturing-4" src="https://www.youtube.com/embed/OV2HV-9dwZw?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+            </iframe>
+          
+        </div><div class="slide" data-type="image" data-caption="Test cut off of the Tormach 1100MX">
+          
+            <img src="/assets/images/Manufacturing5.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Second test cut off the Tormach 1100MX">
+          
+            <img src="/assets/images/Manufacturing9.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Laser cut EVA foam">
+          
+            <img src="/assets/images/CO2Laser.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Vacuum forming with a Formech former">
+          
+            <img src="/assets/images/vacuumformer3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Custom metal fabrication - plasma cut plates, manual metal working/bending, welding, and powder coating">
+          
+            <img src="/assets/images/Stand1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Stand prior to powder-coating">
+          
+            <img src="/assets/images/Stand5.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Post-baking in the powder-coating oven">
+          
+            <img src="/assets/images/Stand3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="WIP laser scanning example">
+          
+            <img src="/assets/images/Scan1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="WIP laser scanning example">
+          
+            <img src="/assets/images/Scan2.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="video">
+      <img src="https://img.youtube.com/vi/c9JMAAcL7XQ/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="video">
+      <img src="https://img.youtube.com/vi/5qvgw3AXIjw/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="video">
+      <img src="https://img.youtube.com/vi/fTPXXytuasA/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="video">
+      <img src="https://img.youtube.com/vi/62ABiiJnl1c/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="video">
+      <img src="https://img.youtube.com/vi/OV2HV-9dwZw/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="5" data-type="image">
+      <img src="/assets/images/thumbs/Manufacturing5.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="6" data-type="image">
+      <img src="/assets/images/thumbs/Manufacturing9.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="7" data-type="image">
+      <img src="/assets/images/thumbs/CO2Laser.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="8" data-type="image">
+      <img src="/assets/images/thumbs/vacuumformer3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="9" data-type="image">
+      <img src="/assets/images/thumbs/Stand1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="10" data-type="image">
+      <img src="/assets/images/thumbs/Stand5.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="11" data-type="image">
+      <img src="/assets/images/thumbs/Stand3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="12" data-type="image">
+      <img src="/assets/images/thumbs/Scan1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="13" data-type="image">
+      <img src="/assets/images/thumbs/Scan2.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>I operate, program, and maintain a variety of manufacturing tools:</p>
+<ul>
+  <li>2X 3/4‑Axis CNC Milling with a Tormach 1100MX and 1X Tormach 440MX</li>
+  <li>Engraving and cutting with BossLaser Fiber (1X) and CO₂ Lasers (2X) + Rotary</li>
+  <li>CNC plasma cutting with a Tormach 1300PL</li>
+  <li>Waterjet cutting with an Omax 1508</li>
+  <li>3D scanning with the Creaform Go!SCAN Spark and VXElements software suite</li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
+<h2 id="high-performance-computing-and-systems-infrastructure"><strong>High-Performance Computing and Systems Infrastructure</strong></h2>
+<!-- Hyper-Converged Infrastructure -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Hyper-Converged Infrastructure (HCI) Design and Implementation
+  </summary>
+
+  <table><tr><td class="project-contributors">
+            Solo Implementation, Management, and Operation
+          </td><td class="project-dates">
+            2019 - Current
+          </td></tr><tr><td colspan="2"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="Server and networking rack configuration, center is the primary 20-node cluster">
+          
+            <img src="/assets/images/ServersInf1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Current cluster and network layout">
+          
+            <img src="/assets/images/Servers18.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Cluster resources from ProxmoxVE UI">
+          
+            <img src="/assets/images/ServersInf5.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Ceph storage cluster status">
+          
+            <img src="/assets/images/ServersInf3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Ceph cluster storage configuration">
+          
+            <img src="/assets/images/ServersInf2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Secondary rack install">
+          
+            <img src="/assets/images/Servers17.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Secondary rack install">
+          
+            <img src="/assets/images/Servers13.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Layout of secondary rack">
+          
+            <img src="/assets/images/Servers12.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Secondary rack wiring">
+          
+            <img src="/assets/images/Servers11.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Intermediate setup of the secondary rack">
+          
+            <img src="/assets/images/Servers2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Configuration of the primary rack">
+          
+            <img src="/assets/images/Servers1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Initial state of network patch wiring">
+          
+            <img src="/assets/images/Servers3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="After first rewire of network patches">
+          
+            <img src="/assets/images/Servers4.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Automated load balancer for the cluster - background service">
+          
+            <img src="/assets/images/PVELoadBalancer3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Custom script library is used to manage and automate cluster tasks">
+          
+            <img src="/assets/images/ProxmoxScripts5.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Example output of the cluster automation">
+          
+            <img src="/assets/images/ProxmoxScripts1.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/ServersInf1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/Servers18.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="image">
+      <img src="/assets/images/thumbs/ServersInf5.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/ServersInf3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="image">
+      <img src="/assets/images/thumbs/ServersInf2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="5" data-type="image">
+      <img src="/assets/images/thumbs/Servers17.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="6" data-type="image">
+      <img src="/assets/images/thumbs/Servers13.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="7" data-type="image">
+      <img src="/assets/images/thumbs/Servers12.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="8" data-type="image">
+      <img src="/assets/images/thumbs/Servers11.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="9" data-type="image">
+      <img src="/assets/images/thumbs/Servers2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="10" data-type="image">
+      <img src="/assets/images/thumbs/Servers1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="11" data-type="image">
+      <img src="/assets/images/thumbs/Servers3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="12" data-type="image">
+      <img src="/assets/images/thumbs/Servers4.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="13" data-type="image">
+      <img src="/assets/images/thumbs/PVELoadBalancer3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="14" data-type="image">
+      <img src="/assets/images/thumbs/ProxmoxScripts5.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="15" data-type="image">
+      <img src="/assets/images/thumbs/ProxmoxScripts1.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>Designed and implemented 20-node hyper-converged ProxmoxVE cluster, concurrently hosting up to 3,000-4,000 virtual machines and containers:</p>
+
+<p>Here are some specifications for this infrastructure:</p>
+<ul>
+  <li>Scalable Compute Resources:
+    <ul>
+      <li>Per-Node: Up to 80 CPU cores and 784GiB RAM</li>
+      <li>Accelerators: Select nodes equipped with NVIDIA RTX 8000 GPUs for GPU-accelerated tasks</li>
+      <li>Aggregate Capacity: 1,464 CPU cores and 10.8TiB RAM</li>
+      <li>Customization: Users can request private compute infrastructures of up to 20-nodes, with Slurm-ready configurations</li>
+    </ul>
+  </li>
+  <li>High-Speed Networking:
+    <ul>
+      <li>Bandwidth: Two 25 GbE links per server (50 GbE aggregate) configured with 802.3ad LACP and MC-LAG for redundancy</li>
+      <li>Features:  RDMA, SDN, jumbo frames, and traffic prioritization</li>
+    </ul>
+  </li>
+  <li>Tiered Storage Solutions:
+    <ul>
+      <li>Ceph-backed dynamic scaling across three performance tiers:
+        <ul>
+          <li>SSD Base</li>
+          <li>SSD Low-Latency</li>
+          <li>HDD Base</li>
+        </ul>
+      </li>
+      <li>Total Capacity: ~211.52TiB with automated data distribution and resilience</li>
+    </ul>
+  </li>
+  <li>Customization and security:
+    <ul>
+      <li>Full control over the software stack and container or VM images</li>
+      <li>Software-defined networking with per-instance firewall rules</li>
+      <li>Support for external network hosting and user-deployed firewalls</li>
+    </ul>
+  </li>
+  <li>Reliability and availability:
+    <ul>
+      <li>Live scaling to adapt to workload demands without downtime</li>
+      <li>Redundant network paths and daily backup/snapshot schedules</li>
+      <li>Designed for security testing, scientific simulations, and parallel computing for data analysis and GPU-intensive applications</li>
+      <li>Preconfigured templates for nested multi-machine clusters with SLURM</li>
+    </ul>
+  </li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- Networking and Security -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Networking and Security
+  </summary>
+
+  <table><tr><td class="project-contributors">
+            Solo Management and Operation
+          </td><td class="project-dates">
+            2020 - Current
+          </td></tr><tr><td colspan="2"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="Current Ubiquiti-based network setup tree, uses OPNSense L3 router, 150-200 physical devices, several thousand virtual devices/servers">
+          
+            <img src="/assets/images/network.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Current rack configuration">
+          
+            <img src="/assets/images/ServersInf1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Ceph status for primary hyper-converged cluster">
+          
+            <img src="/assets/images/ServersInf3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Example setup of the Zero Trust access control management">
+          
+            <img src="/assets/images/ZeroTrust.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/network.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/ServersInf1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="image">
+      <img src="/assets/images/thumbs/ServersInf3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/ZeroTrust.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>I’ve managed a variety of network configurations and their supporting software:</p>
+
+<ul>
+  <li>Firewall Configuration and Management
+    <ul>
+      <li>OPNSense / PFSense / SonicWall
+        <ul>
+          <li>Deployed in active-active or active-standby high-availability pairs</li>
+          <li>Application-aware filtering, IDS/IPS integration</li>
+          <li>Role-based administration, audit logging to SIEM</li>
+          <li>Geo-IP blocking</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Linux Networking Configuration and Management
+    <ul>
+      <li>VLAN trunking configuration, LACP setup, and network performance optimizations</li>
+      <li>Linux-based firewall configuration and management</li>
+      <li>OSPF routing configuration for small-scale clusters</li>
+      <li>Optimization for Ceph networked storage</li>
+    </ul>
+  </li>
+  <li>VPN Configuration and Management
+    <ul>
+      <li>OpenVPN Hosting
+        <ul>
+          <li>Centralized server deployments for user and service tunnels</li>
+          <li>RADIUS/LDAP integration for authentication</li>
+          <li>Per-client policy enforcement and dynamic IP assignment</li>
+        </ul>
+      </li>
+      <li>Site-to-Site VPN Experience
+        <ul>
+          <li>OPNSense ↔ OPNSense, OPNSense ↔ Palo Alto, SonicWall ↔ Palo Alto</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Networking Hardware Ecosystem
+    <ul>
+      <li>MC-LAG with ECS Aggregation Switches
+        <ul>
+          <li>Active/active link aggregation across top-of-rack and spine layers for redundancy</li>
+          <li>VLAN segmentation and access control lists for tenant isolation</li>
+        </ul>
+      </li>
+      <li>Deployment of Wi-Fi 7 networks</li>
+      <li>IP Security Cameras and NVR Integration
+        <ul>
+          <li>PoE/PoE+ power delivery</li>
+          <li>Centralized NVR for video recording with time-sync and automated archival</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Software-Defined Networking for Cluster Overlays
+    <ul>
+      <li>Custom L2/L3 overlays
+        <ul>
+          <li>Proxmox SDN module enabling per-tenant virtual networks within the cluster</li>
+        </ul>
+      </li>
+      <li>Performance Monitoring with NetFlow
+        <ul>
+          <li>Real-time flow telemetry to identify congestion and optimize traffic paths</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Cloudflare Zero Trust
+    <ul>
+      <li>Email-Based Access Controls
+        <ul>
+          <li>Secure web application access using one-time email verification links</li>
+          <li>Granular policy enforcement per URL, with logging of all user sessions</li>
+        </ul>
+      </li>
+      <li>Remote Workstation and Internal App Protection
+        <ul>
+          <li>Proxy published internal services (RDP, SSH, web UIs) through Zero Trust tunnels</li>
+          <li>Device posture checks via WARP client</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- Active Directory Management -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Active Directory Management
+  </summary>
+
+  <table><tr><td class="project-contributors">
+            Solo Management and Operation
+          </td><td class="project-dates">
+            2019 - Current
+          </td></tr><tr><td colspan="2"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="Screen-cap of the current state of the active directory, ~2500 users, ~500 enabled in-use accounts, ~2000 accounts disabled (users that may return)">
+          
+            <img src="/assets/images/AD1.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/AD1.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>Active Directory Management (500+ users)</p>
+
+<ul>
+  <li>Self-Service Password Management
+    <ul>
+      <li>Automated portals enable users to reset and change their own passwords securely</li>
+      <li>MFA using TOTP for identity verification</li>
+    </ul>
+  </li>
+  <li>Recurring Self-Audits
+    <ul>
+      <li>Scheduled scans of user accounts and group memberships to detect inactive or orphaned objects</li>
+      <li>Automated reports on password-policy compliance and access entitlements</li>
+    </ul>
+  </li>
+  <li>Scalability and Concurrency
+    <ul>
+      <li>Supports around 500 concurrent users without performance degradation</li>
+      <li>High-availability domain controllers and load-balanced authentication</li>
+    </ul>
+  </li>
+  <li>AD-Backed Network Access
+    <ul>
+      <li>Wi-Fi Access: 802.1X authentication against AD for per-user connectivity</li>
+      <li>VPN Access: AD credential validation for remote-user tunnels</li>
+    </ul>
+  </li>
+  <li>Group-Based Policy Management
+    <ul>
+      <li>Role and department-based groups management and network VLAN assignments</li>
+      <li>Dynamic group memberships allow policies to follow users as they change roles</li>
+    </ul>
+  </li>
+  <li>Group Provisioning
+    <ul>
+      <li>Integration with HR/authoritative systems to import new users and remove old users</li>
+      <li>AD group creation and membership updates via scripted exports</li>
+    </ul>
+  </li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- Tools and Platforms -->
+<h2 id="tools-and-platforms"><strong>Tools and Platforms</strong></h2>
+<ul>
+  <li>Electronics and CAD: Altium Designer, KiCad, Autodesk Fusion 360, MATLAB</li>
+  <li>Server and Virtualization: Proxmox VE, Ceph, VMWare vSphere, Windows Server, Hyper-V, Ansible, PDQ Deploy</li>
+  <li>Programming Languages: C/C++, Python, JavaScript, C# (WPF, Unity), Bash, PowerShell, Make</li>
+  <li>Environments and Administration: Linux and Windows administration, embedded platforms (ARM, RISC), GitHub Automation</li>
+  <li>Miscellaneous: Blender, Adobe Suite (Photoshop, Illustrator, After Effects, Substance Painter), GIMP/Inkscape</li>
+</ul>
+
+<!-- This Website-->
+<h3 id="information-on-coeladev"><strong>Information on coela.dev</strong></h3>
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Coela.dev Website
+  </summary>
+
+  <table><tr><td><a href="https://github.com/coelacant1/coela.dev">Github</a></td><td class="project-dates">
+            2025 - Current
+          </td></tr><tr><td colspan="2"><p>The site’s backend uses Ruby and Jekyll to compile Markdown and Liquid templates into a static site on push. A GitHub CI workflow automatically rebuilds and deploys the site on changes to the main branch. On the front end, an HTML5 Canvas script animates sine-wave effects, and CSS with JavaScript handles glitch-text animations for headings.</p>
+</td>
+    </tr>
+  </table>
+</details>
+
+
+
+      <footer class="site-footer">
+        <span class="site-footer-credits">© 2025 - All Rights Reserved.</span>
+        <br>
+        <br>
+      </footer>
+    </main>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        let ytGlobalIndex = 0;
+        
+        document.querySelectorAll('.mini-gallery').forEach(gallery => {
+          const slides = gallery.querySelectorAll('.slide');
+          const thumbs = gallery.querySelectorAll('.thumb');
+          const prev   = gallery.querySelector('.nav.prev');
+          const next   = gallery.querySelector('.nav.next');
+          const captionEl    = gallery.querySelector('.slide-caption');
+          let current  = 0;
+
+          const loadMedia = node => {
+            const img = node.querySelector('img[data-src]');
+            if (img && !img.src) img.src = img.dataset.src;
+
+            const vid = node.querySelector('iframe[data-src][allowfullscreen]');
+            if (vid && !vid.src) vid.src = vid.dataset.src;
+
+            const pdf = node.querySelector('iframe[data-src][type="application/pdf"]');
+            if (pdf && !pdf.src) pdf.src = pdf.dataset.src;
+          };
+
+          function showSlide(idx) {
+            const oldSlide = slides[current];
+            if (oldSlide.dataset.type === 'video') {
+              const player = oldSlide.querySelector('iframe');
+              player.contentWindow.postMessage(
+                JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }),
+                '*'
+              );
+            }
+
+            slides[current].classList.remove('active');
+            thumbs[current].classList.remove('active');
+            current = (idx + slides.length) % slides.length;
+            slides[current].classList.add('active');
+            thumbs[current].classList.add('active');
+            
+            const text = slides[current].dataset.caption || '';
+            captionEl.textContent = text;
+
+            loadMedia(slides[current]);
+          }
+
+          prev.addEventListener('click', () => showSlide(current - 1));
+          next.addEventListener('click', () => showSlide(current + 1));
+          thumbs.forEach(thumb => {
+            thumb.addEventListener('click', () => {
+              showSlide(parseInt(thumb.dataset.index, 10));
+            });
+          });
+
+          showSlide(0)
+        });
+
+        document.querySelectorAll(".project-details").forEach(details => {
+          const summary = details.querySelector("summary");
+
+          summary.addEventListener("mouseenter", () => {
+            summary.classList.remove("finishing");
+            summary.classList.add("hovering");
+          });
+
+          summary.addEventListener("mouseleave", () => {
+            summary.classList.remove("hovering");
+            summary.classList.add("finishing");
+            setTimeout(() => {
+              summary.classList.remove("finishing");
+            }, 750);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
