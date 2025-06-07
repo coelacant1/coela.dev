@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="{{ site.lang | default: "en-US" }}">
+  <head>
+    <meta charset="UTF-8">
+{% seo %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#f85589">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="stylesheet" href="{{ '/assets/css/style.css?v=' | append: site.github.build_revision | relative_url }}">
+    <link rel="icon" type="image/x-icon" href="/assets/coelabw.ico">
+  </head>
+  <body>
+    <a id="skip-to-content" href="#content">Skip to the content.</a>
+
+    <header class="page-header wave-header" role="banner">
+      <canvas id="wave-canvas"></canvas>
+      <div class="page-header__inner">
+        <br>
+        <div class="project-name glitch" data-text="{{ site.title }}">
+          {{ site.title }}
+          <span class="glitch-green">{{ site.title }}</span>
+        </div>
+        <div class="project-tagline">{{ site.tagline }}</div>
+        <a href="./" class="btn">Portfolio</a>
+        <a href="/Contact" class="btn">Contact</a>
+      </div>
+    </header>
+
+    <script>
+      const header    = document.querySelector('.page-header');
+      const canvas    = document.getElementById('wave-canvas');
+      const ctx       = canvas.getContext('2d');
+      const lineCount = 6;
+      const baseColor = '#e891b4';
+
+      function hexToHSL(H) {
+        let r = 0, g = 0, b = 0;
+        if (H.length === 4) {
+          r = "0x" + H[1] + H[1];
+          g = "0x" + H[2] + H[2];
+          b = "0x" + H[3] + H[3];
+        } else if (H.length === 7) {
+          r = "0x" + H[1] + H[2];
+          g = "0x" + H[3] + H[4];
+          b = "0x" + H[5] + H[6];
+        }
+        r /= 255; g /= 255; b /= 255;
+        let cmin = Math.min(r,g,b),
+            cmax = Math.max(r,g,b),
+            delta = cmax - cmin,
+            h = 0, s = 0, l = 0;
+
+        if (delta === 0) h = 0;
+        else if (cmax === r) h = ((g - b) / delta) % 6;
+        else if (cmax === g) h = (b - r) / delta + 2;
+        else h = (r - g) / delta + 4;
+        h = Math.round(h * 60);
+        if (h < 0) h += 360;
+
+        l = (cmax + cmin) / 2;
+
+        s = delta === 0 ? 0 : delta / (1 - Math.abs(2*l -1));
+        s = +(s * 100).toFixed(1);
+        l = +(l * 100).toFixed(1);
+
+        return { h, s, l };
+      }
+
+      function hslToHex(h, s, l) {
+        s /= 100;
+        l /= 100;
+        let c = (1 - Math.abs(2*l - 1)) * s,
+            x = c * (1 - Math.abs((h / 60) % 2 - 1)),
+            m = l - c/2,
+            r = 0, g = 0, b = 0;
+
+        if (0 <= h && h < 60)      { r = c; g = x; b = 0; }
+        else if (60 <= h && h < 120) { r = x; g = c; b = 0; }
+        else if (120 <= h && h < 180) { r = 0; g = c; b = x; }
+        else if (180 <= h && h < 240) { r = 0; g = x; b = c; }
+        else if (240 <= h && h < 300) { r = x; g = 0; b = c; }
+        else { r = c; g = 0; b = x; }
+
+        r = Math.round((r + m) * 255);
+        g = Math.round((g + m) * 255);
+        b = Math.round((b + m) * 255);
+
+        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+      }
+
+      function hexToRGB(hex) {
+        let r = 0, g = 0, b = 0;
+        if (hex.length === 4) {
+          r = parseInt(hex[1] + hex[1], 16);
+          g = parseInt(hex[2] + hex[2], 16);
+          b = parseInt(hex[3] + hex[3], 16);
+        } else if (hex.length === 7) {
+          r = parseInt(hex[1] + hex[2], 16);
+          g = parseInt(hex[3] + hex[4], 16);
+          b = parseInt(hex[5] + hex[6], 16);
+        }
+        return [r, g, b];
+      }
+
+      let waves = [];
+      let lastTimestamp = 0;
+
+      function resizeCanvas() {
+        canvas.width  = header.clientWidth;
+        canvas.height = header.clientHeight;
+        initWaves();
+      }
+
+      window.addEventListener('DOMContentLoaded', resizeCanvas);
+      window.addEventListener('resize', resizeCanvas);
+
+      const alphaTop = 1.0;
+      const alphaBottom = 0.15;
+
+      function initWaves() {
+        const spacing = canvas.height / (lineCount + 1);
+        waves = [];
+
+        const baseHSL = hexToHSL(baseColor);
+
+        for (let i = 0; i < lineCount; i++) {
+          const satShift = (Math.random() * 30) - 15;
+          const lightShift = (Math.random() * 30) - 15;
+          const s = Math.min(100, Math.max(0, baseHSL.s + satShift));
+          const l = Math.min(100, Math.max(0, baseHSL.l + lightShift));
+          const baseHue = baseHSL.h + (Math.random() * 60 - 30) % 360;
+          const hueShiftSpeed = 0.072 + (Math.random() * 0.01 - 0.005);
+
+          const alpha = alphaTop + (alphaBottom - alphaTop) * (i / (lineCount - 1));
+
+          waves.push({
+            y:           spacing * (i + 1),
+            amplitude:   spacing * (0.4 + Math.random() * 0.3),
+            wavelength:  canvas.width / (2 + Math.random() * 6),
+            phase:       Math.random() * Math.PI * 2,
+            speed:       0.001 + Math.random() * 0.005,
+            thickness:   4 + (lineCount - i) * 2,
+            baseHue,
+            saturation:  s,
+            lightness:   l,
+            hueShiftSpeed,
+            alpha,
+            color:       ''
+          });
+        }
+      }
+
+      function drawFrame(timestamp = 0) {
+        if (!lastTimestamp) lastTimestamp = timestamp;
+        const elapsed = timestamp - lastTimestamp;
+        lastTimestamp = timestamp;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = '#121517';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.globalCompositeOperation = 'normal';
+
+        waves.forEach(w => {
+          const newHue = (w.baseHue + timestamp * w.hueShiftSpeed) % 360;
+          w.color = hslToHex(newHue, w.saturation, w.lightness);
+          w.rgb = hexToRGB(w.color);
+
+          drawSineWave(w);
+          w.phase += w.speed;
+        });
+
+        ctx.globalCompositeOperation = 'source-over';
+
+        requestAnimationFrame(drawFrame);
+      }
+
+      function drawSineWave({ y, amplitude, wavelength, phase, thickness, rgb, alpha }) {
+        ctx.beginPath();
+        const step = 10;
+        for (let x = 0; x <= canvas.width + step; x += step) {
+          const theta = (x / wavelength) + phase;
+          const yy    = y + Math.sin(theta) * amplitude;
+          x === 0 ? ctx.moveTo(x, yy) : ctx.lineTo(x, yy);
+        }
+
+        ctx.strokeStyle = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
+        ctx.lineWidth   = thickness;
+        ctx.lineCap     = 'round';
+        ctx.stroke();
+      }
+
+      requestAnimationFrame(drawFrame);
+    </script>
+
+    <main id="content" class="main-content" role="main">
+      {{ content }}
+
+      <footer class="site-footer">
+        <span class="site-footer-credits">© 2025 - All Rights Reserved.</span>
+        <br>
+        <br>
+      </footer>
+    </main>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        document.querySelectorAll('.mini-gallery').forEach(gallery => {
+          const slides = gallery.querySelectorAll('.slide');
+          const thumbs = gallery.querySelectorAll('.thumb');
+          const prev   = gallery.querySelector('.nav.prev');
+          const next   = gallery.querySelector('.nav.next');
+          const captionEl    = gallery.querySelector('.slide-caption');
+          let current  = 0;
+
+          const loadMedia = node => {
+            const img = node.querySelector('img[data-src]');
+            if (img && !img.src) img.src = img.dataset.src;
+
+            const vid = node.querySelector('iframe[data-src][allowfullscreen]');
+            if (vid && !vid.src) vid.src = vid.dataset.src;
+
+            const pdf = node.querySelector('iframe[data-src][type="application/pdf"]');
+            if (pdf && !pdf.src) pdf.src = pdf.dataset.src;
+          };
+
+          function showSlide(idx) {
+            const oldSlide = slides[current];
+            if (oldSlide.dataset.type === 'video') {
+              const player = oldSlide.querySelector('iframe');
+              player.contentWindow.postMessage(
+                JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }),
+                '*'
+              );
+            }
+
+            slides[current].classList.remove('active');
+            thumbs[current].classList.remove('active');
+            current = (idx + slides.length) % slides.length;
+            slides[current].classList.add('active');
+            thumbs[current].classList.add('active');
+            
+            const text = slides[current].dataset.caption || '';
+            captionEl.textContent = text;
+
+            loadMedia(slides[current]);
+          }
+
+          prev.addEventListener('click', () => showSlide(current - 1));
+          next.addEventListener('click', () => showSlide(current + 1));
+          thumbs.forEach(thumb => {
+            thumb.addEventListener('click', () => {
+              showSlide(parseInt(thumb.dataset.index, 10));
+            });
+          });
+
+          showSlide(0)
+        });
+
+        document.querySelectorAll(".project-details").forEach(details => {
+          const summary = details.querySelector("summary");
+
+          summary.addEventListener("mouseenter", () => {
+            summary.classList.remove("finishing");
+            summary.classList.add("hovering");
+          });
+
+          summary.addEventListener("mouseleave", () => {
+            summary.classList.remove("hovering");
+            summary.classList.add("finishing");
+            setTimeout(() => {
+              summary.classList.remove("finishing");
+            }, 750);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

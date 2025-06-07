@@ -1,0 +1,15 @@
+inherit_gem:
+  rubocop-github:
+    - config/default.yml
+
+AllCops:
+  NewCops: enable
+  Exclude:
+    - vendor/**/*
+    - _site/**/*
+    - .jekyll-cache/**/*
+    - .vscode/**/*
+    - Gemfile.lock
+
+Layout/LineLength:
+  Enabled: false

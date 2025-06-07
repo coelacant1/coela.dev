@@ -1,0 +1,74 @@
+{%- comment -%}
+  Grab slides from either:
+   • include.slides   (`{% include mini-gallery.html slides=page.slides %}`)
+   • slides           (`{% mini_gallery %}…YAML…{% endmini_gallery %}`)
+{%- endcomment -%}
+
+{%- if include.slides -%}
+  {%- assign slides = include.slides -%}
+{%- elsif slides -%}
+  {%- assign slides = slides -%}
+{%- else -%}
+  {%- assign slides = [] -%}
+{%- endif -%}
+
+<div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides">
+      {%- for slide in slides -%}
+        <div class="slide{% if forloop.first %} active{% endif %}" data-type="{{ slide.type }}" data-caption="{{ slide.caption | escape }}">
+          {% if slide.type == "video" %}
+            <iframe
+              id="yt-player-{{ forloop.index0 }}"
+              src="https://www.youtube.com/embed/{{ slide.video_id }}?rel=0&enablejsapi=1"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              loading="lazy"
+              allowfullscreen>
+            </iframe>
+          {% elsif slide.type == "pdf" %}
+            <div class="pdf-container" style="width:100%; height:100%; overflow:hidden;">
+              <iframe
+                data-src="{{ slide.src }}"
+                type="application/pdf"
+                width="100%" height="100%"
+                style="border:none;"
+                loading="lazy"
+              >
+                <p>Your browser doesn't support PDFs. <a href="{{ slide.src }}">Download PDF</a>.</p>
+              </iframe>
+            </div>
+          {% else %}
+            <img src="{{ slide.src }}" alt="{{ slide.alt | default: '' }}">
+          {% endif %}
+        </div>
+      {%- endfor -%}
+    </div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  {% for slide in slides %}
+    {% if slide.type == "video" %}
+      {%- assign thumb_url = "https://img.youtube.com/vi/" 
+          | append: slide.video_id 
+          | append: "/hqdefault.jpg" -%}
+    {% elsif slide.type == "pdf" %}
+        {%- assign thumb_url = slide.thumb | default: "/assets/icons/pdf-icon.png" -%}
+    {% else %}
+      {%- assign thumb_url = slide.thumb -%}
+    {% endif %}
+    <div
+      class="thumb{% if forloop.first %} active{% endif %}"
+      data-index="{{ forloop.index0 }}"
+      data-type="{{ slide.type }}">
+      <img
+        src="{{ thumb_url }}"
+        alt=""
+      >
+    </div>
+  {% endfor %}
+  </div>
+</div>

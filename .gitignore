@@ -1,0 +1,24 @@
+# Jekyll build output & cache
+_site/*
+.jekyll-cache/
+.jekyll-metadata
+
+# Sass / Assets caches
+.sass-cache/
+
+# Bundler & RubyGems artifacts
+.bundle/
+vendor/
+vendor/bundle/
+vendor/cache/
+Gemfile.lock
+
+# Operating system & editor
+*~
+*.swp
+
+# IDE & project settings
+.vscode/
+
+# Environment vars & secrets
+.env

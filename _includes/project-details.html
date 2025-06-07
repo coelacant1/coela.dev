@@ -1,0 +1,67 @@
+{%- comment -%}
+  Expect these keys on include:
+    • summary     - string
+    • links       - list of { name, url }
+    • contributors       - string (optional)
+    • dates       - string (optional)
+    • description - markdown/string
+    • iframe      - iframe URL (optional)
+    • slides      - array for mini-gallery (optional)
+{%- endcomment -%}
+
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    {{ include.summary }}
+  </summary>
+
+  <table>
+    {%- if (include.links and include.links.size > 0) or include.dates -%}
+      <tr>
+        {%- for link in include.links -%}
+          <td><a href="{{ link.url }}">{{ link.name }}</a></td>
+        {%- endfor -%}
+        {%- if include.contributors -%}
+          <td class="project-contributors">
+            {{ include.contributors }}
+          </td>
+        {%- endif -%}
+        {%- if include.dates -%}
+          <td class="project-dates">
+            {{ include.dates }}
+          </td>
+        {%- endif -%}
+
+      </tr>
+    {%- endif -%}
+
+    <tr>
+      {%- assign col_count = include.links | size | default: 1 -%}
+      {%- if include.contributors -%}
+        {%- assign col_count = col_count | plus: 1 -%}
+      {%- endif -%}
+      {%- if include.dates -%}
+        {%- assign col_count = col_count | plus: 1 -%}
+      {%- endif -%}
+      <td colspan="{{ col_count }}">
+        {%- if include.slides and include.slides.size > 0 -%}
+          {% include mini-gallery.html slides=include.slides %}
+        {%- endif -%}
+
+        {{ include.description | markdownify }}
+
+        {%- if include.iframe -%}
+          <div class="project-iframe" style="margin: 1em 0;">
+            <iframe
+              src="{{ include.iframe }}"
+              width="100%" height="400"
+              frameborder="0"
+              allowfullscreen>
+            </iframe>
+          </div>
+        {%- endif -%}
+
+      </td>
+    </tr>
+  </table>
+</details>
