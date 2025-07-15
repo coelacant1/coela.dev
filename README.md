@@ -3,7 +3,7 @@
 
 
 
-Welcome to the repository for [coela.dev](https://ceola.dev/)-the portfolio site of **Coela Can't**.
+Welcome to the repository for [coela.dev](https://coela.dev/)-the portfolio site of **Coela Can't**.
 
 ---
 
