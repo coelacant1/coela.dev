@@ -15,7 +15,7 @@ $header-bg-color-secondary: #aaa !default;
 /* Text */
 $section-headings-color: #ccc !default;
 $body-text-color: #aaa !default;
-$body-link-color: #f85588 !default;
+$body-link-color: #a7a7a7 !default;
 $blockquote-text-color: #819198 !default;
 
 /* Code */
@@ -721,7 +721,7 @@ header.wave-header .content {
 }
 
 .project-details > summary.hovering {
-  color: #d02760;
+  color: #d0d0d0;
   animation-name: textscale;
   animation-duration: .5s;
   animation-timing-function: ease-in-out;
