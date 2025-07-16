@@ -80,14 +80,14 @@ body {
   left: 10px;
   height: auto;
   width: auto;
-  background: #07aa77;
-  outline: thick solid #07aa77;
+  background: #585858;
+  outline: thick solid #585858;
 }
 
 /* 7) TYPOGRAPHY & LINKS */
 /* ------------------------------------------------------------------------- */
 a {
-  color: #f85588;
+  color: #a7a7a7;
   text-decoration: none;
 }
 a:hover {
@@ -829,7 +829,7 @@ header.wave-header .content {
   }
 }
 .project-details > summary.hovering {
-  color: #d02760;
+  color: #d0d0d0;
   animation-name: textscale;
   animation-duration: 0.5s;
   animation-timing-function: ease-in-out;
