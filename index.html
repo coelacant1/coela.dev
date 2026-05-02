@@ -496,6 +496,133 @@
   </table>
 </details>
 
+<!-- Koilo Engine -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Koilo Engine: C++ Game Engine with Runtime Scripting
+  </summary>
+
+  <table><tr><td><a href="https://github.com/coelacant1/Koilo-Engine">GitHub</a></td><td class="project-contributors">
+            Solo Project
+          </td><td class="project-dates">
+            2025 - Now
+          </td></tr><tr><td colspan="3"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="3D scene rendered in Koilo Engine with KSL materials and an orbiting camera">
+          
+            <img src="/assets/images/Koilo1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="OBJ model loaded with textures and a keyframe camera track">
+          
+            <img src="/assets/images/Koilo2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Second OBJ scene demonstrating the asset import pipeline">
+          
+            <img src="/assets/images/Koilo7.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Multi-mesh stress test comparing GPU and software renderer output">
+          
+            <img src="/assets/images/Koilo3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="2D space shooter sample using signals, coroutines, collision, and wave spawning">
+          
+            <img src="/assets/images/Koilo4.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="KoiloScript language feature showcase">
+          
+            <img src="/assets/images/Koilo5.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Dynamic module loading via the runtime reflection bridge">
+          
+            <img src="/assets/images/Koilo6.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="UI demo running on top of the engine">
+          
+            <img src="/assets/images/Koilo8.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/Koilo1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/Koilo2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="image">
+      <img src="/assets/images/thumbs/Koilo7.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/Koilo3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="image">
+      <img src="/assets/images/thumbs/Koilo4.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="5" data-type="image">
+      <img src="/assets/images/thumbs/Koilo5.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="6" data-type="image">
+      <img src="/assets/images/thumbs/Koilo6.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="7" data-type="image">
+      <img src="/assets/images/thumbs/Koilo8.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>Koilo Engine is a compact C++17 game engine designed to run across both desktop systems and resource-constrained microcontrollers. Scenes and game logic are authored in KoiloScript (<code class="language-plaintext highlighter-rouge">.ks</code>), a bytecode-compiled scripting language with full access to engine internals through runtime reflection. This is the spiritual successor to ProtoTracer, generalizing the renderer and physics core into a portable engine usable on both PCs and embedded targets.</p>
+
+<p>Targets include Linux, Windows, Raspberry Pi, Teensy 4.x, ESP32-S3, and STM32.</p>
+
+<p>Features include:</p>
+<ul>
+  <li>Multi-backend rendering with a common interface
+    <ul>
+      <li>Vulkan, OpenGL 3.3, and a CPU software rasterizer</li>
+      <li>KSL shaders compile to both GLSL and CPU from the same source</li>
+    </ul>
+  </li>
+  <li>KoiloScript scripting language
+    <ul>
+      <li>Variables, functions, classes, coroutines, signals, imports, operator overloading</li>
+      <li>Direct calls into C++ objects through a reflection bridge</li>
+    </ul>
+  </li>
+  <li>Reflection system for exposing C++ classes to scripts via macros (no external codegen)</li>
+  <li>Hot-reloadable dynamic modules (<code class="language-plaintext highlighter-rouge">.so</code>/<code class="language-plaintext highlighter-rouge">.dll</code>) with lifecycle hooks and phased init</li>
+  <li>Scene graph and ECS with transform propagation and dense component storage</li>
+  <li>Animation: skeletal playback, keyframe camera tracks, morph target blending, material animation</li>
+  <li>Optimized math library: vectors, quaternions, matrices, transforms, splines, spatial indexing, noise, Kalman filters, FFT</li>
+  <li>Asset pipeline with the KoiloMesh format (morph targets) and OBJ/FBX offline conversion</li>
+  <li>Optional subsystems: AI (pathfinding, behavior trees, FSM), SDL2 audio, particles, LED panel output, HTTP live preview</li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
 <!-- AetherControl -->
 <details class="project-details">
   <summary class="noselect">
@@ -602,6 +729,67 @@
   <li>Support for sensor calibration and automated testing routines</li>
   <li>Optimized for ARM Cortex-M microcontrollers with efficient resource use</li>
   <li>Custom PathPlanner optimizing for up to the number of GPIO pins available to drive the system</li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- Radtel RT-950 Pro Firmware -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    RT-950 Pro: Open-Source Handheld Radio Firmware
+  </summary>
+
+  <table><tr><td><a href="https://github.com/coelacant1/Radtel-RT950-Pro-Firmware">GitHub</a></td><td class="project-contributors">
+            Contributors on GitHub
+          </td><td class="project-dates">
+            2025 - Now
+          </td></tr><tr><td colspan="3"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="Custom firmware running the hardware self-test on a real RT-950 Pro: AT32F403A + ST7789V LCD + dual BK4829 + SI4732 detected, GPIO/LED/backlight/band-relay/LCD bus verified">
+          
+            <img src="/assets/images/RT950Pro1.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/RT950Pro1.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>Open-source bare-metal firmware for the Radtel RT-950 Pro handheld radio, targeting the Artery AT32F403A (ARM Cortex-M4F @ 120 MHz, 1 MB flash, 96 KB SRAM). The custom firmware loads via the OEM bootloader using the standard <code class="language-plaintext highlighter-rouge">.BTF</code> update flow with no CRC or signature, so users can flash it through the existing OEM tool.</p>
+
+<p>Hardware bring-up confirmed on real hardware:</p>
+<ul>
+  <li>ST7789V 240x320 LCD via 8080 parallel bus with custom text rendering</li>
+  <li>Status LEDs, dual backlights, power latch, and band relay control</li>
+  <li>Boot, GPIO, and display fully functional under custom firmware</li>
+</ul>
+
+<p>Implemented (code-complete, hardware testing in progress):</p>
+<ul>
+  <li>Drivers: GPIO, SPI2 (flash), bit-bang SPI for BK4829, bit-bang I2C for SI4732, multiple UARTs, ADC2, DAC1+TIM6+DMA, dual-channel DMA, ST7789V 8080 parallel</li>
+  <li>RF: dual BK4829 transceiver driver with frequency programming, TX power control, and flash-stored calibration tables</li>
+  <li>Application: dual VFO (A/B/C), PTT with active-low relay routing, debounced keypad scanner, rotary encoder, S-meter, hierarchical 12-category menu, frequency entry</li>
+  <li>Digital modes: APRS (hardware FSK via BK4829, MIC-E packets), DTMF encode/decode, CTCSS/DCS tone generation</li>
+  <li>Receivers: SI4732 AM/FM/SSB broadcast, FM presets, NOAA weather channels</li>
+  <li>Storage: SPI flash layout for 990 channels, VFO configs and settings, wear-leveled NV storage, CPS programming over UART4</li>
+  <li>Comms: GPS NMEA parser, BLE data bridge, VOX</li>
+  <li>UI: splash screen, zone browser, text input, scanner, spectrum analyzer</li>
+  <li>Cross-band repeat with band-specific relay routing and verified PTT polarity for PA safety</li>
+  <li>Tooling: BTF firmware encrypt/decrypt, CPS flash read/write, serial firmware uploader with auto-restart</li>
+  <li>Hardware self-test suite covering backlight, UART, LCD, BK4829/SI4732 chip IDs, SPI flash JEDEC ID, ADC, DAC tone, keypad, GPS, and full system diagnostics</li>
 </ul>
 </td>
     </tr>
@@ -763,6 +951,92 @@
             <iframe src="https://coelacant.com/ProxmoxScripts/" class="project-iframe" allowfullscreen="">
             </iframe>
           </div></td>
+    </tr>
+  </table>
+</details>
+
+<!-- pAWS - Proxmox Automated Web Services -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Proxmox Automated Web Services: Self-Hosted AWS-Style Platform on Proxmox VE
+  </summary>
+
+  <table><tr><td><a href="https://github.com/coelacant1/Proxmox-Automated-Web-Services">GitHub</a></td><td class="project-contributors">
+            Solo Project
+          </td><td class="project-dates">
+            2025 - Now
+          </td></tr><tr><td colspan="3"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="pAWS dashboard giving a single view of compute, storage, and cluster health">
+          
+            <img src="/assets/images/pAWS1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Container/VM overview with lifecycle controls">
+          
+            <img src="/assets/images/pAWS2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Browser-based VNC console for direct VM access">
+          
+            <img src="/assets/images/pAWS3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Administration panel for users, infrastructure connections, and templates">
+          
+            <img src="/assets/images/pAWS4.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/pAWS1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/pAWS2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="image">
+      <img src="/assets/images/thumbs/pAWS3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/pAWS4.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>pAWS (Proxmox Automated Web Services) is a self-hosted, AWS-like infrastructure platform built on Proxmox VE. It provides multi-tenant compute, networking, storage, backups, and monitoring through a unified web UI and REST API, turning a Proxmox cluster into a managed cloud-style environment.</p>
+
+<p>Targeted feature set:</p>
+<ul>
+  <li>Compute: VMs and LXC containers from templates with full lifecycle management, browser-based console (noVNC/xterm.js), snapshots, and import/export</li>
+  <li>Networking: VPCs with subnets, security groups, service endpoints, and DNS</li>
+  <li>Storage: S3-compatible object storage backed by Ceph RadosGW, with file browser, sharing, and presigned URLs</li>
+  <li>Backups: Proxmox Backup Server integration with scheduled plans and point-in-time restore</li>
+  <li>Monitoring: per-resource metrics, alarms, and log aggregation</li>
+  <li>Auth: local accounts (JWT) plus OAuth2/OIDC, with RBAC roles (Admin/Operator/Member/Viewer)</li>
+  <li>Admin: user management, template catalog, quotas, and audit logging</li>
+</ul>
+
+<p>Stack:</p>
+<ul>
+  <li>Frontend: React 19, TypeScript, Vite, Tailwind CSS v4</li>
+  <li>Backend: Python 3.11+, FastAPI, async SQLAlchemy 2, Pydantic v2</li>
+  <li>Data: PostgreSQL 16, Redis 7, Celery</li>
+  <li>Infrastructure: Proxmox VE 8+, Ceph RadosGW, Proxmox Backup Server</li>
+  <li>Cluster credentials are AES-256-GCM encrypted at rest using a stable master key</li>
+</ul>
+</td>
     </tr>
   </table>
 </details>
@@ -996,6 +1270,105 @@
             <iframe src="https://coelacant.com/Teensy-Loader-Javascript/Teensy-Loader-Example.html" class="project-iframe" allowfullscreen="">
             </iframe>
           </div></td>
+    </tr>
+  </table>
+</details>
+
+<!-- Bambu Lab Cloud API -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret">▸</span>
+    Bambu Lab Cloud API: Python Library and Compatibility Layer
+  </summary>
+
+  <table><tr><td><a href="https://pypi.org/project/bambu-lab-cloud-api/">PyPI</a></td><td><a href="https://github.com/coelacant1/Bambu-Lab-Cloud-API">GitHub</a></td><td class="project-contributors">
+            Solo Project
+          </td><td class="project-dates">
+            2025 - Now
+          </td></tr><tr><td colspan="4"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="Live JPEG frame streaming from a Bambu Lab P1S camera through the Python client">
+          
+            <img src="/assets/images/BambuLabCloudAPI1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Comprehensive test suite startup: enumerating three P1S printers with model, online state, print status, nozzle, and access codes via the Cloud API">
+          
+            <img src="/assets/images/BambuLabCloudAPI2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Device version, AMS filament info, print status, user profile, and TTCode camera credentials returned by the Cloud API">
+          
+            <img src="/assets/images/BambuLabCloudAPI3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="TUTK P2P video credentials and a live MQTT push_status stream with the full 63-field printer state captured by the client">
+          
+            <img src="/assets/images/BambuLabCloudAPI4.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Parsed MQTT messages (temperatures, fans, AMS units, layer/progress) followed by the file upload flow generating S3 signed URLs">
+          
+            <img src="/assets/images/BambuLabCloudAPI5.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Upload to S3 confirmed, cloud file listing retrieved, and the full 20/20 test suite passing end-to-end">
+          
+            <img src="/assets/images/BambuLabCloudAPI6.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/BambuLabCloudAPI1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/BambuLabCloudAPI2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="image">
+      <img src="/assets/images/thumbs/BambuLabCloudAPI3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/BambuLabCloudAPI4.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="image">
+      <img src="/assets/images/thumbs/BambuLabCloudAPI5.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="5" data-type="image">
+      <img src="/assets/images/thumbs/BambuLabCloudAPI6.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>A documentation effort and Python library for communicating with Bambu Lab 3D printers through their Cloud API, MQTT protocol, and local connections. Originally built as a read-only proxy for managing a print farm.</p>
+
+<p>Features include:</p>
+<ul>
+  <li>API endpoint reference built from network traffic analysis, split into focused modules (auth, devices, users, files/printing, MQTT, AMS/filament, camera, errors)</li>
+  <li>Unified Python client (<code class="language-plaintext highlighter-rouge">bambulab</code>) covering Cloud API, MQTT, local FTP upload, and video streams</li>
+  <li>Authentication with 2FA / email verification code support and token caching</li>
+  <li>Real-time MQTT monitoring and control of print state and printer telemetry</li>
+  <li>File upload via both Cloud API (S3) and local FTP</li>
+  <li>Video streaming: RTSP for X1 series, JPEG frame streaming for A1/P1 series</li>
+  <li>Compatibility server that bridges Home Assistant, OctoPrint, and other tools to the Cloud API without enabling developer mode</li>
+  <li>Strict read-only and full-mode proxy servers with rate limiting for safe gateway use</li>
+  <li>Comprehensive test suite covering 20+ endpoints, MQTT live data, S3 file upload, and TUTK video credentials</li>
+  <li>G-code reference documentation for supported printer models</li>
+  <li>Distributed on PyPI as <code class="language-plaintext highlighter-rouge">bambu-lab-cloud-api</code></li>
+</ul>
+</td>
     </tr>
   </table>
 </details>
