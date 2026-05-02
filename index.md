@@ -129,6 +129,76 @@ slides:
 
 {% endproject %}
 
+<!-- Koilo Engine -->
+{% project %}
+name: KoiloEngine
+
+summary: "Koilo Engine: C++ Game Engine with Runtime Scripting"
+
+links:
+  - name: GitHub
+    url: https://github.com/coelacant1/Koilo-Engine
+
+dates: "2025 - Now"
+
+contributors: "Solo Project"
+
+description: |-
+  Koilo Engine is a compact C++17 game engine designed to run across both desktop systems and resource-constrained microcontrollers. Scenes and game logic are authored in KoiloScript (`.ks`), a bytecode-compiled scripting language with full access to engine internals through runtime reflection. This is the spiritual successor to ProtoTracer, generalizing the renderer and physics core into a portable engine usable on both PCs and embedded targets.
+
+  Targets include Linux, Windows, Raspberry Pi, Teensy 4.x, ESP32-S3, and STM32.
+
+  Features include:
+  - Multi-backend rendering with a common interface
+    - Vulkan, OpenGL 3.3, and a CPU software rasterizer
+    - KSL shaders compile to both GLSL and CPU from the same source
+  - KoiloScript scripting language
+    - Variables, functions, classes, coroutines, signals, imports, operator overloading
+    - Direct calls into C++ objects through a reflection bridge
+  - Reflection system for exposing C++ classes to scripts via macros (no external codegen)
+  - Hot-reloadable dynamic modules (`.so`/`.dll`) with lifecycle hooks and phased init
+  - Scene graph and ECS with transform propagation and dense component storage
+  - Animation: skeletal playback, keyframe camera tracks, morph target blending, material animation
+  - Optimized math library: vectors, quaternions, matrices, transforms, splines, spatial indexing, noise, Kalman filters, FFT
+  - Asset pipeline with the KoiloMesh format (morph targets) and OBJ/FBX offline conversion
+  - Optional subsystems: AI (pathfinding, behavior trees, FSM), SDL2 audio, particles, LED panel output, HTTP live preview
+
+slides:
+  - type: image
+    src: /assets/images/Koilo1.jpg
+    thumb: /assets/images/thumbs/Koilo1.jpg
+    caption: "3D scene rendered in Koilo Engine with KSL materials and an orbiting camera"
+  - type: image
+    src: /assets/images/Koilo2.jpg
+    thumb: /assets/images/thumbs/Koilo2.jpg
+    caption: "OBJ model loaded with textures and a keyframe camera track"
+  - type: image
+    src: /assets/images/Koilo7.jpg
+    thumb: /assets/images/thumbs/Koilo7.jpg
+    caption: "Second OBJ scene demonstrating the asset import pipeline"
+  - type: image
+    src: /assets/images/Koilo3.jpg
+    thumb: /assets/images/thumbs/Koilo3.jpg
+    caption: "Multi-mesh stress test comparing GPU and software renderer output"
+  - type: image
+    src: /assets/images/Koilo4.jpg
+    thumb: /assets/images/thumbs/Koilo4.jpg
+    caption: "2D space shooter sample using signals, coroutines, collision, and wave spawning"
+  - type: image
+    src: /assets/images/Koilo5.jpg
+    thumb: /assets/images/thumbs/Koilo5.jpg
+    caption: "KoiloScript language feature showcase"
+  - type: image
+    src: /assets/images/Koilo6.jpg
+    thumb: /assets/images/thumbs/Koilo6.jpg
+    caption: "Dynamic module loading via the runtime reflection bridge"
+  - type: image
+    src: /assets/images/Koilo8.jpg
+    thumb: /assets/images/thumbs/Koilo8.jpg
+    caption: "UI demo running on top of the engine"
+
+{% endproject %}
+
 <!-- AetherControl -->
 {% project %}
 name: AetherControl
@@ -183,6 +253,49 @@ slides:
     src: /assets/images/AetherControl3.jpg
     thumb: /assets/images/thumbs/AetherControl3.jpg
     caption: "Configuration file for the Stewart Platform"
+
+{% endproject %}
+
+<!-- Radtel RT-950 Pro Firmware -->
+{% project %}
+name: RT950ProFirmware
+
+summary: "RT-950 Pro: Open-Source Handheld Radio Firmware"
+
+links:
+  - name: GitHub
+    url: https://github.com/coelacant1/Radtel-RT950-Pro-Firmware
+
+dates: "2025 - Now"
+
+contributors: "Contributors on GitHub"
+
+description: |-
+  Open-source bare-metal firmware for the Radtel RT-950 Pro handheld radio, targeting the Artery AT32F403A (ARM Cortex-M4F @ 120 MHz, 1 MB flash, 96 KB SRAM). The custom firmware loads via the OEM bootloader using the standard `.BTF` update flow with no CRC or signature, so users can flash it through the existing OEM tool.
+
+  Hardware bring-up confirmed on real hardware:
+  - ST7789V 240x320 LCD via 8080 parallel bus with custom text rendering
+  - Status LEDs, dual backlights, power latch, and band relay control
+  - Boot, GPIO, and display fully functional under custom firmware
+
+  Implemented (code-complete, hardware testing in progress):
+  - Drivers: GPIO, SPI2 (flash), bit-bang SPI for BK4829, bit-bang I2C for SI4732, multiple UARTs, ADC2, DAC1+TIM6+DMA, dual-channel DMA, ST7789V 8080 parallel
+  - RF: dual BK4829 transceiver driver with frequency programming, TX power control, and flash-stored calibration tables
+  - Application: dual VFO (A/B/C), PTT with active-low relay routing, debounced keypad scanner, rotary encoder, S-meter, hierarchical 12-category menu, frequency entry
+  - Digital modes: APRS (hardware FSK via BK4829, MIC-E packets), DTMF encode/decode, CTCSS/DCS tone generation
+  - Receivers: SI4732 AM/FM/SSB broadcast, FM presets, NOAA weather channels
+  - Storage: SPI flash layout for 990 channels, VFO configs and settings, wear-leveled NV storage, CPS programming over UART4
+  - Comms: GPS NMEA parser, BLE data bridge, VOX
+  - UI: splash screen, zone browser, text input, scanner, spectrum analyzer
+  - Cross-band repeat with band-specific relay routing and verified PTT polarity for PA safety
+  - Tooling: BTF firmware encrypt/decrypt, CPS flash read/write, serial firmware uploader with auto-restart
+  - Hardware self-test suite covering backlight, UART, LCD, BK4829/SI4732 chip IDs, SPI flash JEDEC ID, ADC, DAC tone, keypad, GPS, and full system diagnostics
+
+slides:
+  - type: image
+    src: /assets/images/RT950Pro1.jpg
+    thumb: /assets/images/thumbs/RT950Pro1.jpg
+    caption: "Custom firmware running the hardware self-test on a real RT-950 Pro: AT32F403A + ST7789V LCD + dual BK4829 + SI4732 detected, GPIO/LED/backlight/band-relay/LCD bus verified"
 
 {% endproject %}
 
@@ -285,6 +398,59 @@ slides:
     src: /assets/images/ProxmoxScripts1.jpg
     thumb: /assets/images/thumbs/ProxmoxScripts1.jpg
     caption: "Example of batch cloning with CCPVE"
+
+{% endproject %}
+
+<!-- pAWS - Proxmox Automated Web Services -->
+{% project %}
+name: ProxmoxAutomatedWebServices
+
+summary: "Proxmox Automated Web Services: Self-Hosted AWS-Style Platform on Proxmox VE"
+
+links:
+  - name: GitHub
+    url: https://github.com/coelacant1/Proxmox-Automated-Web-Services
+
+dates: "2025 - Now"
+
+contributors: "Solo Project"
+
+description: |-
+  pAWS (Proxmox Automated Web Services) is a self-hosted, AWS-like infrastructure platform built on Proxmox VE. It provides multi-tenant compute, networking, storage, backups, and monitoring through a unified web UI and REST API, turning a Proxmox cluster into a managed cloud-style environment.
+
+  Targeted feature set:
+  - Compute: VMs and LXC containers from templates with full lifecycle management, browser-based console (noVNC/xterm.js), snapshots, and import/export
+  - Networking: VPCs with subnets, security groups, service endpoints, and DNS
+  - Storage: S3-compatible object storage backed by Ceph RadosGW, with file browser, sharing, and presigned URLs
+  - Backups: Proxmox Backup Server integration with scheduled plans and point-in-time restore
+  - Monitoring: per-resource metrics, alarms, and log aggregation
+  - Auth: local accounts (JWT) plus OAuth2/OIDC, with RBAC roles (Admin/Operator/Member/Viewer)
+  - Admin: user management, template catalog, quotas, and audit logging
+
+  Stack:
+  - Frontend: React 19, TypeScript, Vite, Tailwind CSS v4
+  - Backend: Python 3.11+, FastAPI, async SQLAlchemy 2, Pydantic v2
+  - Data: PostgreSQL 16, Redis 7, Celery
+  - Infrastructure: Proxmox VE 8+, Ceph RadosGW, Proxmox Backup Server
+  - Cluster credentials are AES-256-GCM encrypted at rest using a stable master key
+
+slides:
+  - type: image
+    src: /assets/images/pAWS1.jpg
+    thumb: /assets/images/thumbs/pAWS1.jpg
+    caption: "pAWS dashboard giving a single view of compute, storage, and cluster health"
+  - type: image
+    src: /assets/images/pAWS2.jpg
+    thumb: /assets/images/thumbs/pAWS2.jpg
+    caption: "Container/VM overview with lifecycle controls"
+  - type: image
+    src: /assets/images/pAWS3.jpg
+    thumb: /assets/images/thumbs/pAWS3.jpg
+    caption: "Browser-based VNC console for direct VM access"
+  - type: image
+    src: /assets/images/pAWS4.jpg
+    thumb: /assets/images/thumbs/pAWS4.jpg
+    caption: "Administration panel for users, infrastructure connections, and templates"
 
 {% endproject %}
 
@@ -422,6 +588,66 @@ slides:
     src: /assets/images/TeensyWebHID6.jpg
     thumb: /assets/images/thumbs/TeensyWebHID6.jpg
     caption: "Serial output from the microcontroller into the browser"
+
+{% endproject %}
+
+<!-- Bambu Lab Cloud API -->
+{% project %}
+name: BambuLabCloudAPI
+
+summary: "Bambu Lab Cloud API: Python Library and Compatibility Layer"
+
+links:
+  - name: PyPI
+    url: https://pypi.org/project/bambu-lab-cloud-api/
+  - name: GitHub
+    url: https://github.com/coelacant1/Bambu-Lab-Cloud-API
+
+dates: "2025 - Now"
+
+contributors: "Solo Project"
+
+description: |-
+  A documentation effort and Python library for communicating with Bambu Lab 3D printers through their Cloud API, MQTT protocol, and local connections. Originally built as a read-only proxy for managing a print farm.
+
+  Features include:
+  - API endpoint reference built from network traffic analysis, split into focused modules (auth, devices, users, files/printing, MQTT, AMS/filament, camera, errors)
+  - Unified Python client (`bambulab`) covering Cloud API, MQTT, local FTP upload, and video streams
+  - Authentication with 2FA / email verification code support and token caching
+  - Real-time MQTT monitoring and control of print state and printer telemetry
+  - File upload via both Cloud API (S3) and local FTP
+  - Video streaming: RTSP for X1 series, JPEG frame streaming for A1/P1 series
+  - Compatibility server that bridges Home Assistant, OctoPrint, and other tools to the Cloud API without enabling developer mode
+  - Strict read-only and full-mode proxy servers with rate limiting for safe gateway use
+  - Comprehensive test suite covering 20+ endpoints, MQTT live data, S3 file upload, and TUTK video credentials
+  - G-code reference documentation for supported printer models
+  - Distributed on PyPI as `bambu-lab-cloud-api`
+
+slides:
+  - type: image
+    src: /assets/images/BambuLabCloudAPI1.jpg
+    thumb: /assets/images/thumbs/BambuLabCloudAPI1.jpg
+    caption: "Live JPEG frame streaming from a Bambu Lab P1S camera through the Python client"
+  - type: image
+    src: /assets/images/BambuLabCloudAPI2.jpg
+    thumb: /assets/images/thumbs/BambuLabCloudAPI2.jpg
+    caption: "Comprehensive test suite startup: enumerating three P1S printers with model, online state, print status, nozzle, and access codes via the Cloud API"
+  - type: image
+    src: /assets/images/BambuLabCloudAPI3.jpg
+    thumb: /assets/images/thumbs/BambuLabCloudAPI3.jpg
+    caption: "Device version, AMS filament info, print status, user profile, and TTCode camera credentials returned by the Cloud API"
+  - type: image
+    src: /assets/images/BambuLabCloudAPI4.jpg
+    thumb: /assets/images/thumbs/BambuLabCloudAPI4.jpg
+    caption: "TUTK P2P video credentials and a live MQTT push_status stream with the full 63-field printer state captured by the client"
+  - type: image
+    src: /assets/images/BambuLabCloudAPI5.jpg
+    thumb: /assets/images/thumbs/BambuLabCloudAPI5.jpg
+    caption: "Parsed MQTT messages (temperatures, fans, AMS units, layer/progress) followed by the file upload flow generating S3 signed URLs"
+  - type: image
+    src: /assets/images/BambuLabCloudAPI6.jpg
+    thumb: /assets/images/thumbs/BambuLabCloudAPI6.jpg
+    caption: "Upload to S3 confirmed, cloud file listing retrieved, and the full 20/20 test suite passing end-to-end"
 
 {% endproject %}
 
