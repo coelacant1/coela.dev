@@ -24,6 +24,5 @@ def validate(file)
   end
 end
 
-validate "Contact.html"
 validate "index.html"
 validate File.join("assets", "css", "style.css")

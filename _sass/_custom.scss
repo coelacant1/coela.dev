@@ -189,21 +189,26 @@ a {
   overflow-x: hidden;
   overflow-y: visible;
 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
   color: $header-heading-color;
   text-align: center;
   background-size: cover;
   background-repeat: no-repeat;
 
   @include large {
-    padding: 0 6rem 5rem 6rem;
+    padding: 2rem 6rem;
   }
 
   @include medium {
-    padding: 0 4rem 3rem 4rem;
+    padding: 1.5rem 4rem;
   }
 
   @include small {
-    padding: 0 2rem 6rem 2rem;
+    padding: 1rem 2rem;
   }
 
   canvas {
@@ -468,22 +473,17 @@ header.wave-header .content {
   font-weight: normal;
   color: $section-headings-color;
   background-color: transparent;
+  margin: 0;
 
   @include large {
     font-size: 1.5rem;
-    margin-top: 1rem;
-    margin-bottom: 2rem;
   }
 
   @include medium {
     font-size: 1.2rem;
-    margin-top: 0.75rem;
-    margin-bottom: 1.5rem;
   }
 
   @include small {
-    margin-top: 0.5rem;
-    margin-bottom: 1rem;
     font-size: 1.0rem;
   }
 }
@@ -502,19 +502,18 @@ header.wave-header .content {
   background-clip: text;
   -webkit-background-clip: text;
   color: transparent;
+  margin: 0 0 0.5rem;
+  line-height: 1.1;
 
   @include large {
-    margin-top: 2rem;
     font-size: 4rem;
   }
 
   @include medium {
-    margin-top: 1.5rem;
     font-size: 3rem;
   }
 
   @include small {
-    margin-top: 1rem;
     font-size: 2.5rem;
 
     display: block;
@@ -736,21 +735,16 @@ header.wave-header .content {
 }
 
 .project-details > summary .caret {
-  display: inline-block;
   margin-right: .5em;
-  font-size: 1.1em;
-  line-height: 1;
-  transform-origin: center center;
-  transform: rotate(0deg);
-  transition: transform 0.4s ease;
+  user-select: none;
+  font-size: 0;
 }
-
-.project-details[open] > summary .caret {
-  transform: rotate(90deg);
+.project-details > summary .caret::before {
+  content: "[+] ";
+  font-size: 1rem;
 }
-
-.project-details:not([open]) > summary .caret {
-  transform: rotate(0deg);
+.project-details[open] > summary .caret::before {
+  content: "[-] ";
 }
 
 .project-iframe-bounds {

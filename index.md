@@ -9,126 +9,6 @@ description: Portfolio
 Engineer and developer who solves problems with hardware, software, and automation. Building performant, modular, and reliable systems-from embedded devices and robotics to virtualization and infrastructure automation.
 
 ## **Software and Embedded Systems Development**
-<!-- ProtoTracer -->
-{% project %}
-name: ProtoTracer
-
-summary: "ProtoTracer: Embedded 3D Rendering Engine"
-
-links:
-  - name: Website
-    url: https://coelacant.com/ProtoTracer/
-  - name: GitHub
-    url: https://github.com/coelacant1/ProtoTracer
-
-dates: "2020 - Now"
-
-contributors: "Contributors on GitHub"
-
-description: |-
-  ProtoTracer is a C++ based 3D rendering engine optimized for microcontrollers. It calculates dynamic 3D scenes in real-time, reacting to sensor or user inputs to adapt the output. This software is designed to be modular for use in other projects.
-  
-  This includes features such as: 
-  - Keyframed animations with support for automated easing
-  - Display of custom converted FBX, OBJ 3D Models with support for textures using any static image format as well as support for animated GIFs
-  - Custom camera definitions and parameters for specialized display shapes and 3D outputs
-  - Support for driving HUB75, WS2812, and APA102 based LED displays, with controller definitions making it easy to create other interfaces
-  - Raster-based 3D rendering as well as Raytraced rendering
-    - Segmented-rendering optimization using quadtrees
-    - Custom rendering pipeline optimized for high frame rates on constrained hardware
-      - Enables PS1-level graphics rendering
-  - Custom static and animated shader materials
-    - Simplex Noise Shaders
-    - Audio Reactive Shaders (Oscilloscope/Spectrum Analyzer)
-    - TV Static emulation
-    - Gradient/Normal/UV Tiled/Depth Materials
-  - Audio Analysis
-    - Voice analysis for matching vowel sounds to viseme shapes
-      - Allows user calibration for custom formant maps
-    - Fourier Transform for analysis/spectrum analyzer display
-    - Filtering and automatic scaling for background noise
-    - Filters: FFT/Kalman/Peak/Ramp/Running Average
-  - Physics Simulator
-  - Hardware Support for:
-    - SSD1306 Status Display/HUD
-    - Communication with secondary controller for wireless control
-    - PWM Fan Controls through a user menu
-    - APDS9960 Color/Distance Sensing
-    - BNO055 Quaternion input for space-mouse like control
-    - MMC56X3 Magnetometer input
-    - SHARPGP2Y Distance Sensing
-    - MAX9814/SPW2430 Microphone Input
-  - Screenspace Shaders for manipulating 3D rendered frames with 2D modifications
-    - Fisheye distortion
-    - Glitch distortion
-    - Box/Radial blur
-    - Magnetic Lens distortion
-    - Phase Shifting
-  - Live object manipulation
-    - Position/Scale/Rotation
-    - Distortion with custom object deformer
-      - Modifies 3D space via transformation functions
-      - Perspective Deform
-      - Sinusoidal Deform
-      - Dropwave Deform
-    - Automatic 3D object alignment
-      - Allows alignment of center of volume or mass to a target coordinate
-      - Fit alignment to a plane
-        - Allows users to rapidly add their own model with any scale/rotation and it will autofit to a target size and plane
-  - Custom Optimized Math Library
-    - Rotation library with support for Axis Angles, Direction Angles(Custom), Euler Angles, Quaternions, Rotation Matrices, Yaw-Pitch-Roll
-    - Vector2D and Vector3D Library
-    - Quaternion Library
-    - Kalman and Running Average Filters for Quaternion Space, Cartesian Space
-  - Automated Testing to verify custom math libary
-    
-  Doxygen genereated documentation from sourcecode:
-
-iframe: https://coelacant.com/ProtoTracer/
-
-slides:
-  - type: video
-    video_id: ii_2rAg5L5c
-    caption: "ProtoTracer menu using multi-button RGB I2C Controller"
-  - type: video
-    video_id: xQfBLp0Ws1g
-    caption: "3D shader running a 2D rasterizer that is then modified with simulated advection"
-  - type: video
-    video_id: C5WwMnbaJ34
-    caption: "Shader with multiply blend modes between two animated GIFs"
-  - type: video
-    video_id: 8uSgCMLcty8
-    caption: "Simplex noise shader with blend mode mixing stripe shader"
-  - type: video
-    video_id: 1AH0N9evXL4
-    caption: "Spiral rainbow shader with multiply blend mode playing Bad Apple as a GIF"
-  - type: video
-    video_id: SXp2C7LbiRM
-    caption: "Dual spiral rainbow shader with lighten blend mode"
-  - type: video
-    video_id: Yc67nFJwqYo
-    caption: "Example of a full keyframed animation"
-  - type: video
-    video_id: TnoXMWCxYpc
-    caption: "External sensor input for controlling the 3D model"
-  - type: video
-    video_id: ucIHCd_vjGA
-    caption: "Rendering a 3D model with 2D textures"
-  - type: video
-    video_id: ZJqEkMUVPH4
-    caption: "Normal shader"
-  - type: video
-    video_id: orijCE6EDM4
-    caption: "Physics simulator with balls in a 3D box"
-  - type: video
-    video_id: Xh3eKCqLIPc
-    caption: "Example of a custom software build for a user"
-  - type: pdf
-    src: /assets/pdfs/ProtogenControllerV2-0.pdf
-    caption: "Controller guide for hardware optimized for ProtoTracer"
-
-{% endproject %}
-
 <!-- Koilo Engine -->
 {% project %}
 name: KoiloEngine
@@ -405,7 +285,7 @@ slides:
 {% project %}
 name: ProxmoxAutomatedWebServices
 
-summary: "Proxmox Automated Web Services: Self-Hosted AWS-Style Platform on Proxmox VE"
+summary: "pAWS: Self-Hosted Cloud on Proxmox VE"
 
 links:
   - name: GitHub
@@ -451,6 +331,126 @@ slides:
     src: /assets/images/pAWS4.jpg
     thumb: /assets/images/thumbs/pAWS4.jpg
     caption: "Administration panel for users, infrastructure connections, and templates"
+
+{% endproject %}
+
+<!-- ProtoTracer -->
+{% project %}
+name: ProtoTracer
+
+summary: "ProtoTracer: Embedded 3D Rendering Engine"
+
+links:
+  - name: Website
+    url: https://coelacant.com/ProtoTracer/
+  - name: GitHub
+    url: https://github.com/coelacant1/ProtoTracer
+
+dates: "2020 - Now"
+
+contributors: "Contributors on GitHub"
+
+description: |-
+  ProtoTracer is a C++ based 3D rendering engine optimized for microcontrollers. It calculates dynamic 3D scenes in real-time, reacting to sensor or user inputs to adapt the output. This software is designed to be modular for use in other projects.
+  
+  This includes features such as: 
+  - Keyframed animations with support for automated easing
+  - Display of custom converted FBX, OBJ 3D Models with support for textures using any static image format as well as support for animated GIFs
+  - Custom camera definitions and parameters for specialized display shapes and 3D outputs
+  - Support for driving HUB75, WS2812, and APA102 based LED displays, with controller definitions making it easy to create other interfaces
+  - Raster-based 3D rendering as well as Raytraced rendering
+    - Segmented-rendering optimization using quadtrees
+    - Custom rendering pipeline optimized for high frame rates on constrained hardware
+      - Enables PS1-level graphics rendering
+  - Custom static and animated shader materials
+    - Simplex Noise Shaders
+    - Audio Reactive Shaders (Oscilloscope/Spectrum Analyzer)
+    - TV Static emulation
+    - Gradient/Normal/UV Tiled/Depth Materials
+  - Audio Analysis
+    - Voice analysis for matching vowel sounds to viseme shapes
+      - Allows user calibration for custom formant maps
+    - Fourier Transform for analysis/spectrum analyzer display
+    - Filtering and automatic scaling for background noise
+    - Filters: FFT/Kalman/Peak/Ramp/Running Average
+  - Physics Simulator
+  - Hardware Support for:
+    - SSD1306 Status Display/HUD
+    - Communication with secondary controller for wireless control
+    - PWM Fan Controls through a user menu
+    - APDS9960 Color/Distance Sensing
+    - BNO055 Quaternion input for space-mouse like control
+    - MMC56X3 Magnetometer input
+    - SHARPGP2Y Distance Sensing
+    - MAX9814/SPW2430 Microphone Input
+  - Screenspace Shaders for manipulating 3D rendered frames with 2D modifications
+    - Fisheye distortion
+    - Glitch distortion
+    - Box/Radial blur
+    - Magnetic Lens distortion
+    - Phase Shifting
+  - Live object manipulation
+    - Position/Scale/Rotation
+    - Distortion with custom object deformer
+      - Modifies 3D space via transformation functions
+      - Perspective Deform
+      - Sinusoidal Deform
+      - Dropwave Deform
+    - Automatic 3D object alignment
+      - Allows alignment of center of volume or mass to a target coordinate
+      - Fit alignment to a plane
+        - Allows users to rapidly add their own model with any scale/rotation and it will autofit to a target size and plane
+  - Custom Optimized Math Library
+    - Rotation library with support for Axis Angles, Direction Angles(Custom), Euler Angles, Quaternions, Rotation Matrices, Yaw-Pitch-Roll
+    - Vector2D and Vector3D Library
+    - Quaternion Library
+    - Kalman and Running Average Filters for Quaternion Space, Cartesian Space
+  - Automated Testing to verify custom math libary
+    
+  Doxygen genereated documentation from sourcecode:
+
+iframe: https://coelacant.com/ProtoTracer/
+
+slides:
+  - type: video
+    video_id: ii_2rAg5L5c
+    caption: "ProtoTracer menu using multi-button RGB I2C Controller"
+  - type: video
+    video_id: xQfBLp0Ws1g
+    caption: "3D shader running a 2D rasterizer that is then modified with simulated advection"
+  - type: video
+    video_id: C5WwMnbaJ34
+    caption: "Shader with multiply blend modes between two animated GIFs"
+  - type: video
+    video_id: 8uSgCMLcty8
+    caption: "Simplex noise shader with blend mode mixing stripe shader"
+  - type: video
+    video_id: 1AH0N9evXL4
+    caption: "Spiral rainbow shader with multiply blend mode playing Bad Apple as a GIF"
+  - type: video
+    video_id: SXp2C7LbiRM
+    caption: "Dual spiral rainbow shader with lighten blend mode"
+  - type: video
+    video_id: Yc67nFJwqYo
+    caption: "Example of a full keyframed animation"
+  - type: video
+    video_id: TnoXMWCxYpc
+    caption: "External sensor input for controlling the 3D model"
+  - type: video
+    video_id: ucIHCd_vjGA
+    caption: "Rendering a 3D model with 2D textures"
+  - type: video
+    video_id: ZJqEkMUVPH4
+    caption: "Normal shader"
+  - type: video
+    video_id: orijCE6EDM4
+    caption: "Physics simulator with balls in a 3D box"
+  - type: video
+    video_id: Xh3eKCqLIPc
+    caption: "Example of a custom software build for a user"
+  - type: pdf
+    src: /assets/pdfs/ProtogenControllerV2-0.pdf
+    caption: "Controller guide for hardware optimized for ProtoTracer"
 
 {% endproject %}
 

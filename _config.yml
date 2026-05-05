@@ -3,7 +3,6 @@ tagline: Hardware and Software Developer
 description: "coela.dev - Hardware and Software Developer"
 
 permalink: /Projects
-permalink: /Contact
 
 plugins:
   - jekyll-seo-tag
