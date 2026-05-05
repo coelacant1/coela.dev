@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="coela.dev">
+  <title>coela.dev</title>
+  <rect width="64" height="64" rx="12" fill="#191919"/>
+  <g fill="none" stroke="#f85589" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <polyline points="16,20 28,32 16,44"/>
+    <line x1="34" y1="46" x2="50" y2="46">
+      <animate attributeName="opacity" values="1;1;0;0;1" keyTimes="0;0.45;0.5;0.95;1" dur="1.2s" repeatCount="indefinite"/>
+    </line>
+  </g>
+</svg>

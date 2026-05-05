@@ -21,7 +21,7 @@
     <meta name="theme-color" content="#f85589">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="stylesheet" href="/assets/css/style.css?v=">
-    <link rel="icon" type="image/x-icon" href="/assets/coelabw.ico">
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
   </head>
   <body>
     <a id="skip-to-content" href="#content">Skip to the content.</a>
@@ -29,14 +29,11 @@
     <header class="page-header wave-header" role="banner">
       <canvas id="wave-canvas"></canvas>
       <div class="page-header__inner">
-        <br>
         <div class="project-name glitch" data-text="coela.dev">
           coela.dev
           <span class="glitch-green">coela.dev</span>
         </div>
         <div class="project-tagline">Hardware and Software Developer</div>
-        <a href="./" class="btn">Portfolio</a>
-        <a href="/Contact" class="btn">Contact</a>
       </div>
     </header>
 
@@ -213,10 +210,555 @@
 <p>Engineer and developer who solves problems with hardware, software, and automation. Building performant, modular, and reliable systems-from embedded devices and robotics to virtualization and infrastructure automation.</p>
 
 <h2 id="software-and-embedded-systems-development"><strong>Software and Embedded Systems Development</strong></h2>
+<!-- Koilo Engine -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret" aria-hidden="true">[+]</span>
+    Koilo Engine: C++ Game Engine with Runtime Scripting
+  </summary>
+
+  <table><tr><td><a href="https://github.com/coelacant1/Koilo-Engine">GitHub</a></td><td class="project-contributors">
+            Solo Project
+          </td><td class="project-dates">
+            2025 - Now
+          </td></tr><tr><td colspan="3"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="3D scene rendered in Koilo Engine with KSL materials and an orbiting camera">
+          
+            <img src="/assets/images/Koilo1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="OBJ model loaded with textures and a keyframe camera track">
+          
+            <img src="/assets/images/Koilo2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Second OBJ scene demonstrating the asset import pipeline">
+          
+            <img src="/assets/images/Koilo7.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Multi-mesh stress test comparing GPU and software renderer output">
+          
+            <img src="/assets/images/Koilo3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="2D space shooter sample using signals, coroutines, collision, and wave spawning">
+          
+            <img src="/assets/images/Koilo4.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="KoiloScript language feature showcase">
+          
+            <img src="/assets/images/Koilo5.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Dynamic module loading via the runtime reflection bridge">
+          
+            <img src="/assets/images/Koilo6.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="UI demo running on top of the engine">
+          
+            <img src="/assets/images/Koilo8.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/Koilo1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/Koilo2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="image">
+      <img src="/assets/images/thumbs/Koilo7.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/Koilo3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="image">
+      <img src="/assets/images/thumbs/Koilo4.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="5" data-type="image">
+      <img src="/assets/images/thumbs/Koilo5.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="6" data-type="image">
+      <img src="/assets/images/thumbs/Koilo6.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="7" data-type="image">
+      <img src="/assets/images/thumbs/Koilo8.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>Koilo Engine is a compact C++17 game engine designed to run across both desktop systems and resource-constrained microcontrollers. Scenes and game logic are authored in KoiloScript (<code class="language-plaintext highlighter-rouge">.ks</code>), a bytecode-compiled scripting language with full access to engine internals through runtime reflection. This is the spiritual successor to ProtoTracer, generalizing the renderer and physics core into a portable engine usable on both PCs and embedded targets.</p>
+
+<p>Targets include Linux, Windows, Raspberry Pi, Teensy 4.x, ESP32-S3, and STM32.</p>
+
+<p>Features include:</p>
+<ul>
+  <li>Multi-backend rendering with a common interface
+    <ul>
+      <li>Vulkan, OpenGL 3.3, and a CPU software rasterizer</li>
+      <li>KSL shaders compile to both GLSL and CPU from the same source</li>
+    </ul>
+  </li>
+  <li>KoiloScript scripting language
+    <ul>
+      <li>Variables, functions, classes, coroutines, signals, imports, operator overloading</li>
+      <li>Direct calls into C++ objects through a reflection bridge</li>
+    </ul>
+  </li>
+  <li>Reflection system for exposing C++ classes to scripts via macros (no external codegen)</li>
+  <li>Hot-reloadable dynamic modules (<code class="language-plaintext highlighter-rouge">.so</code>/<code class="language-plaintext highlighter-rouge">.dll</code>) with lifecycle hooks and phased init</li>
+  <li>Scene graph and ECS with transform propagation and dense component storage</li>
+  <li>Animation: skeletal playback, keyframe camera tracks, morph target blending, material animation</li>
+  <li>Optimized math library: vectors, quaternions, matrices, transforms, splines, spatial indexing, noise, Kalman filters, FFT</li>
+  <li>Asset pipeline with the KoiloMesh format (morph targets) and OBJ/FBX offline conversion</li>
+  <li>Optional subsystems: AI (pathfinding, behavior trees, FSM), SDL2 audio, particles, LED panel output, HTTP live preview</li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- AetherControl -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret" aria-hidden="true">[+]</span>
+    AetherControl: Optimized CNC Firmware
+  </summary>
+
+  <table><tr><td><a href="https://github.com/coelacant1/AetherControl">GitHub</a></td><td class="project-contributors">
+            Solo Project
+          </td><td class="project-dates">
+            2023 - Now
+          </td></tr><tr><td colspan="3"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="video" data-caption="AetherControl on a CoreXY Pick n Place Machine">
+          
+            <div class="video-container">
+              <iframe id="yt-player-AetherControl-0" src="https://www.youtube.com/embed/4LFMXw97F7c?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+              </iframe>
+            </div>
+          
+        </div><div class="slide" data-type="image" data-caption="Example configuration for the AB motors of the Pick n Place">
+          
+            <img src="/assets/images/AetherControl1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="video" data-caption="Second example of AetherControl on the CoreXY Pick n Place assembling a PCB">
+          
+            <div class="video-container">
+              <iframe id="yt-player-AetherControl-2" src="https://www.youtube.com/embed/nXmGRJHBArY?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+              </iframe>
+            </div>
+          
+        </div><div class="slide" data-type="image" data-caption="Example configuration for the Z and R motors of the Pick n Place - end effector controller">
+          
+            <img src="/assets/images/AetherControl2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="video" data-caption="AetherControl controlling a 6-Axis 425mm stroke Stewart Platform">
+          
+            <div class="video-container">
+              <iframe id="yt-player-AetherControl-4" src="https://www.youtube.com/embed/DOIEZTeIsqk?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+              </iframe>
+            </div>
+          
+        </div><div class="slide" data-type="image" data-caption="Configuration file for the Stewart Platform">
+          
+            <img src="/assets/images/AetherControl3.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="video">
+      <img src="https://img.youtube.com/vi/4LFMXw97F7c/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/AetherControl1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="video">
+      <img src="https://img.youtube.com/vi/nXmGRJHBArY/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/AetherControl2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="4" data-type="video">
+      <img src="https://img.youtube.com/vi/DOIEZTeIsqk/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="5" data-type="image">
+      <img src="/assets/images/thumbs/AetherControl3.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>AetherControl is a streamlined and modular, C++ based motion-control firmware. It is built for real-time G-code parsing, motion planning, kinematics, and stepper-motor drive. Supports advanced kinematics like Stewart platforms, CoreXY machines, and Cartesian robots with dynamic trajectory planning.</p>
+
+<p>Implementations:</p>
+<ul>
+  <li>High-Speed CoreXY pick-and-place machine</li>
+  <li>High-Speed 6x 1000W AC Servo based 6-axis Stewart platform used as a flight simulator</li>
+</ul>
+
+<p>This includes features such as:</p>
+<ul>
+  <li>Support for Stewart platform, Cartesian, CoreXY, and custom kinematics configurations</li>
+  <li>Dynamic trajectory planning with velocity and acceleration constraints</li>
+  <li>G-code parsing and execution for CNC command interpretation</li>
+  <li>Real-time multi-axis synchronization and motion coordination</li>
+  <li>Multi-Controller synchronization</li>
+  <li>Layered modular architecture for easy customization and extension</li>
+  <li>Support for sensor calibration and automated testing routines</li>
+  <li>Optimized for ARM Cortex-M microcontrollers with efficient resource use</li>
+  <li>Custom PathPlanner optimizing for up to the number of GPIO pins available to drive the system</li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- Radtel RT-950 Pro Firmware -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret" aria-hidden="true">[+]</span>
+    RT-950 Pro: Open-Source Handheld Radio Firmware
+  </summary>
+
+  <table><tr><td><a href="https://github.com/coelacant1/Radtel-RT950-Pro-Firmware">GitHub</a></td><td class="project-contributors">
+            Contributors on GitHub
+          </td><td class="project-dates">
+            2025 - Now
+          </td></tr><tr><td colspan="3"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="Custom firmware running the hardware self-test on a real RT-950 Pro: AT32F403A + ST7789V LCD + dual BK4829 + SI4732 detected, GPIO/LED/backlight/band-relay/LCD bus verified">
+          
+            <img src="/assets/images/RT950Pro1.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/RT950Pro1.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>Open-source bare-metal firmware for the Radtel RT-950 Pro handheld radio, targeting the Artery AT32F403A (ARM Cortex-M4F @ 120 MHz, 1 MB flash, 96 KB SRAM). The custom firmware loads via the OEM bootloader using the standard <code class="language-plaintext highlighter-rouge">.BTF</code> update flow with no CRC or signature, so users can flash it through the existing OEM tool.</p>
+
+<p>Hardware bring-up confirmed on real hardware:</p>
+<ul>
+  <li>ST7789V 240x320 LCD via 8080 parallel bus with custom text rendering</li>
+  <li>Status LEDs, dual backlights, power latch, and band relay control</li>
+  <li>Boot, GPIO, and display fully functional under custom firmware</li>
+</ul>
+
+<p>Implemented (code-complete, hardware testing in progress):</p>
+<ul>
+  <li>Drivers: GPIO, SPI2 (flash), bit-bang SPI for BK4829, bit-bang I2C for SI4732, multiple UARTs, ADC2, DAC1+TIM6+DMA, dual-channel DMA, ST7789V 8080 parallel</li>
+  <li>RF: dual BK4829 transceiver driver with frequency programming, TX power control, and flash-stored calibration tables</li>
+  <li>Application: dual VFO (A/B/C), PTT with active-low relay routing, debounced keypad scanner, rotary encoder, S-meter, hierarchical 12-category menu, frequency entry</li>
+  <li>Digital modes: APRS (hardware FSK via BK4829, MIC-E packets), DTMF encode/decode, CTCSS/DCS tone generation</li>
+  <li>Receivers: SI4732 AM/FM/SSB broadcast, FM presets, NOAA weather channels</li>
+  <li>Storage: SPI flash layout for 990 channels, VFO configs and settings, wear-leveled NV storage, CPS programming over UART4</li>
+  <li>Comms: GPS NMEA parser, BLE data bridge, VOX</li>
+  <li>UI: splash screen, zone browser, text input, scanner, spectrum analyzer</li>
+  <li>Cross-band repeat with band-specific relay routing and verified PTT polarity for PA safety</li>
+  <li>Tooling: BTF firmware encrypt/decrypt, CPS flash read/write, serial firmware uploader with auto-restart</li>
+  <li>Hardware self-test suite covering backlight, UART, LCD, BK4829/SI4732 chip IDs, SPI flash JEDEC ID, ADC, DAC tone, keypad, GPS, and full system diagnostics</li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
+<!-- ProxmoxScripts -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret" aria-hidden="true">[+]</span>
+    ProxmoxScripts for Automated Infrastracture Management
+  </summary>
+
+  <table><tr><td><a href="https://coelacant.com/ProxmoxScripts/">Website</a></td><td><a href="https://github.com/coelacant1/ProxmoxScripts">GitHub</a></td><td class="project-contributors">
+            Contributors on GitHub
+          </td><td class="project-dates">
+            2024 - Now
+          </td></tr><tr><td colspan="4"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="Screenshot of the custom terminal user interface for CCPVE">
+          
+            <img src="/assets/images/ProxmoxScripts5.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Example of running a command/script available through CCPVE">
+          
+            <img src="/assets/images/ProxmoxScripts4.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Example of automatically cloning, SSHing to the Windows VM, configuring the IP and cloning the next VM">
+          
+            <img src="/assets/images/ProxmoxScripts2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Example of batch cloning with CCPVE">
+          
+            <img src="/assets/images/ProxmoxScripts1.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/ProxmoxScripts5.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/ProxmoxScripts4.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="image">
+      <img src="/assets/images/thumbs/ProxmoxScripts2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/ProxmoxScripts1.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>ProxmoxScripts is a collection of Bash scripts for streamlining and automating the management of Proxmox Virtual Environment (PVE) clusters. This was developed to help manage and automate Proxmox virtualization infrastructure. The scripts are accessible via a console-based menu for overview, navigation, and execution. Users can read help information for each script as well as get a description of required parameters.</p>
+
+<p>Features include:</p>
+<ul>
+  <li>Cluster configuration tools
+    <ul>
+      <li>Adding Nodes - Remote configuration with IP</li>
+      <li>Cluster Creation - From list of IPs</li>
+      <li>Cluster Deletion - Separating all nodes from cluster</li>
+    </ul>
+  </li>
+  <li>Firewall management
+    <ul>
+      <li>Bulk LXC/VM Firewall Management</li>
+      <li>Automated host default firewall configuration</li>
+    </ul>
+  </li>
+  <li>High Availability
+    <ul>
+      <li>Create HA Group and add nodes</li>
+      <li>Bulk add LXC/VMs to HA group</li>
+    </ul>
+  </li>
+  <li>Host Automation and Configuration
+    <ul>
+      <li>Remove local-lvm storage and expand local storage (for Hyper-Converged setups)</li>
+      <li>Bulk Microcode configuration/Timezone Configuration/Upgrades</li>
+      <li>Generic PWM and Dell IPMI hardware fan control adapting to CPU temperatures</li>
+      <li>Enable CPU Scaling Governer</li>
+      <li>Enable GPU Passthrough to VM</li>
+      <li>Enable IOMMU</li>
+      <li>Enable GPU Sharing with LXC</li>
+      <li>Optimize for X3D hardware</li>
+      <li>Live memory testing</li>
+      <li>System optimization for nested virtualization</li>
+    </ul>
+  </li>
+  <li>LXC and VM Configuration and Management</li>
+  <li>Networking
+    <ul>
+      <li>Bulk adding network bonds</li>
+      <li>List all VM/LXC IDs with their associated MAC address</li>
+      <li>Bulk set DNS on cluster</li>
+      <li>Find VM ID from MAC address</li>
+      <li>Automated host-to-host network speed test</li>
+      <li>Bulk update network interface names</li>
+      <li>Bulk host uplink speed test</li>
+    </ul>
+  </li>
+  <li>Remote VM/LXC Management
+    <ul>
+      <li>Integration with Apache Guacamole
+        <ul>
+          <li>Bulk add/delete RDP connections</li>
+          <li>Bulk add/remove SFTP server to RDP connections</li>
+          <li>Bulk list RDP configuration</li>
+          <li>Bulk update/remove drive redirection</li>
+          <li>Pull Guacamole authentication token</li>
+        </ul>
+      </li>
+      <li>Configuration of virtual machine static IPs over SSH for Debian/Ubuntu/Windows</li>
+    </ul>
+  </li>
+  <li>Generate a resource report for all VMs/LXCs</li>
+  <li>Automated penetration testing/port scanning</li>
+  <li>Storage Automation
+    <ul>
+      <li>Ceph Configuration
+        <ul>
+          <li>Bulk create OSDs</li>
+          <li>Edit crushmap (decompiles, prints directory, allows user edit, then recompile)</li>
+          <li>Bulk restart managers/monitors/metadata servers/OSDs</li>
+          <li>Set pool to minimum size of 1 and to a size of 1 (testing/temporary data)</li>
+          <li>Create automated deep scrubbing with a chron job</li>
+          <li>Automate creating a single drive Ceph node (shares host OS and Ceph data)</li>
+          <li>Bulk OSD sparsify</li>
+          <li>Bulk start stopped disks</li>
+          <li>Full data wipe on specified disk (clear Ceph and all remnants of user data)</li>
+        </ul>
+      </li>
+      <li>Disk Benchmarking</li>
+      <li>Bulk VM disk deletion</li>
+      <li>Bulk VM disk deletion for disks with snapshots</li>
+      <li>Trim all filesystems of resources using Qemu Agent or LXC</li>
+      <li>Automate disk spin down</li>
+      <li>Pass host directory to LXC</li>
+      <li>Update stale mounts</li>
+    </ul>
+  </li>
+  <li>Custom User Interface library</li>
+</ul>
+<div class="project-iframe-bounds">
+            <iframe src="https://coelacant.com/ProxmoxScripts/" class="project-iframe" allowfullscreen="">
+            </iframe>
+          </div></td>
+    </tr>
+  </table>
+</details>
+
+<!-- pAWS - Proxmox Automated Web Services -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret" aria-hidden="true">[+]</span>
+    pAWS: Self-Hosted Cloud on Proxmox VE
+  </summary>
+
+  <table><tr><td><a href="https://github.com/coelacant1/Proxmox-Automated-Web-Services">GitHub</a></td><td class="project-contributors">
+            Solo Project
+          </td><td class="project-dates">
+            2025 - Now
+          </td></tr><tr><td colspan="3"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="pAWS dashboard giving a single view of compute, storage, and cluster health">
+          
+            <img src="/assets/images/pAWS1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Container/VM overview with lifecycle controls">
+          
+            <img src="/assets/images/pAWS2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Browser-based VNC console for direct VM access">
+          
+            <img src="/assets/images/pAWS3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Administration panel for users, infrastructure connections, and templates">
+          
+            <img src="/assets/images/pAWS4.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/pAWS1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="1" data-type="image">
+      <img src="/assets/images/thumbs/pAWS2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="image">
+      <img src="/assets/images/thumbs/pAWS3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="3" data-type="image">
+      <img src="/assets/images/thumbs/pAWS4.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>pAWS (Proxmox Automated Web Services) is a self-hosted, AWS-like infrastructure platform built on Proxmox VE. It provides multi-tenant compute, networking, storage, backups, and monitoring through a unified web UI and REST API, turning a Proxmox cluster into a managed cloud-style environment.</p>
+
+<p>Targeted feature set:</p>
+<ul>
+  <li>Compute: VMs and LXC containers from templates with full lifecycle management, browser-based console (noVNC/xterm.js), snapshots, and import/export</li>
+  <li>Networking: VPCs with subnets, security groups, service endpoints, and DNS</li>
+  <li>Storage: S3-compatible object storage backed by Ceph RadosGW, with file browser, sharing, and presigned URLs</li>
+  <li>Backups: Proxmox Backup Server integration with scheduled plans and point-in-time restore</li>
+  <li>Monitoring: per-resource metrics, alarms, and log aggregation</li>
+  <li>Auth: local accounts (JWT) plus OAuth2/OIDC, with RBAC roles (Admin/Operator/Member/Viewer)</li>
+  <li>Admin: user management, template catalog, quotas, and audit logging</li>
+</ul>
+
+<p>Stack:</p>
+<ul>
+  <li>Frontend: React 19, TypeScript, Vite, Tailwind CSS v4</li>
+  <li>Backend: Python 3.11+, FastAPI, async SQLAlchemy 2, Pydantic v2</li>
+  <li>Data: PostgreSQL 16, Redis 7, Celery</li>
+  <li>Infrastructure: Proxmox VE 8+, Ceph RadosGW, Proxmox Backup Server</li>
+  <li>Cluster credentials are AES-256-GCM encrypted at rest using a stable master key</li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
 <!-- ProtoTracer -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     ProtoTracer: Embedded 3D Rendering Engine
   </summary>
 
@@ -496,555 +1038,10 @@
   </table>
 </details>
 
-<!-- Koilo Engine -->
-<details class="project-details">
-  <summary class="noselect">
-    <span class="caret">▸</span>
-    Koilo Engine: C++ Game Engine with Runtime Scripting
-  </summary>
-
-  <table><tr><td><a href="https://github.com/coelacant1/Koilo-Engine">GitHub</a></td><td class="project-contributors">
-            Solo Project
-          </td><td class="project-dates">
-            2025 - Now
-          </td></tr><tr><td colspan="3"><div class="mini-gallery">
-  <div class="slider">
-    <button type="button" class="nav prev">&lt;</button>
-    <div class="slides"><div class="slide active" data-type="image" data-caption="3D scene rendered in Koilo Engine with KSL materials and an orbiting camera">
-          
-            <img src="/assets/images/Koilo1.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="OBJ model loaded with textures and a keyframe camera track">
-          
-            <img src="/assets/images/Koilo2.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="Second OBJ scene demonstrating the asset import pipeline">
-          
-            <img src="/assets/images/Koilo7.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="Multi-mesh stress test comparing GPU and software renderer output">
-          
-            <img src="/assets/images/Koilo3.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="2D space shooter sample using signals, coroutines, collision, and wave spawning">
-          
-            <img src="/assets/images/Koilo4.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="KoiloScript language feature showcase">
-          
-            <img src="/assets/images/Koilo5.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="Dynamic module loading via the runtime reflection bridge">
-          
-            <img src="/assets/images/Koilo6.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="UI demo running on top of the engine">
-          
-            <img src="/assets/images/Koilo8.jpg" alt="" />
-          
-        </div></div>
-    <button type="button" class="nav next">&gt;</button>
-  </div>
-
-  <div class="slide-caption"></div>
-
-  <div class="thumbnails">
-  
-    
-    <div class="thumb active" data-index="0" data-type="image">
-      <img src="/assets/images/thumbs/Koilo1.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="1" data-type="image">
-      <img src="/assets/images/thumbs/Koilo2.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="2" data-type="image">
-      <img src="/assets/images/thumbs/Koilo7.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="3" data-type="image">
-      <img src="/assets/images/thumbs/Koilo3.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="4" data-type="image">
-      <img src="/assets/images/thumbs/Koilo4.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="5" data-type="image">
-      <img src="/assets/images/thumbs/Koilo5.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="6" data-type="image">
-      <img src="/assets/images/thumbs/Koilo6.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="7" data-type="image">
-      <img src="/assets/images/thumbs/Koilo8.jpg" alt="" />
-    </div>
-  
-  </div>
-</div>
-<p>Koilo Engine is a compact C++17 game engine designed to run across both desktop systems and resource-constrained microcontrollers. Scenes and game logic are authored in KoiloScript (<code class="language-plaintext highlighter-rouge">.ks</code>), a bytecode-compiled scripting language with full access to engine internals through runtime reflection. This is the spiritual successor to ProtoTracer, generalizing the renderer and physics core into a portable engine usable on both PCs and embedded targets.</p>
-
-<p>Targets include Linux, Windows, Raspberry Pi, Teensy 4.x, ESP32-S3, and STM32.</p>
-
-<p>Features include:</p>
-<ul>
-  <li>Multi-backend rendering with a common interface
-    <ul>
-      <li>Vulkan, OpenGL 3.3, and a CPU software rasterizer</li>
-      <li>KSL shaders compile to both GLSL and CPU from the same source</li>
-    </ul>
-  </li>
-  <li>KoiloScript scripting language
-    <ul>
-      <li>Variables, functions, classes, coroutines, signals, imports, operator overloading</li>
-      <li>Direct calls into C++ objects through a reflection bridge</li>
-    </ul>
-  </li>
-  <li>Reflection system for exposing C++ classes to scripts via macros (no external codegen)</li>
-  <li>Hot-reloadable dynamic modules (<code class="language-plaintext highlighter-rouge">.so</code>/<code class="language-plaintext highlighter-rouge">.dll</code>) with lifecycle hooks and phased init</li>
-  <li>Scene graph and ECS with transform propagation and dense component storage</li>
-  <li>Animation: skeletal playback, keyframe camera tracks, morph target blending, material animation</li>
-  <li>Optimized math library: vectors, quaternions, matrices, transforms, splines, spatial indexing, noise, Kalman filters, FFT</li>
-  <li>Asset pipeline with the KoiloMesh format (morph targets) and OBJ/FBX offline conversion</li>
-  <li>Optional subsystems: AI (pathfinding, behavior trees, FSM), SDL2 audio, particles, LED panel output, HTTP live preview</li>
-</ul>
-</td>
-    </tr>
-  </table>
-</details>
-
-<!-- AetherControl -->
-<details class="project-details">
-  <summary class="noselect">
-    <span class="caret">▸</span>
-    AetherControl: Optimized CNC Firmware
-  </summary>
-
-  <table><tr><td><a href="https://github.com/coelacant1/AetherControl">GitHub</a></td><td class="project-contributors">
-            Solo Project
-          </td><td class="project-dates">
-            2023 - Now
-          </td></tr><tr><td colspan="3"><div class="mini-gallery">
-  <div class="slider">
-    <button type="button" class="nav prev">&lt;</button>
-    <div class="slides"><div class="slide active" data-type="video" data-caption="AetherControl on a CoreXY Pick n Place Machine">
-          
-            <div class="video-container">
-              <iframe id="yt-player-AetherControl-0" src="https://www.youtube.com/embed/4LFMXw97F7c?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
-              </iframe>
-            </div>
-          
-        </div><div class="slide" data-type="image" data-caption="Example configuration for the AB motors of the Pick n Place">
-          
-            <img src="/assets/images/AetherControl1.jpg" alt="" />
-          
-        </div><div class="slide" data-type="video" data-caption="Second example of AetherControl on the CoreXY Pick n Place assembling a PCB">
-          
-            <div class="video-container">
-              <iframe id="yt-player-AetherControl-2" src="https://www.youtube.com/embed/nXmGRJHBArY?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
-              </iframe>
-            </div>
-          
-        </div><div class="slide" data-type="image" data-caption="Example configuration for the Z and R motors of the Pick n Place - end effector controller">
-          
-            <img src="/assets/images/AetherControl2.jpg" alt="" />
-          
-        </div><div class="slide" data-type="video" data-caption="AetherControl controlling a 6-Axis 425mm stroke Stewart Platform">
-          
-            <div class="video-container">
-              <iframe id="yt-player-AetherControl-4" src="https://www.youtube.com/embed/DOIEZTeIsqk?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
-              </iframe>
-            </div>
-          
-        </div><div class="slide" data-type="image" data-caption="Configuration file for the Stewart Platform">
-          
-            <img src="/assets/images/AetherControl3.jpg" alt="" />
-          
-        </div></div>
-    <button type="button" class="nav next">&gt;</button>
-  </div>
-
-  <div class="slide-caption"></div>
-
-  <div class="thumbnails">
-  
-    
-    <div class="thumb active" data-index="0" data-type="video">
-      <img src="https://img.youtube.com/vi/4LFMXw97F7c/hqdefault.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="1" data-type="image">
-      <img src="/assets/images/thumbs/AetherControl1.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="2" data-type="video">
-      <img src="https://img.youtube.com/vi/nXmGRJHBArY/hqdefault.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="3" data-type="image">
-      <img src="/assets/images/thumbs/AetherControl2.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="4" data-type="video">
-      <img src="https://img.youtube.com/vi/DOIEZTeIsqk/hqdefault.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="5" data-type="image">
-      <img src="/assets/images/thumbs/AetherControl3.jpg" alt="" />
-    </div>
-  
-  </div>
-</div>
-<p>AetherControl is a streamlined and modular, C++ based motion-control firmware. It is built for real-time G-code parsing, motion planning, kinematics, and stepper-motor drive. Supports advanced kinematics like Stewart platforms, CoreXY machines, and Cartesian robots with dynamic trajectory planning.</p>
-
-<p>Implementations:</p>
-<ul>
-  <li>High-Speed CoreXY pick-and-place machine</li>
-  <li>High-Speed 6x 1000W AC Servo based 6-axis Stewart platform used as a flight simulator</li>
-</ul>
-
-<p>This includes features such as:</p>
-<ul>
-  <li>Support for Stewart platform, Cartesian, CoreXY, and custom kinematics configurations</li>
-  <li>Dynamic trajectory planning with velocity and acceleration constraints</li>
-  <li>G-code parsing and execution for CNC command interpretation</li>
-  <li>Real-time multi-axis synchronization and motion coordination</li>
-  <li>Multi-Controller synchronization</li>
-  <li>Layered modular architecture for easy customization and extension</li>
-  <li>Support for sensor calibration and automated testing routines</li>
-  <li>Optimized for ARM Cortex-M microcontrollers with efficient resource use</li>
-  <li>Custom PathPlanner optimizing for up to the number of GPIO pins available to drive the system</li>
-</ul>
-</td>
-    </tr>
-  </table>
-</details>
-
-<!-- Radtel RT-950 Pro Firmware -->
-<details class="project-details">
-  <summary class="noselect">
-    <span class="caret">▸</span>
-    RT-950 Pro: Open-Source Handheld Radio Firmware
-  </summary>
-
-  <table><tr><td><a href="https://github.com/coelacant1/Radtel-RT950-Pro-Firmware">GitHub</a></td><td class="project-contributors">
-            Contributors on GitHub
-          </td><td class="project-dates">
-            2025 - Now
-          </td></tr><tr><td colspan="3"><div class="mini-gallery">
-  <div class="slider">
-    <button type="button" class="nav prev">&lt;</button>
-    <div class="slides"><div class="slide active" data-type="image" data-caption="Custom firmware running the hardware self-test on a real RT-950 Pro: AT32F403A + ST7789V LCD + dual BK4829 + SI4732 detected, GPIO/LED/backlight/band-relay/LCD bus verified">
-          
-            <img src="/assets/images/RT950Pro1.jpg" alt="" />
-          
-        </div></div>
-    <button type="button" class="nav next">&gt;</button>
-  </div>
-
-  <div class="slide-caption"></div>
-
-  <div class="thumbnails">
-  
-    
-    <div class="thumb active" data-index="0" data-type="image">
-      <img src="/assets/images/thumbs/RT950Pro1.jpg" alt="" />
-    </div>
-  
-  </div>
-</div>
-<p>Open-source bare-metal firmware for the Radtel RT-950 Pro handheld radio, targeting the Artery AT32F403A (ARM Cortex-M4F @ 120 MHz, 1 MB flash, 96 KB SRAM). The custom firmware loads via the OEM bootloader using the standard <code class="language-plaintext highlighter-rouge">.BTF</code> update flow with no CRC or signature, so users can flash it through the existing OEM tool.</p>
-
-<p>Hardware bring-up confirmed on real hardware:</p>
-<ul>
-  <li>ST7789V 240x320 LCD via 8080 parallel bus with custom text rendering</li>
-  <li>Status LEDs, dual backlights, power latch, and band relay control</li>
-  <li>Boot, GPIO, and display fully functional under custom firmware</li>
-</ul>
-
-<p>Implemented (code-complete, hardware testing in progress):</p>
-<ul>
-  <li>Drivers: GPIO, SPI2 (flash), bit-bang SPI for BK4829, bit-bang I2C for SI4732, multiple UARTs, ADC2, DAC1+TIM6+DMA, dual-channel DMA, ST7789V 8080 parallel</li>
-  <li>RF: dual BK4829 transceiver driver with frequency programming, TX power control, and flash-stored calibration tables</li>
-  <li>Application: dual VFO (A/B/C), PTT with active-low relay routing, debounced keypad scanner, rotary encoder, S-meter, hierarchical 12-category menu, frequency entry</li>
-  <li>Digital modes: APRS (hardware FSK via BK4829, MIC-E packets), DTMF encode/decode, CTCSS/DCS tone generation</li>
-  <li>Receivers: SI4732 AM/FM/SSB broadcast, FM presets, NOAA weather channels</li>
-  <li>Storage: SPI flash layout for 990 channels, VFO configs and settings, wear-leveled NV storage, CPS programming over UART4</li>
-  <li>Comms: GPS NMEA parser, BLE data bridge, VOX</li>
-  <li>UI: splash screen, zone browser, text input, scanner, spectrum analyzer</li>
-  <li>Cross-band repeat with band-specific relay routing and verified PTT polarity for PA safety</li>
-  <li>Tooling: BTF firmware encrypt/decrypt, CPS flash read/write, serial firmware uploader with auto-restart</li>
-  <li>Hardware self-test suite covering backlight, UART, LCD, BK4829/SI4732 chip IDs, SPI flash JEDEC ID, ADC, DAC tone, keypad, GPS, and full system diagnostics</li>
-</ul>
-</td>
-    </tr>
-  </table>
-</details>
-
-<!-- ProxmoxScripts -->
-<details class="project-details">
-  <summary class="noselect">
-    <span class="caret">▸</span>
-    ProxmoxScripts for Automated Infrastracture Management
-  </summary>
-
-  <table><tr><td><a href="https://coelacant.com/ProxmoxScripts/">Website</a></td><td><a href="https://github.com/coelacant1/ProxmoxScripts">GitHub</a></td><td class="project-contributors">
-            Contributors on GitHub
-          </td><td class="project-dates">
-            2024 - Now
-          </td></tr><tr><td colspan="4"><div class="mini-gallery">
-  <div class="slider">
-    <button type="button" class="nav prev">&lt;</button>
-    <div class="slides"><div class="slide active" data-type="image" data-caption="Screenshot of the custom terminal user interface for CCPVE">
-          
-            <img src="/assets/images/ProxmoxScripts5.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="Example of running a command/script available through CCPVE">
-          
-            <img src="/assets/images/ProxmoxScripts4.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="Example of automatically cloning, SSHing to the Windows VM, configuring the IP and cloning the next VM">
-          
-            <img src="/assets/images/ProxmoxScripts2.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="Example of batch cloning with CCPVE">
-          
-            <img src="/assets/images/ProxmoxScripts1.jpg" alt="" />
-          
-        </div></div>
-    <button type="button" class="nav next">&gt;</button>
-  </div>
-
-  <div class="slide-caption"></div>
-
-  <div class="thumbnails">
-  
-    
-    <div class="thumb active" data-index="0" data-type="image">
-      <img src="/assets/images/thumbs/ProxmoxScripts5.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="1" data-type="image">
-      <img src="/assets/images/thumbs/ProxmoxScripts4.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="2" data-type="image">
-      <img src="/assets/images/thumbs/ProxmoxScripts2.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="3" data-type="image">
-      <img src="/assets/images/thumbs/ProxmoxScripts1.jpg" alt="" />
-    </div>
-  
-  </div>
-</div>
-<p>ProxmoxScripts is a collection of Bash scripts for streamlining and automating the management of Proxmox Virtual Environment (PVE) clusters. This was developed to help manage and automate Proxmox virtualization infrastructure. The scripts are accessible via a console-based menu for overview, navigation, and execution. Users can read help information for each script as well as get a description of required parameters.</p>
-
-<p>Features include:</p>
-<ul>
-  <li>Cluster configuration tools
-    <ul>
-      <li>Adding Nodes - Remote configuration with IP</li>
-      <li>Cluster Creation - From list of IPs</li>
-      <li>Cluster Deletion - Separating all nodes from cluster</li>
-    </ul>
-  </li>
-  <li>Firewall management
-    <ul>
-      <li>Bulk LXC/VM Firewall Management</li>
-      <li>Automated host default firewall configuration</li>
-    </ul>
-  </li>
-  <li>High Availability
-    <ul>
-      <li>Create HA Group and add nodes</li>
-      <li>Bulk add LXC/VMs to HA group</li>
-    </ul>
-  </li>
-  <li>Host Automation and Configuration
-    <ul>
-      <li>Remove local-lvm storage and expand local storage (for Hyper-Converged setups)</li>
-      <li>Bulk Microcode configuration/Timezone Configuration/Upgrades</li>
-      <li>Generic PWM and Dell IPMI hardware fan control adapting to CPU temperatures</li>
-      <li>Enable CPU Scaling Governer</li>
-      <li>Enable GPU Passthrough to VM</li>
-      <li>Enable IOMMU</li>
-      <li>Enable GPU Sharing with LXC</li>
-      <li>Optimize for X3D hardware</li>
-      <li>Live memory testing</li>
-      <li>System optimization for nested virtualization</li>
-    </ul>
-  </li>
-  <li>LXC and VM Configuration and Management</li>
-  <li>Networking
-    <ul>
-      <li>Bulk adding network bonds</li>
-      <li>List all VM/LXC IDs with their associated MAC address</li>
-      <li>Bulk set DNS on cluster</li>
-      <li>Find VM ID from MAC address</li>
-      <li>Automated host-to-host network speed test</li>
-      <li>Bulk update network interface names</li>
-      <li>Bulk host uplink speed test</li>
-    </ul>
-  </li>
-  <li>Remote VM/LXC Management
-    <ul>
-      <li>Integration with Apache Guacamole
-        <ul>
-          <li>Bulk add/delete RDP connections</li>
-          <li>Bulk add/remove SFTP server to RDP connections</li>
-          <li>Bulk list RDP configuration</li>
-          <li>Bulk update/remove drive redirection</li>
-          <li>Pull Guacamole authentication token</li>
-        </ul>
-      </li>
-      <li>Configuration of virtual machine static IPs over SSH for Debian/Ubuntu/Windows</li>
-    </ul>
-  </li>
-  <li>Generate a resource report for all VMs/LXCs</li>
-  <li>Automated penetration testing/port scanning</li>
-  <li>Storage Automation
-    <ul>
-      <li>Ceph Configuration
-        <ul>
-          <li>Bulk create OSDs</li>
-          <li>Edit crushmap (decompiles, prints directory, allows user edit, then recompile)</li>
-          <li>Bulk restart managers/monitors/metadata servers/OSDs</li>
-          <li>Set pool to minimum size of 1 and to a size of 1 (testing/temporary data)</li>
-          <li>Create automated deep scrubbing with a chron job</li>
-          <li>Automate creating a single drive Ceph node (shares host OS and Ceph data)</li>
-          <li>Bulk OSD sparsify</li>
-          <li>Bulk start stopped disks</li>
-          <li>Full data wipe on specified disk (clear Ceph and all remnants of user data)</li>
-        </ul>
-      </li>
-      <li>Disk Benchmarking</li>
-      <li>Bulk VM disk deletion</li>
-      <li>Bulk VM disk deletion for disks with snapshots</li>
-      <li>Trim all filesystems of resources using Qemu Agent or LXC</li>
-      <li>Automate disk spin down</li>
-      <li>Pass host directory to LXC</li>
-      <li>Update stale mounts</li>
-    </ul>
-  </li>
-  <li>Custom User Interface library</li>
-</ul>
-<div class="project-iframe-bounds">
-            <iframe src="https://coelacant.com/ProxmoxScripts/" class="project-iframe" allowfullscreen="">
-            </iframe>
-          </div></td>
-    </tr>
-  </table>
-</details>
-
-<!-- pAWS - Proxmox Automated Web Services -->
-<details class="project-details">
-  <summary class="noselect">
-    <span class="caret">▸</span>
-    Proxmox Automated Web Services: Self-Hosted AWS-Style Platform on Proxmox VE
-  </summary>
-
-  <table><tr><td><a href="https://github.com/coelacant1/Proxmox-Automated-Web-Services">GitHub</a></td><td class="project-contributors">
-            Solo Project
-          </td><td class="project-dates">
-            2025 - Now
-          </td></tr><tr><td colspan="3"><div class="mini-gallery">
-  <div class="slider">
-    <button type="button" class="nav prev">&lt;</button>
-    <div class="slides"><div class="slide active" data-type="image" data-caption="pAWS dashboard giving a single view of compute, storage, and cluster health">
-          
-            <img src="/assets/images/pAWS1.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="Container/VM overview with lifecycle controls">
-          
-            <img src="/assets/images/pAWS2.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="Browser-based VNC console for direct VM access">
-          
-            <img src="/assets/images/pAWS3.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="Administration panel for users, infrastructure connections, and templates">
-          
-            <img src="/assets/images/pAWS4.jpg" alt="" />
-          
-        </div></div>
-    <button type="button" class="nav next">&gt;</button>
-  </div>
-
-  <div class="slide-caption"></div>
-
-  <div class="thumbnails">
-  
-    
-    <div class="thumb active" data-index="0" data-type="image">
-      <img src="/assets/images/thumbs/pAWS1.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="1" data-type="image">
-      <img src="/assets/images/thumbs/pAWS2.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="2" data-type="image">
-      <img src="/assets/images/thumbs/pAWS3.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="3" data-type="image">
-      <img src="/assets/images/thumbs/pAWS4.jpg" alt="" />
-    </div>
-  
-  </div>
-</div>
-<p>pAWS (Proxmox Automated Web Services) is a self-hosted, AWS-like infrastructure platform built on Proxmox VE. It provides multi-tenant compute, networking, storage, backups, and monitoring through a unified web UI and REST API, turning a Proxmox cluster into a managed cloud-style environment.</p>
-
-<p>Targeted feature set:</p>
-<ul>
-  <li>Compute: VMs and LXC containers from templates with full lifecycle management, browser-based console (noVNC/xterm.js), snapshots, and import/export</li>
-  <li>Networking: VPCs with subnets, security groups, service endpoints, and DNS</li>
-  <li>Storage: S3-compatible object storage backed by Ceph RadosGW, with file browser, sharing, and presigned URLs</li>
-  <li>Backups: Proxmox Backup Server integration with scheduled plans and point-in-time restore</li>
-  <li>Monitoring: per-resource metrics, alarms, and log aggregation</li>
-  <li>Auth: local accounts (JWT) plus OAuth2/OIDC, with RBAC roles (Admin/Operator/Member/Viewer)</li>
-  <li>Admin: user management, template catalog, quotas, and audit logging</li>
-</ul>
-
-<p>Stack:</p>
-<ul>
-  <li>Frontend: React 19, TypeScript, Vite, Tailwind CSS v4</li>
-  <li>Backend: Python 3.11+, FastAPI, async SQLAlchemy 2, Pydantic v2</li>
-  <li>Data: PostgreSQL 16, Redis 7, Celery</li>
-  <li>Infrastructure: Proxmox VE 8+, Ceph RadosGW, Proxmox Backup Server</li>
-  <li>Cluster credentials are AES-256-GCM encrypted at rest using a stable master key</li>
-</ul>
-</td>
-    </tr>
-  </table>
-</details>
-
 <!-- OpenDACT -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     OpenDACT: Automatic Delta Kinematics Calibration Software
   </summary>
 
@@ -1114,7 +1111,7 @@
 <!-- Proxmox Load Balancer -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Proxmox VE Load Balancer
   </summary>
 
@@ -1190,7 +1187,7 @@
 <!-- Teensy WebHID -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Teensy WebHID Firmware Loader
   </summary>
 
@@ -1277,7 +1274,7 @@
 <!-- Bambu Lab Cloud API -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Bambu Lab Cloud API: Python Library and Compatibility Layer
   </summary>
 
@@ -1376,7 +1373,7 @@
 <!-- Proxmox GPU Passthrough Optimizations -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Proxmox GPU Passthrough for Workstations
   </summary>
 
@@ -1421,7 +1418,7 @@
 <!-- Stewart Platform -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Stewart Platform - Firmware and Hardware for Flight Simulator
   </summary>
 
@@ -1526,7 +1523,7 @@
 <!-- Pick n Place -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Custom High-Speed CoreXY Pick-and-Place
   </summary>
 
@@ -1813,7 +1810,7 @@
 <!-- Delta 3D Printer -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Custom High-Speed Delta 3D Printer
   </summary>
 
@@ -1949,7 +1946,7 @@
 <!-- 4-Axis Cutter + Fusion Post Processor -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Custom 4-Axis Machines and Fusion 360 Post Processors
   </summary>
 
@@ -2032,7 +2029,7 @@
 <!-- 4-Axis Automated Gimbal -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     4-Axis Automated Gimbal for MEMS-Based Motion Processor Testing
   </summary>
 
@@ -2134,7 +2131,7 @@
 <!-- Custom Electronics Design -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Power Electronics and Control Systems
   </summary>
 
@@ -2434,7 +2431,7 @@
 <!-- High-Speed CoreXY 3D Printer -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Customized Voron CoreXY 3D Printer
   </summary>
 
@@ -2553,7 +2550,7 @@
 <!-- Wearable 3D Designs -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Wearable 3D Printed Designs with Integrated Electronics
   </summary>
 
@@ -2801,7 +2798,7 @@
 <!-- Dual Tilt Quadcopter -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Dual-Tilt Rotor Quadcopter
   </summary>
 
@@ -2868,7 +2865,7 @@ Highlights:</li>
 <!-- Other Projects-->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Other Product Prototyping, Engineering, and Software
   </summary>
 
@@ -3050,7 +3047,7 @@ Highlights:</li>
 <!-- Advanced Manufacturing Technologies -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Advanced Additive Manufacturing Technologies
   </summary>
 
@@ -3270,7 +3267,7 @@ Highlights:</li>
 <!-- Pick and Place Line -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Installation and Operation of Automated Pick-and-Place Assembly Line
   </summary>
 
@@ -3382,7 +3379,7 @@ Highlights:</li>
 <!-- Large Scale 3d Printing -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Design and Creation of Large-Scale Custom Printers
   </summary>
 
@@ -3438,7 +3435,7 @@ Highlights:</li>
 <!-- Print Farm Implementation and Management -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Print Farm Implementation and Management
   </summary>
 
@@ -3501,7 +3498,7 @@ Highlights:</li>
 <!-- Custom Tooling -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Injection Molding, Vacuum Forming, and Specialized Tooling Design
   </summary>
 
@@ -3799,7 +3796,7 @@ Highlights:</li>
 <!-- Other Manufacturing Expertise -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Other Manufacturing Technology Expertise
   </summary>
 
@@ -3978,7 +3975,7 @@ Highlights:</li>
 <!-- Hyper-Converged Infrastructure -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Hyper-Converged Infrastructure (HCI) Design and Implementation
   </summary>
 
@@ -4198,7 +4195,7 @@ Highlights:</li>
 <!-- Networking and Security -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Networking and Security
   </summary>
 
@@ -4349,7 +4346,7 @@ Highlights:</li>
 <!-- Active Directory Management -->
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Active Directory Management
   </summary>
 
@@ -4438,7 +4435,7 @@ Highlights:</li>
 <h3 id="information-on-coeladev"><strong>Information on coela.dev</strong></h3>
 <details class="project-details">
   <summary class="noselect">
-    <span class="caret">▸</span>
+    <span class="caret" aria-hidden="true">[+]</span>
     Coela.dev Website
   </summary>
 
@@ -4453,7 +4450,7 @@ Highlights:</li>
 
 
       <footer class="site-footer">
-        <span class="site-footer-credits">© 2025 - All Rights Reserved.</span>
+        <span class="site-footer-credits">© 2026 - All Rights Reserved.</span>
         <br>
         <br>
       </footer>
