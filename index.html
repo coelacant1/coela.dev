@@ -3,18 +3,18 @@
   <head>
     <meta charset="UTF-8">
 <!-- Begin Jekyll SEO tag v2.8.0 -->
-<title>Portfolio | coela.dev</title>
+<title>Portfolio | S.T.R.</title>
 <meta name="generator" content="Jekyll v4.4.1" />
 <meta property="og:title" content="Portfolio" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Portfolio" />
 <meta property="og:description" content="Portfolio" />
-<meta property="og:site_name" content="coela.dev" />
+<meta property="og:site_name" content="S.T.R." />
 <meta property="og:type" content="website" />
 <meta name="twitter:card" content="summary" />
 <meta property="twitter:title" content="Portfolio" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","description":"Portfolio","headline":"Portfolio","name":"coela.dev","url":"/"}</script>
+{"@context":"https://schema.org","@type":"WebSite","description":"Portfolio","headline":"Portfolio","name":"S.T.R.","url":"/"}</script>
 <!-- End Jekyll SEO tag -->
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,188 +26,27 @@
   <body>
     <a id="skip-to-content" href="#content">Skip to the content.</a>
 
-    <header class="page-header wave-header" role="banner">
-      <canvas id="wave-canvas"></canvas>
+    <header class="page-header" role="banner">
       <div class="page-header__inner">
-        <div class="project-name glitch" data-text="coela.dev">
-          coela.dev
-          <span class="glitch-green">coela.dev</span>
-        </div>
-        <div class="project-tagline">Hardware and Software Developer</div>
+        <div class="project-name">S.T.R.</div>
+        <div class="project-tagline">Embedded Systems · Custom Electronics · Infrastructure Automation</div>
+        <nav class="page-nav" aria-label="Primary">
+          <a href="#product-prototyping-and-engineering">Hardware</a>
+          <a href="#software-and-embedded-systems-development">Software</a>
+          <a href="#advanced-manufacturing">Manufacturing</a>
+          <a href="#high-performance-computing-and-systems-infrastructure">Infrastructure</a>
+          <a href="https://github.com/coelacant1?tab=repositories" target="_blank" rel="noopener">GitHub</a>
+        </nav>
       </div>
     </header>
 
-    <script>
-      const header    = document.querySelector('.page-header');
-      const canvas    = document.getElementById('wave-canvas');
-      const ctx       = canvas.getContext('2d');
-      const lineCount = 6;
-      const baseColor = '#e891b4';
-
-      function hexToHSL(H) {
-        let r = 0, g = 0, b = 0;
-        if (H.length === 4) {
-          r = "0x" + H[1] + H[1];
-          g = "0x" + H[2] + H[2];
-          b = "0x" + H[3] + H[3];
-        } else if (H.length === 7) {
-          r = "0x" + H[1] + H[2];
-          g = "0x" + H[3] + H[4];
-          b = "0x" + H[5] + H[6];
-        }
-        r /= 255; g /= 255; b /= 255;
-        let cmin = Math.min(r,g,b),
-            cmax = Math.max(r,g,b),
-            delta = cmax - cmin,
-            h = 0, s = 0, l = 0;
-
-        if (delta === 0) h = 0;
-        else if (cmax === r) h = ((g - b) / delta) % 6;
-        else if (cmax === g) h = (b - r) / delta + 2;
-        else h = (r - g) / delta + 4;
-        h = Math.round(h * 60);
-        if (h < 0) h += 360;
-
-        l = (cmax + cmin) / 2;
-
-        s = delta === 0 ? 0 : delta / (1 - Math.abs(2*l -1));
-        s = +(s * 100).toFixed(1);
-        l = +(l * 100).toFixed(1);
-
-        return { h, s, l };
-      }
-
-      function hslToHex(h, s, l) {
-        s /= 100;
-        l /= 100;
-        let c = (1 - Math.abs(2*l - 1)) * s,
-            x = c * (1 - Math.abs((h / 60) % 2 - 1)),
-            m = l - c/2,
-            r = 0, g = 0, b = 0;
-
-        if (0 <= h && h < 60)      { r = c; g = x; b = 0; }
-        else if (60 <= h && h < 120) { r = x; g = c; b = 0; }
-        else if (120 <= h && h < 180) { r = 0; g = c; b = x; }
-        else if (180 <= h && h < 240) { r = 0; g = x; b = c; }
-        else if (240 <= h && h < 300) { r = x; g = 0; b = c; }
-        else { r = c; g = 0; b = x; }
-
-        r = Math.round((r + m) * 255);
-        g = Math.round((g + m) * 255);
-        b = Math.round((b + m) * 255);
-
-        return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
-      }
-
-      function hexToRGB(hex) {
-        let r = 0, g = 0, b = 0;
-        if (hex.length === 4) {
-          r = parseInt(hex[1] + hex[1], 16);
-          g = parseInt(hex[2] + hex[2], 16);
-          b = parseInt(hex[3] + hex[3], 16);
-        } else if (hex.length === 7) {
-          r = parseInt(hex[1] + hex[2], 16);
-          g = parseInt(hex[3] + hex[4], 16);
-          b = parseInt(hex[5] + hex[6], 16);
-        }
-        return [r, g, b];
-      }
-
-      let waves = [];
-      let lastTimestamp = 0;
-
-      function resizeCanvas() {
-        canvas.width  = header.clientWidth;
-        canvas.height = header.clientHeight;
-        initWaves();
-      }
-
-      window.addEventListener('DOMContentLoaded', resizeCanvas);
-      window.addEventListener('resize', resizeCanvas);
-
-      const alphaTop = 1.0;
-      const alphaBottom = 0.15;
-
-      function initWaves() {
-        const spacing = canvas.height / (lineCount + 1);
-        waves = [];
-
-        const baseHSL = hexToHSL(baseColor);
-
-        for (let i = 0; i < lineCount; i++) {
-          const satShift = (Math.random() * 30) - 15;
-          const lightShift = (Math.random() * 30) - 15;
-          const s = Math.min(100, Math.max(0, baseHSL.s + satShift));
-          const l = Math.min(100, Math.max(0, baseHSL.l + lightShift));
-          const baseHue = baseHSL.h + (Math.random() * 60 - 30) % 360;
-          const hueShiftSpeed = 0.072 + (Math.random() * 0.01 - 0.005);
-
-          const alpha = alphaTop + (alphaBottom - alphaTop) * (i / (lineCount - 1));
-
-          waves.push({
-            y:           spacing * (i + 1),
-            amplitude:   spacing * (0.4 + Math.random() * 0.3),
-            wavelength:  canvas.width / (2 + Math.random() * 6),
-            phase:       Math.random() * Math.PI * 2,
-            speed:       0.001 + Math.random() * 0.005,
-            thickness:   4 + (lineCount - i) * 2,
-            baseHue,
-            saturation:  s,
-            lightness:   l,
-            hueShiftSpeed,
-            alpha,
-            color:       ''
-          });
-        }
-      }
-
-      function drawFrame(timestamp = 0) {
-        if (!lastTimestamp) lastTimestamp = timestamp;
-        const elapsed = timestamp - lastTimestamp;
-        lastTimestamp = timestamp;
-
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = '#121517';
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-        ctx.globalCompositeOperation = 'normal';
-
-        waves.forEach(w => {
-          const newHue = (w.baseHue + timestamp * w.hueShiftSpeed) % 360;
-          w.color = hslToHex(newHue, w.saturation, w.lightness);
-          w.rgb = hexToRGB(w.color);
-
-          drawSineWave(w);
-          w.phase += w.speed;
-        });
-
-        ctx.globalCompositeOperation = 'source-over';
-
-        requestAnimationFrame(drawFrame);
-      }
-
-      function drawSineWave({ y, amplitude, wavelength, phase, thickness, rgb, alpha }) {
-        ctx.beginPath();
-        const step = 10;
-        for (let x = 0; x <= canvas.width + step; x += step) {
-          const theta = (x / wavelength) + phase;
-          const yy    = y + Math.sin(theta) * amplitude;
-          x === 0 ? ctx.moveTo(x, yy) : ctx.lineTo(x, yy);
-        }
-
-        ctx.strokeStyle = `rgba(${rgb[0]}, ${rgb[1]}, ${rgb[2]}, ${alpha})`;
-        ctx.lineWidth   = thickness;
-        ctx.lineCap     = 'round';
-        ctx.stroke();
-      }
-
-      requestAnimationFrame(drawFrame);
-    </script>
 
     <main id="content" class="main-content" role="main">
       <!-- # **Meet Coela**{: .typewriter } -->
 
-<p>Engineer and developer who solves problems with hardware, software, and automation. Building performant, modular, and reliable systems-from embedded devices and robotics to virtualization and infrastructure automation.</p>
+<p>Embedded software, electrical, and systems engineer with 8+ years shipping firmware and hardware across defense, industrial, and consumer applications. <strong>Custom mixed-signal and power PCB design</strong> in Altium, <strong>bare-metal and RTOS firmware</strong>, motion and motor control, hardware security analysis, and the <strong>Proxmox/Ceph platforms</strong> behind it all.</p>
+
+<p><em>Some of my professional work is not publicly shareable; the projects below are the subset I can show. Selected work spans embedded firmware, mixed-signal hardware, motion control, and large-scale compute infrastructure.</em></p>
 
 <h2 id="product-prototyping-and-engineering"><strong>Product Prototyping and Engineering</strong></h2>
 <!-- Stewart Platform -->
@@ -298,6 +137,15 @@
   </div>
 </div>
 <p>The Stewart Platform project is an adaptation of a commercial system. The machine originally shipped with MDBox motion controllers, controlled via ethernet. Because of high latency it was adapted with a custom controller, upgraded 1000W AC servos for the linear actuators, and custom firmware and software. This was the start of the AetherControl project detailed above. The attached repository contains the interface code that takes target XYZ Cartesian coordinates and Euler rotations, then computes the six actuator lengths for AetherControl. The goal of the project was to adapt the system to handle high-frequency vibration and high-speed motion for research on flight dynamics.</p>
+
+<p>Hardware specifications and rebuild details:</p>
+<ul>
+  <li>1,000 lb payload capacity, 0.45 m/s peak linear velocity, 1G upward acceleration</li>
+  <li>Six 1000W AC servos driven directly by a single custom controller, replacing two networked controllers with ~100 ms update latency</li>
+  <li>Motor selection done as a trade study across stepper, BLDC, and AC servo options sized for the target torque/inertia and dynamic response</li>
+  <li>Custom power electronics, real-time C++ firmware, and an inverse-kinematics simulator validated end-to-end before integration</li>
+  <li>Now the experimental backbone for ongoing university aerospace dynamics research, supporting <strong>10+ peer-reviewed publications</strong> across ASEE, ASME, and aerospace-engineering venues, plus external industry collaborations</li>
+</ul>
 
 <p>The inverse kinematics repository allows for custom user-defined configuration parameters, taking in:</p>
 <ul>
@@ -609,7 +457,7 @@
   
   </div>
 </div>
-<p>This project started was to create a small yet capable Pick-and-Place machine. This machine has been used to manufacture RGB LED displays which each have over 500 LEDs, power distribution boards, custom LED control electronics, etc.</p>
+<p>Designed and built a custom CoreXY pick-and-place machine for in-house SMT assembly of RGB LED displays (500+ LEDs each), power-distribution boards, and custom LED control electronics.</p>
 
 <p>Features:</p>
 <ul>
@@ -947,7 +795,7 @@
   
   </div>
 </div>
-<p>Designed and built custom power-conversion, motion‑control systems, and other electronics:</p>
+<p>Designed and brought up mixed-signal, power-conversion, LED-control, sensor, and motion-control PCBs for production hardware, lab equipment, and custom automation systems:</p>
 <ul>
   <li>Custom Buck Power Regulators: Gallium nitride-based buck converters stepping 60 V down to 5 V at up to 20 A</li>
   <li>LoRa Remote Firework Igniter: 12-channel, 2 A LoRa-based firework-igniter controller prototype</li>
@@ -1233,24 +1081,24 @@
           </td></tr><tr><td colspan="3"><div class="mini-gallery">
   <div class="slider">
     <button type="button" class="nav prev">&lt;</button>
-    <div class="slides"><div class="slide active" data-type="video" data-caption="Full-color RGB test of the display system - Gamma design">
+    <div class="slides"><div class="slide active" data-type="video" data-caption="Internal stereoscopic vision system on the Gamma Design">
           
             <div class="video-container">
-              <iframe id="yt-player-Wearable3D-0" src="https://www.youtube.com/embed/dfjvdJtsRFg?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
-              </iframe>
-            </div>
-          
-        </div><div class="slide" data-type="video" data-caption="Internal stereoscopic vision system on the Gamma Design">
-          
-            <div class="video-container">
-              <iframe id="yt-player-Wearable3D-1" src="https://www.youtube.com/embed/CoMETUpcQyA?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+              <iframe id="yt-player-Wearable3D-0" src="https://www.youtube.com/embed/CoMETUpcQyA?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
               </iframe>
             </div>
           
         </div><div class="slide" data-type="video" data-caption="Display testing the vision system">
           
             <div class="video-container">
-              <iframe id="yt-player-Wearable3D-2" src="https://www.youtube.com/embed/cp83inwCs3M?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+              <iframe id="yt-player-Wearable3D-1" src="https://www.youtube.com/embed/cp83inwCs3M?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+              </iframe>
+            </div>
+          
+        </div><div class="slide" data-type="video" data-caption="Full-color RGB test of the display system - Gamma design">
+          
+            <div class="video-container">
+              <iframe id="yt-player-Wearable3D-2" src="https://www.youtube.com/embed/dfjvdJtsRFg?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
               </iframe>
             </div>
           
@@ -1333,17 +1181,17 @@
   
     
     <div class="thumb active" data-index="0" data-type="video">
-      <img src="https://img.youtube.com/vi/dfjvdJtsRFg/hqdefault.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="1" data-type="video">
       <img src="https://img.youtube.com/vi/CoMETUpcQyA/hqdefault.jpg" alt="" />
     </div>
   
     
-    <div class="thumb" data-index="2" data-type="video">
+    <div class="thumb" data-index="1" data-type="video">
       <img src="https://img.youtube.com/vi/cp83inwCs3M/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="2" data-type="video">
+      <img src="https://img.youtube.com/vi/dfjvdJtsRFg/hqdefault.jpg" alt="" />
     </div>
   
     
@@ -1906,6 +1754,33 @@ Highlights:</li>
   </table>
 </details>
 
+<!-- Consumer Electronics Production -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret" aria-hidden="true">[+]</span>
+    Small-Batch Consumer Electronics Production
+  </summary>
+
+  <table><tr><td class="project-contributors">
+            Solo Project
+          </td><td class="project-dates">
+            2020 - Now
+          </td></tr><tr><td colspan="2"><p>Founded and operated a small electronics business that took custom wearable-display and LED-controller hardware from prototype through production, firmware release, fulfillment, and customer support.</p>
+
+<p>Beyond prototyping, several of the projects on this page were taken to small-batch production and shipped to customers worldwide. This involved owning the full pipeline end-to-end:</p>
+<ul>
+  <li>Custom mixed-signal and power PCB design in Altium - LED drivers (HUB75, WS2812), USB-C PD, DC-DC buck converters, and motor/sensor controllers</li>
+  <li>In-house SMT assembly down to 0402 components - stencil printing, custom CoreXY pick-and-place, reflow, microscope rework, and functional test</li>
+  <li>Production fixtures - test harnesses, calibration jigs, programming rigs, and packaging tooling</li>
+  <li>Firmware build and release pipelines, customer-facing documentation, and direct customer support for hardware and firmware issues</li>
+  <li>Multiple PCB designs taken from prototype to production
+The wearable display, LED controller, and protogen-platform projects below all flowed through this pipeline.</li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
 <!-- Other Projects-->
 <details class="project-details">
   <summary class="noselect">
@@ -1916,29 +1791,9 @@ Highlights:</li>
   <table><tr><td colspan="1"><div class="mini-gallery">
   <div class="slider">
     <button type="button" class="nav prev">&lt;</button>
-    <div class="slides"><div class="slide active" data-type="image" data-caption="Render of the stroboscope enclosure">
-          
-            <img src="/assets/images/CAD26.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="View of the internals of the stroboscope enclosure">
-          
-            <img src="/assets/images/CAD23.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="Electronics of the stroboscope">
-          
-            <img src="/assets/images/Electronics3.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="Electronics and test fit in the stroboscope enclsoure">
-          
-            <img src="/assets/images/Electronics7.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="Copper DMLS metal prints with integrated cooling channels">
+    <div class="slides"><div class="slide active" data-type="image" data-caption="Copper DMLS metal prints with integrated cooling channels">
           
             <img src="/assets/images/AdvancedAdditive1.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="CAD for the Drives Hardware">
-          
-            <img src="/assets/images/CAD20.jpg" alt="" />
           
         </div><div class="slide" data-type="image" data-caption="LoRa based remote firework controller">
           
@@ -1947,10 +1802,6 @@ Highlights:</li>
         </div><div class="slide" data-type="image" data-caption="Controllers for LED driving">
           
             <img src="/assets/images/Electronics29.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="Environmental temperature monitors">
-          
-            <img src="/assets/images/Electronics32.jpg" alt="" />
           
         </div><div class="slide" data-type="image" data-caption="End Effector Controller for the high speed pick and place">
           
@@ -1988,13 +1839,6 @@ Highlights:</li>
           
             <img src="/assets/images/Misc4.jpg" alt="" />
           
-        </div><div class="slide" data-type="video" data-caption="Prototype electrospinner with the high voltage power supply set up for testing">
-          
-            <div class="video-container">
-              <iframe id="yt-player-OtherProjects-18" src="https://www.youtube.com/embed/X0HMRT9F_YY?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
-              </iframe>
-            </div>
-          
         </div><div class="slide" data-type="image" data-caption="Miscellaneous prototyping work">
           
             <img src="/assets/images/Misc6.jpg" alt="" />
@@ -2011,6 +1855,45 @@ Highlights:</li>
           
             <img src="/assets/images/Misc9.jpg" alt="" />
           
+        </div><div class="slide" data-type="image" data-caption="Render of the stroboscope enclosure">
+          
+            <img src="/assets/images/CAD26.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="View of the internals of the stroboscope enclosure">
+          
+            <img src="/assets/images/CAD23.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Electronics of the stroboscope">
+          
+            <img src="/assets/images/Electronics3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Electronics and test fit in the stroboscope enclosure">
+          
+            <img src="/assets/images/Electronics7.jpg" alt="" />
+          
+        </div><div class="slide" data-type="video" data-caption="Prototype electrospinner with the high voltage power supply set up for testing">
+          
+            <div class="video-container">
+              <iframe id="yt-player-OtherProjects-20" src="https://www.youtube.com/embed/X0HMRT9F_YY?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+              </iframe>
+            </div>
+          
+        </div><div class="slide" data-type="image" data-caption="CAD for the multi-mode motor drives hardware (3-phase AC / BLDC / DC)">
+          
+            <img src="/assets/images/CAD20.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Networked environmental monitoring stations">
+          
+            <img src="/assets/images/Electronics32.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="10ft tall delta-style 3D printer laying on its side - had to be moved to a separate room to go vertical">
+          
+            <img src="/assets/images/10ftDelta.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="First test print of the large-format delta 3D printer">
+          
+            <img src="/assets/images/10ftDeltaTest.jpg" alt="" />
+          
         </div></div>
     <button type="button" class="nav next">&gt;</button>
   </div>
@@ -2021,137 +1904,149 @@ Highlights:</li>
   
     
     <div class="thumb active" data-index="0" data-type="image">
-      <img src="/assets/images/thumbs/CAD26.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="1" data-type="image">
-      <img src="/assets/images/thumbs/CAD23.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="2" data-type="image">
-      <img src="/assets/images/thumbs/Electronics3.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="3" data-type="image">
-      <img src="/assets/images/thumbs/Electronics7.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="4" data-type="image">
       <img src="/assets/images/thumbs/AdvancedAdditive1.jpg" alt="" />
     </div>
   
     
-    <div class="thumb" data-index="5" data-type="image">
-      <img src="/assets/images/thumbs/CAD20.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="6" data-type="image">
+    <div class="thumb" data-index="1" data-type="image">
       <img src="/assets/images/thumbs/Electronics9.jpg" alt="" />
     </div>
   
     
-    <div class="thumb" data-index="7" data-type="image">
+    <div class="thumb" data-index="2" data-type="image">
       <img src="/assets/images/thumbs/Electronics29.jpg" alt="" />
     </div>
   
     
-    <div class="thumb" data-index="8" data-type="image">
-      <img src="/assets/images/thumbs/Electronics32.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="9" data-type="image">
+    <div class="thumb" data-index="3" data-type="image">
       <img src="/assets/images/thumbs/Electronics27.jpg" alt="" />
     </div>
   
     
-    <div class="thumb" data-index="10" data-type="image">
+    <div class="thumb" data-index="4" data-type="image">
       <img src="/assets/images/thumbs/PolyJet1.jpg" alt="" />
     </div>
   
     
-    <div class="thumb" data-index="11" data-type="image">
+    <div class="thumb" data-index="5" data-type="image">
       <img src="/assets/images/thumbs/CAD3.jpg" alt="" />
     </div>
   
     
-    <div class="thumb" data-index="12" data-type="image">
+    <div class="thumb" data-index="6" data-type="image">
       <img src="/assets/images/thumbs/Electronics6.jpg" alt="" />
     </div>
   
     
-    <div class="thumb" data-index="13" data-type="image">
+    <div class="thumb" data-index="7" data-type="image">
       <img src="/assets/images/thumbs/Electronics24.jpg" alt="" />
     </div>
   
     
-    <div class="thumb" data-index="14" data-type="image">
+    <div class="thumb" data-index="8" data-type="image">
       <img src="/assets/images/thumbs/Misc1.jpg" alt="" />
     </div>
   
     
-    <div class="thumb" data-index="15" data-type="image">
+    <div class="thumb" data-index="9" data-type="image">
       <img src="/assets/images/thumbs/Misc2.jpg" alt="" />
     </div>
   
     
-    <div class="thumb" data-index="16" data-type="image">
+    <div class="thumb" data-index="10" data-type="image">
       <img src="/assets/images/thumbs/Misc3.jpg" alt="" />
     </div>
   
     
-    <div class="thumb" data-index="17" data-type="image">
+    <div class="thumb" data-index="11" data-type="image">
       <img src="/assets/images/thumbs/Misc4.jpg" alt="" />
     </div>
   
     
-    <div class="thumb" data-index="18" data-type="video">
-      <img src="https://img.youtube.com/vi/X0HMRT9F_YY/hqdefault.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="19" data-type="image">
+    <div class="thumb" data-index="12" data-type="image">
       <img src="/assets/images/thumbs/Misc6.jpg" alt="" />
     </div>
   
     
-    <div class="thumb" data-index="20" data-type="image">
+    <div class="thumb" data-index="13" data-type="image">
       <img src="/assets/images/thumbs/Misc7.jpg" alt="" />
     </div>
   
     
-    <div class="thumb" data-index="21" data-type="image">
+    <div class="thumb" data-index="14" data-type="image">
       <img src="/assets/images/thumbs/Misc8.jpg" alt="" />
     </div>
   
     
-    <div class="thumb" data-index="22" data-type="image">
+    <div class="thumb" data-index="15" data-type="image">
       <img src="/assets/images/thumbs/Misc9.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="16" data-type="image">
+      <img src="/assets/images/thumbs/CAD26.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="17" data-type="image">
+      <img src="/assets/images/thumbs/CAD23.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="18" data-type="image">
+      <img src="/assets/images/thumbs/Electronics3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="19" data-type="image">
+      <img src="/assets/images/thumbs/Electronics7.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="20" data-type="video">
+      <img src="https://img.youtube.com/vi/X0HMRT9F_YY/hqdefault.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="21" data-type="image">
+      <img src="/assets/images/thumbs/CAD20.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="22" data-type="image">
+      <img src="/assets/images/thumbs/Electronics32.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="23" data-type="image">
+      <img src="/assets/images/thumbs/10ftDelta.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="24" data-type="image">
+      <img src="/assets/images/thumbs/10ftDeltaTest.jpg" alt="" />
     </div>
   
   </div>
 </div>
 <ul>
-  <li>Electrospinner: Designed and built an automated electrospinning device for researching polymer nanofibers (With Co-Worker)</li>
   <li>Custom Print Farm: Designed and built custom compact and portable CoreXY stackable 3D printer farm (With Co-Workers)</li>
   <li>Tripteron 3D Printer: Developed a Cartesian-parallel 3D printer prototype</li>
   <li>Reflow Heater Controller: Created hardware and firmware for a reflow heater, featuring PID temperature control and programmable profiles</li>
   <li>Printer Conversion for PEEK/Ultem: Modified a Stratasys FDM printer’s hot end, control electronics, and build chamber to print high-temperature materials (PEEK/Ultem/Polycarbonate)</li>
   <li>Ozone Water Treatment System: Created a residential ozone generator for point-of-entry water sanitation, including ozone injection and feedback control with dissolved-ozone sensors</li>
-  <li>Environment Monitoring System: Built a networked sensor station (BME280 + ESP8266) for temperature, humidity, and pressure monitoring, with data upload to a cloud dashboard and low-power deep-sleep operation</li>
   <li>Face Shield Production (COVID, 6,000+ units): Organized and scaled PETG face-shield fabrication using laser-cut visors, injection-molded frames, and die-cut elastic (with co-worker)</li>
   <li>High-Speed USB Current Device: Created a portable measurement device capable of sampling voltage and current at kilohertz rates-ideal for reverse-engineering ongoing tasks on electronics</li>
   <li>Medical Mattress Squeeze Table: Built a pneumatic squeeze-table assembly used in medical mattress manufacturing (with Co-Worker)</li>
   <li>Medical Mattress/Pad Heater: Built custom heating apparatus for sealing seams on medical mattress pads (with Co-Worker)</li>
   <li>Window Clip Manufacturing: Recreated obsolete window-clip parts via bulk additive manufacturing to replace thousands of failed components (with co-worker)</li>
   <li>Multi-Color FDM Production: Designed prototype parts for a consumer product and managed printing and post-processing of 500 multi-color FDM components</li>
-  <li>Custom Drives Hardware: Designed and built drives electronics for three-phase AC motors, inductive motors, and DC motors in a single enclosure</li>
-  <li>Topographic Map: Designed and created 12’x5’ topographic map for education and research center (with Co-Worker)</li>
+  <li>Custom 10ft Delta 3D Printer: Co-designed and built a 10ft tall x 6ft wide large-format Delta 3D printer prototype in 45 days; used OpenDACT for kinematic calibration on a 4 ft diameter bed (with Co-Workers)</li>
+  <li>High-Precision Stroboscope: Microcontroller-driven LED stroboscope with custom optics, power electronics, and a CNC-machined enclosure for high-speed photography and rotating-machinery analysis</li>
+  <li>Programmable Electrospinner: Automated electrospinning device with high-voltage power supply, syringe-pump control, and a programmable interface for polymer-nanofiber research</li>
+  <li>Multi-Mode Motor Drives Hardware: Three-phase AC, BLDC, and brushed-DC motor controller in a single enclosure, with integrated power electronics and a common control interface used across multiple research projects</li>
+  <li>Biomedical Haptics Driver: Motor and actuator driver hardware for a biomedical haptics research prototype</li>
+  <li>Environmental Monitoring System: Networked sensor stations (BME280 + ESP-class MCUs) for temperature, humidity, and pressure logging with cloud upload and low-power deep-sleep operation</li>
 </ul>
 </td>
     </tr>
@@ -2263,7 +2158,8 @@ Highlights:</li>
   <li>Layered modular architecture for easy customization and extension</li>
   <li>Support for sensor calibration and automated testing routines</li>
   <li>Optimized for ARM Cortex-M microcontrollers with efficient resource use</li>
-  <li>Custom PathPlanner optimizing for up to the number of GPIO pins available to drive the system</li>
+  <li>Deterministic path planner for high-channel-count step generation on GPIO-constrained ARM microcontrollers</li>
+  <li>Demonstrated in production on an in-house custom CoreXY pick-and-place at sustained 800 mm/s travel and 2G acceleration</li>
 </ul>
 </td>
     </tr>
@@ -2321,6 +2217,8 @@ Highlights:</li>
   
   </div>
 </div>
+<p><em>Open-source - 53+ stars on <a href="https://github.com/coelacant1/OpenDACT">GitHub</a>, with an active international user base.</em></p>
+
 <p>OpenDACT (Open-source Delta Automatic Calibration Tool) is a calibration tool for delta robots. It calibrates generic delta robots and automates calibration of Repetier-firmware-controlled delta robots (primarily 3D printers). The calibration uses forward and inverse kinematics measurements to make adjustments. It takes Z-height readings at key XY points on a flat plate (print bed) to iteratively calculate hardware offsets. Users can manually adjust hardware or apply software offsets to correct for imperfections.</p>
 
 <p>This software solves for the following mechanical offsets:</p>
@@ -2418,7 +2316,9 @@ Highlights:</li>
   
   </div>
 </div>
-<p>A documentation effort and Python library for communicating with Bambu Lab 3D printers through their Cloud API, MQTT protocol, and local connections. Originally built as a read-only proxy for managing a print farm.</p>
+<p><em>Open-source - 108+ stars on <a href="https://github.com/coelacant1/Bambu-Lab-Cloud-API">GitHub</a>. Deployed as the data layer for a 40+ printer industrial digital-twin research project for a major aerospace prime.</em></p>
+
+<p>A documentation effort and Python library for communicating with Bambu Lab 3D printers through their Cloud API, MQTT protocol, and local connections. Originally built as a read-only proxy and data layer for a 43-printer fleet / digital-twin workflow, then generalized into a library for monitoring and controlling print farms without needing developer mode on the printers.</p>
 
 <p>Features include:</p>
 <ul>
@@ -2516,13 +2416,6 @@ Highlights:</li>
               </iframe>
             </div>
           
-        </div><div class="slide" data-type="pdf" data-caption="Controller guide for hardware optimized for ProtoTracer">
-          
-            <div class="pdf-container">
-              <iframe data-src="/assets/pdfs/ProtogenControllerV2-0.pdf" data-type="pdf" loading="lazy">
-              </iframe>
-            </div>
-          
         </div></div>
     <button type="button" class="nav next">&gt;</button>
   </div>
@@ -2576,13 +2469,10 @@ Highlights:</li>
       <img src="https://img.youtube.com/vi/orijCE6EDM4/hqdefault.jpg" alt="" />
     </div>
   
-    
-    <div class="thumb" data-index="9" data-type="pdf">
-      <img src="/assets/icons/pdf-icon.png" alt="" />
-    </div>
-  
   </div>
 </div>
+<p><em>Open-source - 205+ stars, 50+ forks on <a href="https://github.com/coelacant1/ProtoTracer">GitHub</a>.</em></p>
+
 <p>ProtoTracer is a C++ based 3D rendering engine optimized for microcontrollers. It calculates dynamic 3D scenes in real-time, reacting to sensor or user inputs to adapt the output. This software is designed to be modular for use in other projects.</p>
 
 <p>This includes features such as:</p>
@@ -2804,6 +2694,67 @@ Highlights:</li>
   </table>
 </details>
 
+<!-- RT-950 Pro Firmware -->
+<details class="project-details">
+  <summary class="noselect">
+    <span class="caret" aria-hidden="true">[+]</span>
+    RT-950 Pro: Open-Source Handheld Radio Firmware
+  </summary>
+
+  <table><tr><td><a href="https://github.com/coelacant1/Radtel-RT950-Pro-Firmware">GitHub</a></td><td class="project-contributors">
+            Contributors on GitHub
+          </td><td class="project-dates">
+            2025 - Now
+          </td></tr><tr><td colspan="3"><div class="mini-gallery">
+  <div class="slider">
+    <button type="button" class="nav prev">&lt;</button>
+    <div class="slides"><div class="slide active" data-type="image" data-caption="Custom firmware running the hardware self-test on a real RT-950 Pro: AT32F403A + ST7789V LCD + dual BK4829 + SI4732 detected, GPIO/LED/backlight/band-relay/LCD bus verified">
+          
+            <img src="/assets/images/RT950Pro1.jpg" alt="" />
+          
+        </div></div>
+    <button type="button" class="nav next">&gt;</button>
+  </div>
+
+  <div class="slide-caption"></div>
+
+  <div class="thumbnails">
+  
+    
+    <div class="thumb active" data-index="0" data-type="image">
+      <img src="/assets/images/thumbs/RT950Pro1.jpg" alt="" />
+    </div>
+  
+  </div>
+</div>
+<p>Open-source bare-metal firmware for the Radtel RT-950 Pro handheld radio, targeting the Artery AT32F403A (ARM Cortex-M4F @ 120 MHz, 1 MB flash, 96 KB SRAM). Built by reverse-engineering the stock firmware from disassembly into thousands of annotated assembly instructions, then reconstructing drivers, peripheral access, and protocol behavior in maintainable C. The custom firmware loads through the OEM bootloader using the standard <code class="language-plaintext highlighter-rouge">.BTF</code> update flow with no CRC or signature, so users can flash it through the existing OEM tool.</p>
+
+<p>Hardware bring-up confirmed on real hardware:</p>
+<ul>
+  <li>ST7789V 240x320 LCD via 8080 parallel bus with custom text rendering</li>
+  <li>Status LEDs, dual backlights, power latch, and band relay control</li>
+  <li>Boot, GPIO, and display fully functional under custom firmware</li>
+</ul>
+
+<p>Implemented (code-complete, hardware testing in progress):</p>
+<ul>
+  <li>Drivers: GPIO, SPI2 (flash), bit-bang SPI for BK4829, bit-bang I2C for SI4732, multiple UARTs, ADC2, DAC1+TIM6+DMA, dual-channel DMA, ST7789V 8080 parallel</li>
+  <li>RF: dual BK4829 transceiver driver with frequency programming, TX power control, and flash-stored calibration tables</li>
+  <li>Application: dual VFO (A/B/C), PTT with active-low relay routing, debounced keypad scanner, rotary encoder, S-meter, hierarchical 12-category menu, frequency entry</li>
+  <li>Digital modes: APRS (hardware FSK via BK4829, MIC-E packets), DTMF encode/decode, CTCSS/DCS tone generation</li>
+  <li>Receivers: SI4732 AM/FM/SSB broadcast, FM presets, NOAA weather channels</li>
+  <li>Storage: SPI flash layout for 990 channels, VFO configs and settings, wear-leveled NV storage, CPS programming over UART4</li>
+  <li>Comms: GPS NMEA parser, BLE data bridge, VOX</li>
+  <li>UI: splash screen, zone browser, text input, scanner, spectrum analyzer</li>
+  <li>Cross-band repeat with band-specific relay routing and verified PTT polarity for PA safety</li>
+  <li>Tooling: BTF firmware encrypt/decrypt, CPS flash read/write, serial firmware uploader with auto-restart</li>
+  <li>Hardware self-test suite covering backlight, UART, LCD, BK4829/SI4732 chip IDs, SPI flash JEDEC ID, ADC, DAC tone, keypad, GPS, and full system diagnostics</li>
+</ul>
+</td>
+    </tr>
+  </table>
+</details>
+
 <!-- Teensy WebHID -->
 <details class="project-details">
   <summary class="noselect">
@@ -2990,7 +2941,7 @@ Highlights:</li>
 <details class="project-details">
   <summary class="noselect">
     <span class="caret" aria-hidden="true">[+]</span>
-    Co-Implementation of a 10,000 sqft Makerspace
+    Co-Implementation of a Large-Scale Manufacturing Lab
   </summary>
 
   <table><tr><td class="project-contributors">
@@ -3190,11 +3141,11 @@ Highlights:</li>
   
   </div>
 </div>
-<p>Co-implemented a 10,000 sqft makerspace from concept through to daily operation.</p>
+<p>Co-authored the technical scope for a large-scale, externally funded manufacturing lab, then co-led the design, build-out, and equipment commissioning. Owned the back-end infrastructure-network, compute, lab IT, and capital-equipment uptime-that keeps the space running.</p>
 
 <p>Scope of work:</p>
 <ul>
-  <li>Co-author on the grant proposal that secured the funding for the space</li>
+  <li>Co-author on the funding proposal that brought the space online</li>
   <li>Worked directly with the architects on space layout, zoning of fabrication areas, utilities, ventilation, and safety planning</li>
   <li>Coordinated with the builders during construction to keep the design intent intact and resolve build-out questions in real time</li>
   <li>Filled out the space: specified, sourced, received, and placed all of the equipment</li>
@@ -3401,7 +3352,7 @@ Highlights:</li>
   
   </div>
 </div>
-<p>Operator and technician for additive manufacturing platforms. Sharing responsibility for hands‑on testing, day‑to‑day operation, and performing preventative maintenance and repairs.</p>
+<p>Shared responsibility for commissioning, operating, maintaining, and supporting uptime on advanced additive manufacturing platforms across metal DMLS, SLS, PolyJet, binder jetting, composite FDM, and large FDM printer fleets.</p>
 
 <p>Key systems managed:</p>
 <ul>
@@ -3489,21 +3440,88 @@ Highlights:</li>
   </table>
 </details>
 
-<!-- Custom Tooling -->
+<!-- Other Manufacturing Expertise -->
 <details class="project-details">
   <summary class="noselect">
     <span class="caret" aria-hidden="true">[+]</span>
-    Injection Molding, Vacuum Forming, and Specialized Tooling Design
+    Manufacturing, Tooling, and Fixturing Expertise
   </summary>
 
   <table><tr><td class="project-contributors">
-            Face Shields with Co-Worker | Rest are Solo Projects
+            Production tooling shared with Co-Worker | Fixtures and most other work solo
           </td><td class="project-dates">
             2011 - Now
           </td></tr><tr><td colspan="2"><div class="mini-gallery">
   <div class="slider">
     <button type="button" class="nav prev">&lt;</button>
-    <div class="slides"><div class="slide active" data-type="image" data-caption="Final STEP design sent to a local manufacturer to EDM the mold and begin production on ~6000 face shields">
+    <div class="slides"><div class="slide active" data-type="video" data-caption="Cutting brass on a waterjet">
+          
+            <div class="video-container">
+              <iframe id="yt-player-OtherManufacturing-0" src="https://www.youtube.com/embed/c9JMAAcL7XQ?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+              </iframe>
+            </div>
+          
+        </div><div class="slide" data-type="video" data-caption="Laser etching brass">
+          
+            <div class="video-container">
+              <iframe id="yt-player-OtherManufacturing-1" src="https://www.youtube.com/embed/5qvgw3AXIjw?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+              </iframe>
+            </div>
+          
+        </div><div class="slide" data-type="video" data-caption="Cutting custom foam panels for a headset">
+          
+            <div class="video-container">
+              <iframe id="yt-player-OtherManufacturing-2" src="https://www.youtube.com/embed/fTPXXytuasA?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+              </iframe>
+            </div>
+          
+        </div><div class="slide" data-type="video" data-caption="Installed and configured two Tormach 1100MX machines with tool changers">
+          
+            <div class="video-container">
+              <iframe id="yt-player-OtherManufacturing-3" src="https://www.youtube.com/embed/62ABiiJnl1c?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+              </iframe>
+            </div>
+          
+        </div><div class="slide" data-type="video" data-caption="Plasma cutting 3/8 mild steel plates">
+          
+            <div class="video-container">
+              <iframe id="yt-player-OtherManufacturing-4" src="https://www.youtube.com/embed/OV2HV-9dwZw?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
+              </iframe>
+            </div>
+          
+        </div><div class="slide" data-type="image" data-caption="Test cut off of the Tormach 1100MX">
+          
+            <img src="/assets/images/Manufacturing5.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Second test cut off the Tormach 1100MX">
+          
+            <img src="/assets/images/Manufacturing9.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Laser cut EVA foam">
+          
+            <img src="/assets/images/CO2Laser.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Custom metal fabrication - plasma cut plates, manual metal working/bending, welding, and powder coating">
+          
+            <img src="/assets/images/Stand1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Stand prior to powder-coating">
+          
+            <img src="/assets/images/Stand5.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Post-baking in the powder-coating oven">
+          
+            <img src="/assets/images/Stand3.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="WIP laser scanning example">
+          
+            <img src="/assets/images/Scan1.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="WIP laser scanning example">
+          
+            <img src="/assets/images/Scan2.jpg" alt="" />
+          
+        </div><div class="slide" data-type="image" data-caption="Final STEP design sent to a local manufacturer to EDM the mold and begin production on ~6000 face shields">
           
             <img src="/assets/images/FaceShields0.jpg" alt="" />
           
@@ -3624,306 +3642,6 @@ Highlights:</li>
   <div class="thumbnails">
   
     
-    <div class="thumb active" data-index="0" data-type="image">
-      <img src="/assets/images/thumbs/FaceShields0.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="1" data-type="image">
-      <img src="/assets/images/thumbs/FaceShields3.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="2" data-type="image">
-      <img src="/assets/images/thumbs/FaceShields2.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="3" data-type="image">
-      <img src="/assets/images/thumbs/FaceShields1.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="4" data-type="image">
-      <img src="/assets/images/thumbs/FaceShields6.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="5" data-type="image">
-      <img src="/assets/images/thumbs/FaceShields11.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="6" data-type="image">
-      <img src="/assets/images/thumbs/FaceShields8.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="7" data-type="image">
-      <img src="/assets/images/thumbs/FaceShields5.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="8" data-type="image">
-      <img src="/assets/images/thumbs/epsilon4.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="9" data-type="image">
-      <img src="/assets/images/thumbs/Beta7.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="10" data-type="image">
-      <img src="/assets/images/thumbs/Beta9.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="11" data-type="image">
-      <img src="/assets/images/thumbs/Beta6.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="12" data-type="image">
-      <img src="/assets/images/thumbs/CAD7.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="13" data-type="image">
-      <img src="/assets/images/thumbs/delta2.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="14" data-type="image">
-      <img src="/assets/images/thumbs/Visors3.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="15" data-type="image">
-      <img src="/assets/images/thumbs/Visors2.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="16" data-type="image">
-      <img src="/assets/images/thumbs/Visors4.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="17" data-type="image">
-      <img src="/assets/images/thumbs/Visors1.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="18" data-type="image">
-      <img src="/assets/images/thumbs/Tools1.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="19" data-type="image">
-      <img src="/assets/images/thumbs/Tools2.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="20" data-type="image">
-      <img src="/assets/images/thumbs/Tools3.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="21" data-type="image">
-      <img src="/assets/images/thumbs/Tools4.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="22" data-type="image">
-      <img src="/assets/images/thumbs/vacuumformer4.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="23" data-type="image">
-      <img src="/assets/images/thumbs/VacuumFormer5.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="24" data-type="image">
-      <img src="/assets/images/thumbs/vacuumformer3.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="25" data-type="image">
-      <img src="/assets/images/thumbs/vacuumformer2.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="26" data-type="image">
-      <img src="/assets/images/thumbs/CAD19.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="27" data-type="image">
-      <img src="/assets/images/thumbs/CAD3.jpg" alt="" />
-    </div>
-  
-  </div>
-</div>
-<p>Developed tooling solutions for injection molding, vacuum forming, and jig creation for repeated tasks:</p>
-<ul>
-  <li>Injection‑Molded Face Shield Frames: Designed parts optimized for automated injection molding; tooling produced over 6,000 units for local clinics and hospitals</li>
-  <li>Custom Vacuum‑Forming Bucks: Engineered master forms (bucks) for thermoforming complex geometries</li>
-  <li>Visor‑Cutting Jigs: Created fixtures to hold and index vacuum-formed visors for manual and automated trimming</li>
-  <li>PCB Stenciling Fixtures: Developed alignment jigs that secure PCBs for solder‑paste application</li>
-  <li>Custom Production Centering Tools: Designed and fabricated fixtures for CO2 laser and fiber laser etching</li>
-</ul>
-</td>
-    </tr>
-  </table>
-</details>
-
-<!-- Large Scale 3d Printing -->
-<details class="project-details">
-  <summary class="noselect">
-    <span class="caret" aria-hidden="true">[+]</span>
-    Design and Creation of Large-Scale Custom Printers
-  </summary>
-
-  <table><tr><td class="project-contributors">
-            Design/Software | Project with Two Co-Workers
-          </td><td class="project-dates">
-            2015 - Now
-          </td></tr><tr><td colspan="2"><div class="mini-gallery">
-  <div class="slider">
-    <button type="button" class="nav prev">&lt;</button>
-    <div class="slides"><div class="slide active" data-type="image" data-caption="10ft tall delta style 3D printer laying on it&#39;s side - had to be moved to a separate room to go vertical">
-          
-            <img src="/assets/images/10ftDelta.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="First test print of the large-format delta 3D printer">
-          
-            <img src="/assets/images/10ftDeltaTest.jpg" alt="" />
-          
-        </div></div>
-    <button type="button" class="nav next">&gt;</button>
-  </div>
-
-  <div class="slide-caption"></div>
-
-  <div class="thumbnails">
-  
-    
-    <div class="thumb active" data-index="0" data-type="image">
-      <img src="/assets/images/thumbs/10ftDelta.jpg" alt="" />
-    </div>
-  
-    
-    <div class="thumb" data-index="1" data-type="image">
-      <img src="/assets/images/thumbs/10ftDeltaTest.jpg" alt="" />
-    </div>
-  
-  </div>
-</div>
-<p>Collaborated with two engineers to build a large-format Delta 3D printer prototype (10ft tall x 6ft wide) in 45 days. Although intended as a proof of concept, it produced usable parts up to 6ft tall.</p>
-
-<p>Contributions:</p>
-<ul>
-  <li>Kinematic Calibration: Leveraged OpenDACT to compute all machine kinematic parameters (arm lengths, endstop offsets, carriage geometry) for a 4 ft‑diameter bed</li>
-  <li>Prototype Mechanical Design: Co‑designed structural linkages, custom brackets, and frame supports; specified and validated actuators and carriage assemblies</li>
-  <li>Motion and Slicer Tuning: Developed and refined slicing profiles and motion parameters (speeds, accelerations, jerk limits)</li>
-  <li>Delivery: Helped all stages-from concept through calibration and test prints-within a 45‑day schedule, and ended with a production‑capable prototype</li>
-</ul>
-</td>
-    </tr>
-  </table>
-</details>
-
-<!-- Other Manufacturing Expertise -->
-<details class="project-details">
-  <summary class="noselect">
-    <span class="caret" aria-hidden="true">[+]</span>
-    Other Manufacturing Technology Expertise
-  </summary>
-
-  <table><tr><td class="project-contributors">
-            Share with Co-Worker
-          </td><td class="project-dates">
-            2020 - Now
-          </td></tr><tr><td colspan="2"><div class="mini-gallery">
-  <div class="slider">
-    <button type="button" class="nav prev">&lt;</button>
-    <div class="slides"><div class="slide active" data-type="video" data-caption="Cutting brass on a waterjet">
-          
-            <div class="video-container">
-              <iframe id="yt-player-OtherManufacturing-0" src="https://www.youtube.com/embed/c9JMAAcL7XQ?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
-              </iframe>
-            </div>
-          
-        </div><div class="slide" data-type="video" data-caption="Laser etching brass">
-          
-            <div class="video-container">
-              <iframe id="yt-player-OtherManufacturing-1" src="https://www.youtube.com/embed/5qvgw3AXIjw?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
-              </iframe>
-            </div>
-          
-        </div><div class="slide" data-type="video" data-caption="Cutting custom foam panels for a headset">
-          
-            <div class="video-container">
-              <iframe id="yt-player-OtherManufacturing-2" src="https://www.youtube.com/embed/fTPXXytuasA?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
-              </iframe>
-            </div>
-          
-        </div><div class="slide" data-type="video" data-caption="Installed and configured two Tormach 1100MX machines with tool changers">
-          
-            <div class="video-container">
-              <iframe id="yt-player-OtherManufacturing-3" src="https://www.youtube.com/embed/62ABiiJnl1c?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
-              </iframe>
-            </div>
-          
-        </div><div class="slide" data-type="video" data-caption="Plasma cutting 3/8 mild steel plates">
-          
-            <div class="video-container">
-              <iframe id="yt-player-OtherManufacturing-4" src="https://www.youtube.com/embed/OV2HV-9dwZw?rel=0&amp;enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" loading="lazy" allowfullscreen="">
-              </iframe>
-            </div>
-          
-        </div><div class="slide" data-type="image" data-caption="Test cut off of the Tormach 1100MX">
-          
-            <img src="/assets/images/Manufacturing5.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="Second test cut off the Tormach 1100MX">
-          
-            <img src="/assets/images/Manufacturing9.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="Laser cut EVA foam">
-          
-            <img src="/assets/images/CO2Laser.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="Custom metal fabrication - plasma cut plates, manual metal working/bending, welding, and powder coating">
-          
-            <img src="/assets/images/Stand1.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="Stand prior to powder-coating">
-          
-            <img src="/assets/images/Stand5.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="Post-baking in the powder-coating oven">
-          
-            <img src="/assets/images/Stand3.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="WIP laser scanning example">
-          
-            <img src="/assets/images/Scan1.jpg" alt="" />
-          
-        </div><div class="slide" data-type="image" data-caption="WIP laser scanning example">
-          
-            <img src="/assets/images/Scan2.jpg" alt="" />
-          
-        </div></div>
-    <button type="button" class="nav next">&gt;</button>
-  </div>
-
-  <div class="slide-caption"></div>
-
-  <div class="thumbnails">
-  
-    
     <div class="thumb active" data-index="0" data-type="video">
       <img src="https://img.youtube.com/vi/c9JMAAcL7XQ/hqdefault.jpg" alt="" />
     </div>
@@ -3988,15 +3706,164 @@ Highlights:</li>
       <img src="/assets/images/thumbs/Scan2.jpg" alt="" />
     </div>
   
+    
+    <div class="thumb" data-index="13" data-type="image">
+      <img src="/assets/images/thumbs/FaceShields0.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="14" data-type="image">
+      <img src="/assets/images/thumbs/FaceShields3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="15" data-type="image">
+      <img src="/assets/images/thumbs/FaceShields2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="16" data-type="image">
+      <img src="/assets/images/thumbs/FaceShields1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="17" data-type="image">
+      <img src="/assets/images/thumbs/FaceShields6.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="18" data-type="image">
+      <img src="/assets/images/thumbs/FaceShields11.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="19" data-type="image">
+      <img src="/assets/images/thumbs/FaceShields8.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="20" data-type="image">
+      <img src="/assets/images/thumbs/FaceShields5.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="21" data-type="image">
+      <img src="/assets/images/thumbs/epsilon4.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="22" data-type="image">
+      <img src="/assets/images/thumbs/Beta7.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="23" data-type="image">
+      <img src="/assets/images/thumbs/Beta9.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="24" data-type="image">
+      <img src="/assets/images/thumbs/Beta6.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="25" data-type="image">
+      <img src="/assets/images/thumbs/CAD7.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="26" data-type="image">
+      <img src="/assets/images/thumbs/delta2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="27" data-type="image">
+      <img src="/assets/images/thumbs/Visors3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="28" data-type="image">
+      <img src="/assets/images/thumbs/Visors2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="29" data-type="image">
+      <img src="/assets/images/thumbs/Visors4.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="30" data-type="image">
+      <img src="/assets/images/thumbs/Visors1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="31" data-type="image">
+      <img src="/assets/images/thumbs/Tools1.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="32" data-type="image">
+      <img src="/assets/images/thumbs/Tools2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="33" data-type="image">
+      <img src="/assets/images/thumbs/Tools3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="34" data-type="image">
+      <img src="/assets/images/thumbs/Tools4.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="35" data-type="image">
+      <img src="/assets/images/thumbs/vacuumformer4.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="36" data-type="image">
+      <img src="/assets/images/thumbs/VacuumFormer5.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="37" data-type="image">
+      <img src="/assets/images/thumbs/vacuumformer3.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="38" data-type="image">
+      <img src="/assets/images/thumbs/vacuumformer2.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="39" data-type="image">
+      <img src="/assets/images/thumbs/CAD19.jpg" alt="" />
+    </div>
+  
+    
+    <div class="thumb" data-index="40" data-type="image">
+      <img src="/assets/images/thumbs/CAD3.jpg" alt="" />
+    </div>
+  
   </div>
 </div>
-<p>Operator, programmer, and technician for a variety of manufacturing tools:</p>
+<p>Programmed, commissioned, maintained, and supported production use of a variety of manufacturing tools, plus designed and built the tooling and fixturing that supports repeated production:</p>
 <ul>
   <li>2X 3/4‑Axis CNC Milling with a Tormach 1100MX and 1X Tormach 440MX</li>
   <li>Engraving and cutting with BossLaser Fiber (1X) and CO₂ Lasers (2X) + Rotary</li>
   <li>CNC plasma cutting with a Tormach 1300PL</li>
   <li>Waterjet cutting with an Omax 1508</li>
   <li>3D scanning with the Creaform Go!SCAN Spark and VXElements software suite</li>
+</ul>
+
+<p>Tooling and fixturing design (injection molding, vacuum forming, jigs):</p>
+<ul>
+  <li>Injection‑Molded Face Shield Frames: Designed parts optimized for automated injection molding; tooling produced over 6,000 units for local clinics and hospitals</li>
+  <li>Custom Vacuum‑Forming Bucks: Engineered master forms (bucks) for thermoforming complex geometries</li>
+  <li>Visor‑Cutting Jigs: Created fixtures to hold and index vacuum-formed visors for manual and automated trimming</li>
+  <li>PCB Stenciling Fixtures: Developed alignment jigs that secure PCBs for solder‑paste application</li>
+  <li>Custom Production Centering Tools: Designed and fabricated fixtures for CO2 laser and fiber laser etching</li>
 </ul>
 </td>
     </tr>
@@ -4055,6 +3922,8 @@ Highlights:</li>
   
   </div>
 </div>
+<p><em>Open-source - 615+ stars, 39+ forks on <a href="https://github.com/coelacant1/ProxmoxScripts">GitHub</a>.</em></p>
+
 <p>ProxmoxScripts is a collection of Bash scripts for streamlining and automating the management of Proxmox Virtual Environment (PVE) clusters. This was developed to help manage and automate Proxmox virtualization infrastructure. The scripts are accessible via a console-based menu for overview, navigation, and execution. Users can read help information for each script as well as get a description of required parameters.</p>
 
 <p>Features include:</p>
@@ -4331,7 +4200,7 @@ Highlights:</li>
   
   </div>
 </div>
-<p>Designed and implemented 20-node hyper-converged ProxmoxVE cluster, concurrently hosting up to 3,000-4,000 virtual machines and containers:</p>
+<p>Designed and implemented 20-node hyper-converged ProxmoxVE cluster, scaled from ~80 to 3,500+ concurrent virtual machine and container instances at 99.9%+ measured uptime:</p>
 
 <p>Specifications for this infrastructure:</p>
 <ul>
@@ -4340,7 +4209,7 @@ Highlights:</li>
       <li>Aggregate Capacity: 1,464 CPU cores and 10.8TiB RAM</li>
       <li>Per-Node: Up to 80 CPU cores and 784GiB RAM</li>
       <li>Accelerators: Select nodes equipped with NVIDIA RTX 8000 GPUs for GPU-accelerated tasks</li>
-      <li>Customization: Users can request private compute infrastructures of up to 20-nodes, with Slurm-ready configurations</li>
+      <li>Customization: Internal users and research groups can be provisioned isolated VM and container environments, including Slurm-ready multi-node configurations when required</li>
     </ul>
   </li>
   <li>Tiered Storage Solutions:
@@ -4353,11 +4222,12 @@ Highlights:</li>
         </ul>
       </li>
       <li>Total Capacity: ~211.52TiB with automated data distribution and resilience</li>
+      <li>Custom CRUSH topology mapping pools across SATA-SSD, SAS-SSD, and SAS-HDD media for cost/performance tiering</li>
     </ul>
   </li>
   <li>High-Speed Networking:
     <ul>
-      <li>Bandwidth: Two 25 GbE links per server (50 GbE aggregate) configured with 802.3ad LACP and MC-LAG for redundancy</li>
+      <li>Bandwidth: Two 25 GbE links per server (50 GbE aggregate) configured with 802.3ad LACP and MC-LAG for redundancy; ~200 Gbps aggregate core bandwidth</li>
       <li>Features:  RDMA, SDN, jumbo frames, and traffic prioritization</li>
     </ul>
   </li>
@@ -4375,6 +4245,11 @@ Highlights:</li>
       <li>Redundant network paths and daily backup/snapshot schedules</li>
       <li>Designed for security testing, scientific simulations, and parallel computing for data analysis and GPU-intensive applications</li>
       <li>Preconfigured templates for nested multi-machine clusters with SLURM</li>
+    </ul>
+  </li>
+  <li>Observability:
+    <ul>
+      <li>Prometheus + Grafana for metrics and dashboards, Zabbix for host/service monitoring and alerting</li>
     </ul>
   </li>
 </ul>
@@ -4445,7 +4320,7 @@ Highlights:</li>
 </div>
 <p>pAWS (Proxmox Automated Web Services) is a self-hosted, AWS-like infrastructure platform built on Proxmox VE. It provides multi-tenant compute, networking, storage, backups, and monitoring through a unified web UI and REST API, turning a Proxmox cluster into a managed cloud-style environment.</p>
 
-<p>Targeted feature set:</p>
+<p>Implemented capabilities:</p>
 <ul>
   <li>Compute: VMs and LXC containers from templates with full lifecycle management, browser-based console (noVNC/xterm.js), snapshots, and import/export</li>
   <li>Networking: VPCs with subnets, security groups, service endpoints, and DNS</li>
@@ -4740,35 +4615,32 @@ Highlights:</li>
   </table>
 </details>
 
-<h2 id="tools-and-platforms"><strong>Tools and Platforms</strong></h2>
+<h2 id="education"><strong>Education</strong></h2>
+
 <ul>
-  <li>Electronics and CAD: Altium Designer, KiCad, Autodesk Fusion 360, MATLAB</li>
-  <li>Server and Virtualization: Proxmox VE, Ceph, VMWare vSphere, Windows Server, Hyper-V, Ansible, PDQ Deploy</li>
-  <li>Programming Languages: C/C++, Python, JavaScript, C# (WPF, Unity), Bash, PowerShell, Make</li>
-  <li>Environments and Administration: Linux and Windows administration, embedded platforms (ARM, RISC), GitHub Automation</li>
-  <li>Miscellaneous: Blender, Adobe Suite (Photoshop, Illustrator, After Effects, Substance Painter), GIMP/Inkscape</li>
+  <li><strong>M.S. Electrical Engineering</strong> - 2018-2020, GPA 3.91 - Thesis: 4-axis MEMS IMU calibration gimbal - IEEE-HKN member</li>
+  <li><strong>B.S. Software Engineering</strong> - 2014-2018 - Capstone: tilt-rotor quadcopter - control systems, simulation, embedded C++</li>
 </ul>
 
-<!-- This Website-->
-<h3 id="information-on-coeladev"><strong>Information on coela.dev</strong></h3>
-<details class="project-details">
-  <summary class="noselect">
-    <span class="caret" aria-hidden="true">[+]</span>
-    Coela.dev Website
-  </summary>
+<h2 id="other-areas"><strong>Other Areas</strong></h2>
 
-  <table><tr><td><a href="https://github.com/coelacant1/coela.dev">Github</a></td><td class="project-dates">
-            2025 - Now
-          </td></tr><tr><td colspan="2"><p>The site’s backend uses Ruby and Jekyll to compile Markdown and Liquid templates into a static site on push. A GitHub CI workflow rebuilds and deploys the site on changes to the main branch. On the front end, an HTML5 Canvas script animates sine-wave effects, and CSS with JavaScript handles glitch-text animations for headings.</p>
-</td>
-    </tr>
-  </table>
-</details>
+<p><em>Areas where I’ve done significant work that isn’t represented by a public project here, either because it’s not shareable or because the work doesn’t lend itself to a portfolio entry.</em></p>
 
+<ul>
+  <li><strong>Control modeling and simulation</strong> - MATLAB / Simulink for control-loop modeling, system identification, and tuning; kinematic and IK modeling</li>
+  <li><strong>Hardware security analysis</strong> - Performed side-channel and fault-injection work with NewAE ChipWhisperer-class tooling, including JTAG / UART probing, voltage and clock glitching, and firmware reverse engineering on non-public hardware in addition to the RT-950 work shown above</li>
+  <li><strong>Embedded Linux and real-time C/C++ firmware</strong> - Developed bring-up, validation, and operational firmware on embedded Linux with real-time-capable kernels for constrained, mixed-criticality power-electronics hardware where bare-metal isn’t an option</li>
+  <li><strong>Formal test, calibration, and HIL</strong> - Designed automated calibration and verification routines, supported hardware-in-the-loop testing, and developed firmware against formal interface control documents and environmental qualification requirements</li>
+  <li><strong>Engineering process</strong> - V&amp;V test planning, ICD-driven firmware development, automated regression and acceptance test infrastructure</li>
+</ul>
 
 
       <footer class="site-footer">
         <span class="site-footer-credits">© 2026 - All Rights Reserved.</span>
+        <span class="site-footer-sep"> · </span>
+        <a class="site-footer-link" href="https://github.com/coelacant1?tab=repositories" target="_blank" rel="noopener">GitHub</a>
+        <span class="site-footer-sep"> · </span>
+        <a class="site-footer-link" href="https://github.com/coelacant1/coela.dev" target="_blank" rel="noopener">Site Source</a>
         <br>
         <br>
       </footer>
@@ -4831,20 +4703,7 @@ Highlights:</li>
         });
 
         document.querySelectorAll(".project-details").forEach(details => {
-          const summary = details.querySelector("summary");
-
-          summary.addEventListener("mouseenter", () => {
-            summary.classList.remove("finishing");
-            summary.classList.add("hovering");
-          });
-
-          summary.addEventListener("mouseleave", () => {
-            summary.classList.remove("hovering");
-            summary.classList.add("finishing");
-            setTimeout(() => {
-              summary.classList.remove("finishing");
-            }, 750);
-          });
+          // No-op: hover/click affordance is now handled in CSS via :hover and the open attribute.
         });
       });
     </script>
