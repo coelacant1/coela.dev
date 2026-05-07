@@ -8,675 +8,6 @@ description: Portfolio
 
 Engineer and developer who solves problems with hardware, software, and automation. Building performant, modular, and reliable systems-from embedded devices and robotics to virtualization and infrastructure automation.
 
-## **Software and Embedded Systems Development**
-<!-- Koilo Engine -->
-{% project %}
-name: KoiloEngine
-
-summary: "Koilo Engine: C++ Game Engine with Runtime Scripting"
-
-links:
-  - name: GitHub
-    url: https://github.com/coelacant1/Koilo-Engine
-
-dates: "2025 - Now"
-
-contributors: "Solo Project"
-
-description: |-
-  Koilo Engine is a compact C++17 game engine designed to run across both desktop systems and resource-constrained microcontrollers. Scenes and game logic are authored in KoiloScript (`.ks`), a bytecode-compiled scripting language with full access to engine internals through runtime reflection. This is the spiritual successor to ProtoTracer, generalizing the renderer and physics core into a portable engine usable on both PCs and embedded targets.
-
-  Targets include Linux, Windows, Raspberry Pi, Teensy 4.x, ESP32-S3, and STM32.
-
-  Features include:
-  - Multi-backend rendering with a common interface
-    - Vulkan, OpenGL 3.3, and a CPU software rasterizer
-    - KSL shaders compile to both GLSL and CPU from the same source
-  - KoiloScript scripting language
-    - Variables, functions, classes, coroutines, signals, imports, operator overloading
-    - Direct calls into C++ objects through a reflection bridge
-  - Reflection system for exposing C++ classes to scripts via macros (no external codegen)
-  - Hot-reloadable dynamic modules (`.so`/`.dll`) with lifecycle hooks and phased init
-  - Scene graph and ECS with transform propagation and dense component storage
-  - Animation: skeletal playback, keyframe camera tracks, morph target blending, material animation
-  - Optimized math library: vectors, quaternions, matrices, transforms, splines, spatial indexing, noise, Kalman filters, FFT
-  - Asset pipeline with the KoiloMesh format (morph targets) and OBJ/FBX offline conversion
-  - Optional subsystems: AI (pathfinding, behavior trees, FSM), SDL2 audio, particles, LED panel output, HTTP live preview
-
-slides:
-  - type: image
-    src: /assets/images/Koilo1.jpg
-    thumb: /assets/images/thumbs/Koilo1.jpg
-    caption: "3D scene rendered in Koilo Engine with KSL materials and an orbiting camera"
-  - type: image
-    src: /assets/images/Koilo2.jpg
-    thumb: /assets/images/thumbs/Koilo2.jpg
-    caption: "OBJ model loaded with textures and a keyframe camera track"
-  - type: image
-    src: /assets/images/Koilo7.jpg
-    thumb: /assets/images/thumbs/Koilo7.jpg
-    caption: "Second OBJ scene demonstrating the asset import pipeline"
-  - type: image
-    src: /assets/images/Koilo3.jpg
-    thumb: /assets/images/thumbs/Koilo3.jpg
-    caption: "Multi-mesh stress test comparing GPU and software renderer output"
-  - type: image
-    src: /assets/images/Koilo4.jpg
-    thumb: /assets/images/thumbs/Koilo4.jpg
-    caption: "2D space shooter sample using signals, coroutines, collision, and wave spawning"
-  - type: image
-    src: /assets/images/Koilo5.jpg
-    thumb: /assets/images/thumbs/Koilo5.jpg
-    caption: "KoiloScript language feature showcase"
-  - type: image
-    src: /assets/images/Koilo6.jpg
-    thumb: /assets/images/thumbs/Koilo6.jpg
-    caption: "Dynamic module loading via the runtime reflection bridge"
-  - type: image
-    src: /assets/images/Koilo8.jpg
-    thumb: /assets/images/thumbs/Koilo8.jpg
-    caption: "UI demo running on top of the engine"
-
-{% endproject %}
-
-<!-- AetherControl -->
-{% project %}
-name: AetherControl
-
-summary: "AetherControl: Optimized CNC Firmware"
-
-links:
-  - name: GitHub
-    url: https://github.com/coelacant1/AetherControl
-
-dates: "2023 - Now"
-
-contributors: "Solo Project"
-
-description: |-
-  AetherControl is a streamlined and modular, C++ based motion-control firmware. It is built for real-time G-code parsing, motion planning, kinematics, and stepper-motor drive. Supports advanced kinematics like Stewart platforms, CoreXY machines, and Cartesian robots with dynamic trajectory planning.
-
-  Implementations:
-  - High-Speed CoreXY pick-and-place machine
-  - High-Speed 6x 1000W AC Servo based 6-axis Stewart platform used as a flight simulator
-
-  This includes features such as:
-  - Support for Stewart platform, Cartesian, CoreXY, and custom kinematics configurations
-  - Dynamic trajectory planning with velocity and acceleration constraints
-  - G-code parsing and execution for CNC command interpretation
-  - Real-time multi-axis synchronization and motion coordination
-  - Multi-Controller synchronization
-  - Layered modular architecture for easy customization and extension
-  - Support for sensor calibration and automated testing routines
-  - Optimized for ARM Cortex-M microcontrollers with efficient resource use
-  - Custom PathPlanner optimizing for up to the number of GPIO pins available to drive the system
-
-slides:
-  - type: video
-    video_id: 4LFMXw97F7c
-    caption: "AetherControl on a CoreXY Pick n Place Machine"
-  - type: image
-    src: /assets/images/AetherControl1.jpg
-    caption: "Example configuration for the AB motors of the Pick n Place"
-    thumb: /assets/images/thumbs/AetherControl1.jpg
-  - type: video
-    video_id: nXmGRJHBArY
-    caption: "Second example of AetherControl on the CoreXY Pick n Place assembling a PCB"
-  - type: image
-    src: /assets/images/AetherControl2.jpg
-    thumb: /assets/images/thumbs/AetherControl2.jpg
-    caption: "Example configuration for the Z and R motors of the Pick n Place - end effector controller"
-  - type: video
-    video_id: DOIEZTeIsqk
-    caption: "AetherControl controlling a 6-Axis 425mm stroke Stewart Platform"
-  - type: image
-    src: /assets/images/AetherControl3.jpg
-    thumb: /assets/images/thumbs/AetherControl3.jpg
-    caption: "Configuration file for the Stewart Platform"
-
-{% endproject %}
-
-<!-- Radtel RT-950 Pro Firmware -->
-{% project %}
-name: RT950ProFirmware
-
-summary: "RT-950 Pro: Open-Source Handheld Radio Firmware"
-
-links:
-  - name: GitHub
-    url: https://github.com/coelacant1/Radtel-RT950-Pro-Firmware
-
-dates: "2025 - Now"
-
-contributors: "Contributors on GitHub"
-
-description: |-
-  Open-source bare-metal firmware for the Radtel RT-950 Pro handheld radio, targeting the Artery AT32F403A (ARM Cortex-M4F @ 120 MHz, 1 MB flash, 96 KB SRAM). The custom firmware loads via the OEM bootloader using the standard `.BTF` update flow with no CRC or signature, so users can flash it through the existing OEM tool.
-
-  Hardware bring-up confirmed on real hardware:
-  - ST7789V 240x320 LCD via 8080 parallel bus with custom text rendering
-  - Status LEDs, dual backlights, power latch, and band relay control
-  - Boot, GPIO, and display fully functional under custom firmware
-
-  Implemented (code-complete, hardware testing in progress):
-  - Drivers: GPIO, SPI2 (flash), bit-bang SPI for BK4829, bit-bang I2C for SI4732, multiple UARTs, ADC2, DAC1+TIM6+DMA, dual-channel DMA, ST7789V 8080 parallel
-  - RF: dual BK4829 transceiver driver with frequency programming, TX power control, and flash-stored calibration tables
-  - Application: dual VFO (A/B/C), PTT with active-low relay routing, debounced keypad scanner, rotary encoder, S-meter, hierarchical 12-category menu, frequency entry
-  - Digital modes: APRS (hardware FSK via BK4829, MIC-E packets), DTMF encode/decode, CTCSS/DCS tone generation
-  - Receivers: SI4732 AM/FM/SSB broadcast, FM presets, NOAA weather channels
-  - Storage: SPI flash layout for 990 channels, VFO configs and settings, wear-leveled NV storage, CPS programming over UART4
-  - Comms: GPS NMEA parser, BLE data bridge, VOX
-  - UI: splash screen, zone browser, text input, scanner, spectrum analyzer
-  - Cross-band repeat with band-specific relay routing and verified PTT polarity for PA safety
-  - Tooling: BTF firmware encrypt/decrypt, CPS flash read/write, serial firmware uploader with auto-restart
-  - Hardware self-test suite covering backlight, UART, LCD, BK4829/SI4732 chip IDs, SPI flash JEDEC ID, ADC, DAC tone, keypad, GPS, and full system diagnostics
-
-slides:
-  - type: image
-    src: /assets/images/RT950Pro1.jpg
-    thumb: /assets/images/thumbs/RT950Pro1.jpg
-    caption: "Custom firmware running the hardware self-test on a real RT-950 Pro: AT32F403A + ST7789V LCD + dual BK4829 + SI4732 detected, GPIO/LED/backlight/band-relay/LCD bus verified"
-
-{% endproject %}
-
-<!-- ProxmoxScripts -->
-{% project %}
-name: ProxmoxScripts
-
-summary: "ProxmoxScripts for Automated Infrastracture Management"
-
-links:
-  - name: Website
-    url: https://coelacant.com/ProxmoxScripts/
-  - name: GitHub
-    url: https://github.com/coelacant1/ProxmoxScripts
-
-dates: "2024 - Now"
-
-contributors: "Contributors on GitHub"
-
-description: |-
-  ProxmoxScripts is a collection of Bash scripts for streamlining and automating the management of Proxmox Virtual Environment (PVE) clusters. This was developed to help manage and automate Proxmox virtualization infrastructure. The scripts are accessible via a console-based menu for overview, navigation, and execution. Users can read help information for each script as well as get a description of required parameters.
-
-  Features include: 
-  - Cluster configuration tools
-    - Adding Nodes - Remote configuration with IP
-    - Cluster Creation - From list of IPs
-    - Cluster Deletion - Separating all nodes from cluster
-  - Firewall management
-    - Bulk LXC/VM Firewall Management
-    - Automated host default firewall configuration
-  - High Availability
-    - Create HA Group and add nodes 
-    - Bulk add LXC/VMs to HA group
-  - Host Automation and Configuration
-    - Remove local-lvm storage and expand local storage (for Hyper-Converged setups)
-    - Bulk Microcode configuration/Timezone Configuration/Upgrades
-    - Generic PWM and Dell IPMI hardware fan control adapting to CPU temperatures
-    - Enable CPU Scaling Governer
-    - Enable GPU Passthrough to VM
-    - Enable IOMMU
-    - Enable GPU Sharing with LXC
-    - Optimize for X3D hardware
-    - Live memory testing
-    - System optimization for nested virtualization
-  - LXC and VM Configuration and Management
-  - Networking
-    - Bulk adding network bonds
-    - List all VM/LXC IDs with their associated MAC address
-    - Bulk set DNS on cluster
-    - Find VM ID from MAC address
-    - Automated host-to-host network speed test
-    - Bulk update network interface names 
-    - Bulk host uplink speed test
-  - Remote VM/LXC Management
-    - Integration with Apache Guacamole
-      - Bulk add/delete RDP connections
-      - Bulk add/remove SFTP server to RDP connections
-      - Bulk list RDP configuration
-      - Bulk update/remove drive redirection
-      - Pull Guacamole authentication token
-    - Configuration of virtual machine static IPs over SSH for Debian/Ubuntu/Windows
-  - Generate a resource report for all VMs/LXCs
-  - Automated penetration testing/port scanning
-  - Storage Automation
-    - Ceph Configuration
-      - Bulk create OSDs
-      - Edit crushmap (decompiles, prints directory, allows user edit, then recompile)
-      - Bulk restart managers/monitors/metadata servers/OSDs
-      - Set pool to minimum size of 1 and to a size of 1 (testing/temporary data)
-      - Create automated deep scrubbing with a chron job
-      - Automate creating a single drive Ceph node (shares host OS and Ceph data)
-      - Bulk OSD sparsify
-      - Bulk start stopped disks
-      - Full data wipe on specified disk (clear Ceph and all remnants of user data)
-    - Disk Benchmarking
-    - Bulk VM disk deletion
-    - Bulk VM disk deletion for disks with snapshots
-    - Trim all filesystems of resources using Qemu Agent or LXC
-    - Automate disk spin down
-    - Pass host directory to LXC
-    - Update stale mounts
-  - Custom User Interface library
-
-iframe: https://coelacant.com/ProxmoxScripts/
-
-slides:
-  - type: image
-    src: /assets/images/ProxmoxScripts5.jpg
-    thumb: /assets/images/thumbs/ProxmoxScripts5.jpg
-    caption: "Screenshot of the custom terminal user interface for CCPVE"
-  - type: image
-    src: /assets/images/ProxmoxScripts4.jpg
-    thumb: /assets/images/thumbs/ProxmoxScripts4.jpg
-    caption: "Example of running a command/script available through CCPVE"
-  - type: image
-    src: /assets/images/ProxmoxScripts2.jpg
-    thumb: /assets/images/thumbs/ProxmoxScripts2.jpg
-    caption: "Example of automatically cloning, SSHing to the Windows VM, configuring the IP and cloning the next VM"
-  - type: image
-    src: /assets/images/ProxmoxScripts1.jpg
-    thumb: /assets/images/thumbs/ProxmoxScripts1.jpg
-    caption: "Example of batch cloning with CCPVE"
-
-{% endproject %}
-
-<!-- pAWS - Proxmox Automated Web Services -->
-{% project %}
-name: ProxmoxAutomatedWebServices
-
-summary: "pAWS: Self-Hosted Cloud on Proxmox VE"
-
-links:
-  - name: GitHub
-    url: https://github.com/coelacant1/Proxmox-Automated-Web-Services
-
-dates: "2025 - Now"
-
-contributors: "Solo Project"
-
-description: |-
-  pAWS (Proxmox Automated Web Services) is a self-hosted, AWS-like infrastructure platform built on Proxmox VE. It provides multi-tenant compute, networking, storage, backups, and monitoring through a unified web UI and REST API, turning a Proxmox cluster into a managed cloud-style environment.
-
-  Targeted feature set:
-  - Compute: VMs and LXC containers from templates with full lifecycle management, browser-based console (noVNC/xterm.js), snapshots, and import/export
-  - Networking: VPCs with subnets, security groups, service endpoints, and DNS
-  - Storage: S3-compatible object storage backed by Ceph RadosGW, with file browser, sharing, and presigned URLs
-  - Backups: Proxmox Backup Server integration with scheduled plans and point-in-time restore
-  - Monitoring: per-resource metrics, alarms, and log aggregation
-  - Auth: local accounts (JWT) plus OAuth2/OIDC, with RBAC roles (Admin/Operator/Member/Viewer)
-  - Admin: user management, template catalog, quotas, and audit logging
-
-  Stack:
-  - Frontend: React 19, TypeScript, Vite, Tailwind CSS v4
-  - Backend: Python 3.11+, FastAPI, async SQLAlchemy 2, Pydantic v2
-  - Data: PostgreSQL 16, Redis 7, Celery
-  - Infrastructure: Proxmox VE 8+, Ceph RadosGW, Proxmox Backup Server
-  - Cluster credentials are AES-256-GCM encrypted at rest using a stable master key
-
-slides:
-  - type: image
-    src: /assets/images/pAWS1.jpg
-    thumb: /assets/images/thumbs/pAWS1.jpg
-    caption: "pAWS dashboard giving a single view of compute, storage, and cluster health"
-  - type: image
-    src: /assets/images/pAWS2.jpg
-    thumb: /assets/images/thumbs/pAWS2.jpg
-    caption: "Container/VM overview with lifecycle controls"
-  - type: image
-    src: /assets/images/pAWS3.jpg
-    thumb: /assets/images/thumbs/pAWS3.jpg
-    caption: "Browser-based VNC console for direct VM access"
-  - type: image
-    src: /assets/images/pAWS4.jpg
-    thumb: /assets/images/thumbs/pAWS4.jpg
-    caption: "Administration panel for users, infrastructure connections, and templates"
-
-{% endproject %}
-
-<!-- ProtoTracer -->
-{% project %}
-name: ProtoTracer
-
-summary: "ProtoTracer: Embedded 3D Rendering Engine"
-
-links:
-  - name: Website
-    url: https://coelacant.com/ProtoTracer/
-  - name: GitHub
-    url: https://github.com/coelacant1/ProtoTracer
-
-dates: "2020 - Now"
-
-contributors: "Contributors on GitHub"
-
-description: |-
-  ProtoTracer is a C++ based 3D rendering engine optimized for microcontrollers. It calculates dynamic 3D scenes in real-time, reacting to sensor or user inputs to adapt the output. This software is designed to be modular for use in other projects.
-  
-  This includes features such as: 
-  - Keyframed animations with support for automated easing
-  - Display of custom converted FBX, OBJ 3D Models with support for textures using any static image format as well as support for animated GIFs
-  - Custom camera definitions and parameters for specialized display shapes and 3D outputs
-  - Support for driving HUB75, WS2812, and APA102 based LED displays, with controller definitions making it easy to create other interfaces
-  - Raster-based 3D rendering as well as Raytraced rendering
-    - Segmented-rendering optimization using quadtrees
-    - Custom rendering pipeline optimized for high frame rates on constrained hardware
-      - Enables PS1-level graphics rendering
-  - Custom static and animated shader materials
-    - Simplex Noise Shaders
-    - Audio Reactive Shaders (Oscilloscope/Spectrum Analyzer)
-    - TV Static emulation
-    - Gradient/Normal/UV Tiled/Depth Materials
-  - Audio Analysis
-    - Voice analysis for matching vowel sounds to viseme shapes
-      - Allows user calibration for custom formant maps
-    - Fourier Transform for analysis/spectrum analyzer display
-    - Filtering and automatic scaling for background noise
-    - Filters: FFT/Kalman/Peak/Ramp/Running Average
-  - Physics Simulator
-  - Hardware Support for:
-    - SSD1306 Status Display/HUD
-    - Communication with secondary controller for wireless control
-    - PWM Fan Controls through a user menu
-    - APDS9960 Color/Distance Sensing
-    - BNO055 Quaternion input for space-mouse like control
-    - MMC56X3 Magnetometer input
-    - SHARPGP2Y Distance Sensing
-    - MAX9814/SPW2430 Microphone Input
-  - Screenspace Shaders for manipulating 3D rendered frames with 2D modifications
-    - Fisheye distortion
-    - Glitch distortion
-    - Box/Radial blur
-    - Magnetic Lens distortion
-    - Phase Shifting
-  - Live object manipulation
-    - Position/Scale/Rotation
-    - Distortion with custom object deformer
-      - Modifies 3D space via transformation functions
-      - Perspective Deform
-      - Sinusoidal Deform
-      - Dropwave Deform
-    - Automatic 3D object alignment
-      - Allows alignment of center of volume or mass to a target coordinate
-      - Fit alignment to a plane
-        - Allows users to rapidly add their own model with any scale/rotation and it will autofit to a target size and plane
-  - Custom Optimized Math Library
-    - Rotation library with support for Axis Angles, Direction Angles(Custom), Euler Angles, Quaternions, Rotation Matrices, Yaw-Pitch-Roll
-    - Vector2D and Vector3D Library
-    - Quaternion Library
-    - Kalman and Running Average Filters for Quaternion Space, Cartesian Space
-  - Automated Testing to verify custom math libary
-    
-  Doxygen genereated documentation from sourcecode:
-
-iframe: https://coelacant.com/ProtoTracer/
-
-slides:
-  - type: video
-    video_id: ii_2rAg5L5c
-    caption: "ProtoTracer menu using multi-button RGB I2C Controller"
-  - type: video
-    video_id: xQfBLp0Ws1g
-    caption: "3D shader running a 2D rasterizer that is then modified with simulated advection"
-  - type: video
-    video_id: C5WwMnbaJ34
-    caption: "Shader with multiply blend modes between two animated GIFs"
-  - type: video
-    video_id: 8uSgCMLcty8
-    caption: "Simplex noise shader with blend mode mixing stripe shader"
-  - type: video
-    video_id: 1AH0N9evXL4
-    caption: "Spiral rainbow shader with multiply blend mode playing Bad Apple as a GIF"
-  - type: video
-    video_id: SXp2C7LbiRM
-    caption: "Dual spiral rainbow shader with lighten blend mode"
-  - type: video
-    video_id: Yc67nFJwqYo
-    caption: "Example of a full keyframed animation"
-  - type: video
-    video_id: TnoXMWCxYpc
-    caption: "External sensor input for controlling the 3D model"
-  - type: video
-    video_id: ucIHCd_vjGA
-    caption: "Rendering a 3D model with 2D textures"
-  - type: video
-    video_id: ZJqEkMUVPH4
-    caption: "Normal shader"
-  - type: video
-    video_id: orijCE6EDM4
-    caption: "Physics simulator with balls in a 3D box"
-  - type: video
-    video_id: Xh3eKCqLIPc
-    caption: "Example of a custom software build for a user"
-  - type: pdf
-    src: /assets/pdfs/ProtogenControllerV2-0.pdf
-    caption: "Controller guide for hardware optimized for ProtoTracer"
-
-{% endproject %}
-
-<!-- OpenDACT -->
-{% project %}
-name: OpenDACT
-
-summary: "OpenDACT: Automatic Delta Kinematics Calibration Software"
-
-links:
-  - name: Github
-    url: https://github.com/coelacant1/OpenDACT
-
-dates: "2014 - 2017"
-
-contributors: "Contributors on GitHub"
-
-description: |-
-  OpenDACT (Open-source Delta Automatic Calibration Tool) is a calibration tool for delta robots. It calibrates generic delta robots and automates calibration of Repetier-firmware-controlled delta robots (primarily 3D printers). The calibration uses forward and inverse kinematics measurements to make adjustments. It takes Z-height readings at key XY points on a flat plate (print bed) to iteratively calculate hardware offsets. Users can manually adjust hardware or apply software offsets to correct for imperfections.
-
-  This software solves for the following mechanical offsets:
-  - Diagonal rod lengths
-  - End effector radius
-  - Horizontal radius
-  - Endstop offsets
-  - Angles of the ABC towers
-
-  For Repetier based robots, these offsets are automatically saved on the controllers EEPROM upon a successful calibration. Z-bed distortion on a newly completed build could have offsets of +/- 2mm across the plate, this tool (assuming issues in the above offsets) can calibrate the systems down to 5-10 microns.
-  
-  This software has been tested and successfully used on small-form factor deltas (100mm plate diameter) and large-form factor deltas (1.5 meter plate diameter).
-
-slides:
-  - type: image
-    src: /assets/images/OpenDACT1.jpg
-    thumb: /assets/images/thumbs/OpenDACT1.jpg
-    caption: "User interface with example calibration of a delta 3D printer running Repetier firmware"
-  - type: image
-    src: /assets/images/OpenDACT2.jpg
-    thumb: /assets/images/thumbs/OpenDACT2.jpg
-    caption: "User interface showing deformation in the physical structure from ideal conditions - can be used to physically tune the machine"
-  - type: image
-    src: /assets/images/OpenDACT4.jpg
-    thumb: /assets/images/thumbs/OpenDACT4.jpg
-    caption: "Full user interface while running a calibration"
-
-{% endproject %}
-
-<!-- Proxmox Load Balancer -->
-{% project %}
-name: PVELoadBalancer
-
-summary: "Proxmox VE Load Balancer"
-
-links:
-  - name: GitHub
-    url: https://github.com/coelacant1/ProxmoxLoadBalancer
-
-dates: "2025 - Now"
-
-contributors: "Solo Project"
-
-description: |-
-  ProxmoxLoadBalancer is a Python tool that balances memory across Proxmox VE cluster nodes. It has two modes of operation:
-
-  - Simulation Mode: Test and visualize load-balancing algorithms in a controlled environment without touching the live cluster.
-  - Live Mode: Uses the Proxmox API to monitor memory usage and migrate VMs to balance load.
-
-  This software is built as a stand-in until ProxmoxVE ships with a built-in cluster load balancer.
-
-iframe: https://coelacant.com/ProxmoxScripts/
-
-slides:
-  - type: image
-    src: /assets/images/PVELoadBalancer3.jpg
-    thumb: /assets/images/thumbs/PVELoadBalancer3.jpg
-    caption: "Example simulated load balance of a 12-node ProxmoxVE cluster with different amounts of memory"
-  - type: image
-    src: /assets/images/PVELoadBalancer1.jpg
-    thumb: /assets/images/thumbs/PVELoadBalancer1.jpg
-    caption: "Example moves from the simulation to balance to equally shared memory"
-  - type: image
-    src: /assets/images/PVELoadBalancer2.jpg
-    thumb: /assets/images/thumbs/PVELoadBalancer2.jpg
-    caption: "Second example of a simulated load-balance but with more extremes in initial conditions"
-  - type: image
-    src: /assets/images/PVELoadBalancer4.jpg
-    thumb: /assets/images/thumbs/PVELoadBalancer4.jpg
-    caption: "Combined simulation of initial load, final load, and moves to get to final load"
-
-{% endproject %}
-
-<!-- Teensy WebHID -->
-{% project %}
-name: WebHID
-
-summary: "Teensy WebHID Firmware Loader"
-
-dates: "2025 - Now"
-
-contributors: "Solo Project"
-
-links:
-  - name: Example Page
-    url: https://coelacant.com/Teensy-Loader-Javascript/Teensy-Loader-Example.html
-  - name: Github
-    url: https://github.com/coelacant1/Teensy-Loader-Javascript
-
-description: |-
-  The Teensy WebHID Loader is a Chromium-based firmware flasher replicating PJRC's Teensy Loader. It parses and uploads HEX and BIN files to Teensy microcontrollers, manages serial connections, and lets end users update device firmware without installing any software.
-
-iframe: https://coelacant.com/Teensy-Loader-Javascript/Teensy-Loader-Example.html
-
-slides:
-  - type: image
-    src: /assets/images/TeensyWebHID7.jpg
-    thumb: /assets/images/thumbs/TeensyWebHID7.jpg
-    caption: "Example of the Teensy WebHID loader integrated into a site for end user firmware updates"
-  - type: image
-    src: /assets/images/TeensyWebHID2.jpg
-    thumb: /assets/images/thumbs/TeensyWebHID2.jpg
-    caption: "List of available .hex files to upload to the microcontroller"
-  - type: image
-    src: /assets/images/TeensyWebHID3.jpg
-    thumb: /assets/images/thumbs/TeensyWebHID3.jpg
-    caption: "Device selection"
-  - type: image
-    src: /assets/images/TeensyWebHID4.jpg
-    thumb: /assets/images/thumbs/TeensyWebHID4.jpg
-    caption: "Uploading firmware to a Teensy 4.0 microcontroller with the WS2812 3.5mm panel configuration"
-  - type: image
-    src: /assets/images/TeensyWebHID5.jpg
-    thumb: /assets/images/thumbs/TeensyWebHID5.jpg
-    caption: "Firmware upload completed"
-  - type: image
-    src: /assets/images/TeensyWebHID6.jpg
-    thumb: /assets/images/thumbs/TeensyWebHID6.jpg
-    caption: "Serial output from the microcontroller into the browser"
-
-{% endproject %}
-
-<!-- Bambu Lab Cloud API -->
-{% project %}
-name: BambuLabCloudAPI
-
-summary: "Bambu Lab Cloud API: Python Library and Compatibility Layer"
-
-links:
-  - name: PyPI
-    url: https://pypi.org/project/bambu-lab-cloud-api/
-  - name: GitHub
-    url: https://github.com/coelacant1/Bambu-Lab-Cloud-API
-
-dates: "2025 - Now"
-
-contributors: "Solo Project"
-
-description: |-
-  A documentation effort and Python library for communicating with Bambu Lab 3D printers through their Cloud API, MQTT protocol, and local connections. Originally built as a read-only proxy for managing a print farm.
-
-  Features include:
-  - API endpoint reference built from network traffic analysis, split into focused modules (auth, devices, users, files/printing, MQTT, AMS/filament, camera, errors)
-  - Unified Python client (`bambulab`) covering Cloud API, MQTT, local FTP upload, and video streams
-  - Authentication with 2FA / email verification code support and token caching
-  - Real-time MQTT monitoring and control of print state and printer telemetry
-  - File upload via both Cloud API (S3) and local FTP
-  - Video streaming: RTSP for X1 series, JPEG frame streaming for A1/P1 series
-  - Compatibility server that bridges Home Assistant, OctoPrint, and other tools to the Cloud API without enabling developer mode
-  - Strict read-only and full-mode proxy servers with rate limiting for safe gateway use
-  - Comprehensive test suite covering 20+ endpoints, MQTT live data, S3 file upload, and TUTK video credentials
-  - G-code reference documentation for supported printer models
-  - Distributed on PyPI as `bambu-lab-cloud-api`
-
-slides:
-  - type: image
-    src: /assets/images/BambuLabCloudAPI1.jpg
-    thumb: /assets/images/thumbs/BambuLabCloudAPI1.jpg
-    caption: "Live JPEG frame streaming from a Bambu Lab P1S camera through the Python client"
-  - type: image
-    src: /assets/images/BambuLabCloudAPI2.jpg
-    thumb: /assets/images/thumbs/BambuLabCloudAPI2.jpg
-    caption: "Comprehensive test suite startup: enumerating three P1S printers with model, online state, print status, nozzle, and access codes via the Cloud API"
-  - type: image
-    src: /assets/images/BambuLabCloudAPI3.jpg
-    thumb: /assets/images/thumbs/BambuLabCloudAPI3.jpg
-    caption: "Device version, AMS filament info, print status, user profile, and TTCode camera credentials returned by the Cloud API"
-  - type: image
-    src: /assets/images/BambuLabCloudAPI4.jpg
-    thumb: /assets/images/thumbs/BambuLabCloudAPI4.jpg
-    caption: "TUTK P2P video credentials and a live MQTT push_status stream with the full 63-field printer state captured by the client"
-  - type: image
-    src: /assets/images/BambuLabCloudAPI5.jpg
-    thumb: /assets/images/thumbs/BambuLabCloudAPI5.jpg
-    caption: "Parsed MQTT messages (temperatures, fans, AMS units, layer/progress) followed by the file upload flow generating S3 signed URLs"
-  - type: image
-    src: /assets/images/BambuLabCloudAPI6.jpg
-    thumb: /assets/images/thumbs/BambuLabCloudAPI6.jpg
-    caption: "Upload to S3 confirmed, cloud file listing retrieved, and the full 20/20 test suite passing end-to-end"
-
-{% endproject %}
-
-<!-- Proxmox GPU Passthrough Optimizations -->
-{% project %}
-name: ProxmoxGPU
-
-summary: "Proxmox GPU Passthrough for Workstations"
-
-links:
-  - name: GitHub
-    url: https://github.com/coelacant1/PVEGPUPassthroughGuide
-
-dates: "2025 - Now"
-
-contributors: "Solo Project"
-
-description: |-
-  A guide to running Proxmox VE as the base operating system for a high-performance workstation. Covers GPU and USB controller passthrough; multi-NUMA-node CPU optimization; BIOS and GRUB tweaks; VFIO module setup and driver blacklisting; microcode updates and GPU ROMs; tuning CPU affinity; network-stack optimizations; Windows/QEMU adjustments for Easy Anti-Cheat compatibility; example VM setups; and benchmarking results.
-  
-  This enables users to run high-performance workstations in various configurations while keeping things easy to manage, since each VM can be tuned for its specific OS or software.
-
-slides:
-  - type: pdf
-    src: /assets/pdfs/PVEGPUPassthroughGuide.pdf
-    caption: "The complete PDF guide from the Github markdown files"
-
-{% endproject %}
-
 ## **Product Prototyping and Engineering**
 <!-- Stewart Platform -->
 {% project %}
@@ -1397,6 +728,624 @@ slides:
 
 {% endproject %}
 
+## **Software and Embedded Systems Development**
+{% project %}
+name: AetherControl
+
+summary: "AetherControl: Optimized CNC Firmware"
+
+links:
+  - name: GitHub
+    url: https://github.com/coelacant1/AetherControl
+
+dates: "2023 - Now"
+
+contributors: "Solo Project"
+
+description: |-
+  AetherControl is a streamlined and modular, C++ based motion-control firmware. It is built for real-time G-code parsing, motion planning, kinematics, and stepper-motor drive. Supports advanced kinematics like Stewart platforms, CoreXY machines, and Cartesian robots with dynamic trajectory planning.
+
+  Implementations:
+  - High-Speed CoreXY pick-and-place machine
+  - High-Speed 6x 1000W AC Servo based 6-axis Stewart platform used as a flight simulator
+
+  This includes features such as:
+  - Support for Stewart platform, Cartesian, CoreXY, and custom kinematics configurations
+  - Dynamic trajectory planning with velocity and acceleration constraints
+  - G-code parsing and execution for CNC command interpretation
+  - Real-time multi-axis synchronization and motion coordination
+  - Multi-Controller synchronization
+  - Layered modular architecture for easy customization and extension
+  - Support for sensor calibration and automated testing routines
+  - Optimized for ARM Cortex-M microcontrollers with efficient resource use
+  - Custom PathPlanner optimizing for up to the number of GPIO pins available to drive the system
+
+slides:
+  - type: video
+    video_id: 4LFMXw97F7c
+    caption: "AetherControl on a CoreXY Pick n Place Machine"
+  - type: image
+    src: /assets/images/AetherControl1.jpg
+    caption: "Example configuration for the AB motors of the Pick n Place"
+    thumb: /assets/images/thumbs/AetherControl1.jpg
+  - type: video
+    video_id: nXmGRJHBArY
+    caption: "Second example of AetherControl on the CoreXY Pick n Place assembling a PCB"
+  - type: image
+    src: /assets/images/AetherControl2.jpg
+    thumb: /assets/images/thumbs/AetherControl2.jpg
+    caption: "Example configuration for the Z and R motors of the Pick n Place - end effector controller"
+  - type: video
+    video_id: DOIEZTeIsqk
+    caption: "AetherControl controlling a 6-Axis 425mm stroke Stewart Platform"
+  - type: image
+    src: /assets/images/AetherControl3.jpg
+    thumb: /assets/images/thumbs/AetherControl3.jpg
+    caption: "Configuration file for the Stewart Platform"
+
+{% endproject %}
+
+<!-- Radtel RT-950 Pro Firmware -->
+{% project %}
+name: RT950ProFirmware
+
+summary: "RT-950 Pro: Open-Source Handheld Radio Firmware"
+
+links:
+  - name: GitHub
+    url: https://github.com/coelacant1/Radtel-RT950-Pro-Firmware
+
+dates: "2025 - Now"
+
+contributors: "Contributors on GitHub"
+
+description: |-
+  Open-source bare-metal firmware for the Radtel RT-950 Pro handheld radio, targeting the Artery AT32F403A (ARM Cortex-M4F @ 120 MHz, 1 MB flash, 96 KB SRAM). The custom firmware loads via the OEM bootloader using the standard `.BTF` update flow with no CRC or signature, so users can flash it through the existing OEM tool.
+
+  Hardware bring-up confirmed on real hardware:
+  - ST7789V 240x320 LCD via 8080 parallel bus with custom text rendering
+  - Status LEDs, dual backlights, power latch, and band relay control
+  - Boot, GPIO, and display fully functional under custom firmware
+
+  Implemented (code-complete, hardware testing in progress):
+  - Drivers: GPIO, SPI2 (flash), bit-bang SPI for BK4829, bit-bang I2C for SI4732, multiple UARTs, ADC2, DAC1+TIM6+DMA, dual-channel DMA, ST7789V 8080 parallel
+  - RF: dual BK4829 transceiver driver with frequency programming, TX power control, and flash-stored calibration tables
+  - Application: dual VFO (A/B/C), PTT with active-low relay routing, debounced keypad scanner, rotary encoder, S-meter, hierarchical 12-category menu, frequency entry
+  - Digital modes: APRS (hardware FSK via BK4829, MIC-E packets), DTMF encode/decode, CTCSS/DCS tone generation
+  - Receivers: SI4732 AM/FM/SSB broadcast, FM presets, NOAA weather channels
+  - Storage: SPI flash layout for 990 channels, VFO configs and settings, wear-leveled NV storage, CPS programming over UART4
+  - Comms: GPS NMEA parser, BLE data bridge, VOX
+  - UI: splash screen, zone browser, text input, scanner, spectrum analyzer
+  - Cross-band repeat with band-specific relay routing and verified PTT polarity for PA safety
+  - Tooling: BTF firmware encrypt/decrypt, CPS flash read/write, serial firmware uploader with auto-restart
+  - Hardware self-test suite covering backlight, UART, LCD, BK4829/SI4732 chip IDs, SPI flash JEDEC ID, ADC, DAC tone, keypad, GPS, and full system diagnostics
+
+slides:
+  - type: image
+    src: /assets/images/RT950Pro1.jpg
+    thumb: /assets/images/thumbs/RT950Pro1.jpg
+    caption: "Custom firmware running the hardware self-test on a real RT-950 Pro: AT32F403A + ST7789V LCD + dual BK4829 + SI4732 detected, GPIO/LED/backlight/band-relay/LCD bus verified"
+
+{% endproject %}
+
+<!-- ProxmoxScripts -->
+{% project %}
+name: ProxmoxScripts
+
+summary: "ProxmoxScripts for Automated Infrastracture Management"
+
+links:
+  - name: Website
+    url: https://coelacant.com/ProxmoxScripts/
+  - name: GitHub
+    url: https://github.com/coelacant1/ProxmoxScripts
+
+dates: "2024 - Now"
+
+contributors: "Contributors on GitHub"
+
+description: |-
+  ProxmoxScripts is a collection of Bash scripts for streamlining and automating the management of Proxmox Virtual Environment (PVE) clusters. This was developed to help manage and automate Proxmox virtualization infrastructure. The scripts are accessible via a console-based menu for overview, navigation, and execution. Users can read help information for each script as well as get a description of required parameters.
+
+  Features include: 
+  - Cluster configuration tools
+    - Adding Nodes - Remote configuration with IP
+    - Cluster Creation - From list of IPs
+    - Cluster Deletion - Separating all nodes from cluster
+  - Firewall management
+    - Bulk LXC/VM Firewall Management
+    - Automated host default firewall configuration
+  - High Availability
+    - Create HA Group and add nodes 
+    - Bulk add LXC/VMs to HA group
+  - Host Automation and Configuration
+    - Remove local-lvm storage and expand local storage (for Hyper-Converged setups)
+    - Bulk Microcode configuration/Timezone Configuration/Upgrades
+    - Generic PWM and Dell IPMI hardware fan control adapting to CPU temperatures
+    - Enable CPU Scaling Governer
+    - Enable GPU Passthrough to VM
+    - Enable IOMMU
+    - Enable GPU Sharing with LXC
+    - Optimize for X3D hardware
+    - Live memory testing
+    - System optimization for nested virtualization
+  - LXC and VM Configuration and Management
+  - Networking
+    - Bulk adding network bonds
+    - List all VM/LXC IDs with their associated MAC address
+    - Bulk set DNS on cluster
+    - Find VM ID from MAC address
+    - Automated host-to-host network speed test
+    - Bulk update network interface names 
+    - Bulk host uplink speed test
+  - Remote VM/LXC Management
+    - Integration with Apache Guacamole
+      - Bulk add/delete RDP connections
+      - Bulk add/remove SFTP server to RDP connections
+      - Bulk list RDP configuration
+      - Bulk update/remove drive redirection
+      - Pull Guacamole authentication token
+    - Configuration of virtual machine static IPs over SSH for Debian/Ubuntu/Windows
+  - Generate a resource report for all VMs/LXCs
+  - Automated penetration testing/port scanning
+  - Storage Automation
+    - Ceph Configuration
+      - Bulk create OSDs
+      - Edit crushmap (decompiles, prints directory, allows user edit, then recompile)
+      - Bulk restart managers/monitors/metadata servers/OSDs
+      - Set pool to minimum size of 1 and to a size of 1 (testing/temporary data)
+      - Create automated deep scrubbing with a chron job
+      - Automate creating a single drive Ceph node (shares host OS and Ceph data)
+      - Bulk OSD sparsify
+      - Bulk start stopped disks
+      - Full data wipe on specified disk (clear Ceph and all remnants of user data)
+    - Disk Benchmarking
+    - Bulk VM disk deletion
+    - Bulk VM disk deletion for disks with snapshots
+    - Trim all filesystems of resources using Qemu Agent or LXC
+    - Automate disk spin down
+    - Pass host directory to LXC
+    - Update stale mounts
+  - Custom User Interface library
+
+iframe: https://coelacant.com/ProxmoxScripts/
+
+slides:
+  - type: image
+    src: /assets/images/ProxmoxScripts1.jpg
+    thumb: /assets/images/thumbs/ProxmoxScripts1.jpg
+    caption: "Multi-pane view of the CCPVE terminal interface running scripts across the cluster"
+  - type: image
+    src: /assets/images/ProxmoxScripts2.jpg
+    thumb: /assets/images/thumbs/ProxmoxScripts2.jpg
+    caption: "CCPVE menus, host overview, and script execution shown side by side"
+  - type: image
+    src: /assets/images/ProxmoxScripts3.jpg
+    thumb: /assets/images/thumbs/ProxmoxScripts3.jpg
+    caption: "Invoking a script through the single-line online bootstrap command"
+
+{% endproject %}
+
+<!-- pAWS - Proxmox Automated Web Services -->
+{% project %}
+name: ProxmoxAutomatedWebServices
+
+summary: "pAWS: Self-Hosted Cloud on Proxmox VE"
+
+links:
+  - name: GitHub
+    url: https://github.com/coelacant1/Proxmox-Automated-Web-Services
+
+dates: "2025 - Now"
+
+contributors: "Solo Project"
+
+description: |-
+  pAWS (Proxmox Automated Web Services) is a self-hosted, AWS-like infrastructure platform built on Proxmox VE. It provides multi-tenant compute, networking, storage, backups, and monitoring through a unified web UI and REST API, turning a Proxmox cluster into a managed cloud-style environment.
+
+  Targeted feature set:
+  - Compute: VMs and LXC containers from templates with full lifecycle management, browser-based console (noVNC/xterm.js), snapshots, and import/export
+  - Networking: VPCs with subnets, security groups, service endpoints, and DNS
+  - Storage: S3-compatible object storage backed by Ceph RadosGW, with file browser, sharing, and presigned URLs
+  - Backups: Proxmox Backup Server integration with scheduled plans and point-in-time restore
+  - Monitoring: per-resource metrics, alarms, and log aggregation
+  - Auth: local accounts (JWT) plus OAuth2/OIDC, with RBAC roles (Admin/Operator/Member/Viewer)
+  - Admin: user management, template catalog, quotas, and audit logging
+
+  Stack:
+  - Frontend: React 19, TypeScript, Vite, Tailwind CSS v4
+  - Backend: Python 3.11+, FastAPI, async SQLAlchemy 2, Pydantic v2
+  - Data: PostgreSQL 16, Redis 7, Celery
+  - Infrastructure: Proxmox VE 8+, Ceph RadosGW, Proxmox Backup Server
+  - Cluster credentials are AES-256-GCM encrypted at rest using a stable master key
+
+slides:
+  - type: image
+    src: /assets/images/pAWS1.jpg
+    thumb: /assets/images/thumbs/pAWS1.jpg
+    caption: "pAWS dashboard giving a single view of compute, storage, and cluster health"
+  - type: image
+    src: /assets/images/pAWS2.jpg
+    thumb: /assets/images/thumbs/pAWS2.jpg
+    caption: "Container/VM overview with lifecycle controls"
+  - type: image
+    src: /assets/images/pAWS3.jpg
+    thumb: /assets/images/thumbs/pAWS3.jpg
+    caption: "Browser-based VNC console for direct VM access"
+  - type: image
+    src: /assets/images/pAWS4.jpg
+    thumb: /assets/images/thumbs/pAWS4.jpg
+    caption: "Administration panel for users, infrastructure connections, and templates"
+
+{% endproject %}
+
+<!-- Koilo Engine -->
+{% project %}
+name: KoiloEngine
+
+summary: "Koilo Engine: C++ Game Engine with Runtime Scripting"
+
+links:
+  - name: GitHub
+    url: https://github.com/coelacant1/Koilo-Engine
+
+dates: "2025 - Now"
+
+contributors: "Solo Project"
+
+description: |-
+  Koilo Engine is a compact C++17 game engine designed to run across both desktop systems and resource-constrained microcontrollers. Scenes and game logic are authored in KoiloScript (`.ks`), a bytecode-compiled scripting language with full access to engine internals through runtime reflection. This is the spiritual successor to ProtoTracer, generalizing the renderer and physics core into a portable engine usable on both PCs and embedded targets.
+
+  Targets include Linux, Windows, Raspberry Pi, Teensy 4.x, ESP32-S3, and STM32.
+
+  Features include:
+  - Multi-backend rendering with a common interface
+    - Vulkan, OpenGL 3.3, and a CPU software rasterizer
+    - KSL shaders compile to both GLSL and CPU from the same source
+  - KoiloScript scripting language
+    - Variables, functions, classes, coroutines, signals, imports, operator overloading
+    - Direct calls into C++ objects through a reflection bridge
+  - Reflection system for exposing C++ classes to scripts via macros (no external codegen)
+  - Hot-reloadable dynamic modules (`.so`/`.dll`) with lifecycle hooks and phased init
+  - Scene graph and ECS with transform propagation and dense component storage
+  - Animation: skeletal playback, keyframe camera tracks, morph target blending, material animation
+  - Optimized math library: vectors, quaternions, matrices, transforms, splines, spatial indexing, noise, Kalman filters, FFT
+  - Asset pipeline with the KoiloMesh format (morph targets) and OBJ/FBX offline conversion
+  - Optional subsystems: AI (pathfinding, behavior trees, FSM), SDL2 audio, particles, LED panel output, HTTP live preview
+
+slides:
+  - type: image
+    src: /assets/images/Koilo8.jpg
+    thumb: /assets/images/thumbs/Koilo8.jpg
+    caption: "UI demo running on top of the engine"
+  - type: image
+    src: /assets/images/Koilo1.jpg
+    thumb: /assets/images/thumbs/Koilo1.jpg
+    caption: "3D scene rendered in Koilo Engine with KSL materials and an orbiting camera"
+  - type: image
+    src: /assets/images/Koilo2.jpg
+    thumb: /assets/images/thumbs/Koilo2.jpg
+    caption: "OBJ model loaded with textures and a keyframe camera track"
+  - type: image
+    src: /assets/images/Koilo3.jpg
+    thumb: /assets/images/thumbs/Koilo3.jpg
+    caption: "Multi-mesh stress test comparing GPU and software renderer output"
+  - type: image
+    src: /assets/images/Koilo4.jpg
+    thumb: /assets/images/thumbs/Koilo4.jpg
+    caption: "2D space shooter sample using signals, coroutines, collision, and wave spawning"
+  - type: image
+    src: /assets/images/Koilo5.jpg
+    thumb: /assets/images/thumbs/Koilo5.jpg
+    caption: "KoiloScript language feature showcase"
+  - type: image
+    src: /assets/images/Koilo6.jpg
+    thumb: /assets/images/thumbs/Koilo6.jpg
+    caption: "Dynamic module loading via the runtime reflection bridge"
+
+{% endproject %}
+
+<!-- AetherControl -->
+<!-- ProtoTracer -->
+{% project %}
+name: ProtoTracer
+
+summary: "ProtoTracer: Embedded 3D Rendering Engine"
+
+links:
+  - name: Website
+    url: https://coelacant.com/ProtoTracer/
+  - name: GitHub
+    url: https://github.com/coelacant1/ProtoTracer
+
+dates: "2020 - Now"
+
+contributors: "Contributors on GitHub"
+
+description: |-
+  ProtoTracer is a C++ based 3D rendering engine optimized for microcontrollers. It calculates dynamic 3D scenes in real-time, reacting to sensor or user inputs to adapt the output. This software is designed to be modular for use in other projects.
+  
+  This includes features such as: 
+  - Keyframed animations with support for automated easing
+  - Display of custom converted FBX, OBJ 3D Models with support for textures using any static image format as well as support for animated GIFs
+  - Custom camera definitions and parameters for specialized display shapes and 3D outputs
+  - Support for driving HUB75, WS2812, and APA102 based LED displays, with controller definitions making it easy to create other interfaces
+  - Raster-based 3D rendering as well as Raytraced rendering
+    - Segmented-rendering optimization using quadtrees
+    - Custom rendering pipeline optimized for high frame rates on constrained hardware
+      - Enables PS1-level graphics rendering
+  - Custom static and animated shader materials
+    - Simplex Noise Shaders
+    - Audio Reactive Shaders (Oscilloscope/Spectrum Analyzer)
+    - TV Static emulation
+    - Gradient/Normal/UV Tiled/Depth Materials
+  - Audio Analysis
+    - Voice analysis for matching vowel sounds to viseme shapes
+      - Allows user calibration for custom formant maps
+    - Fourier Transform for analysis/spectrum analyzer display
+    - Filtering and automatic scaling for background noise
+    - Filters: FFT/Kalman/Peak/Ramp/Running Average
+  - Physics Simulator
+  - Hardware Support for:
+    - SSD1306 Status Display/HUD
+    - Communication with secondary controller for wireless control
+    - PWM Fan Controls through a user menu
+    - APDS9960 Color/Distance Sensing
+    - BNO055 Quaternion input for space-mouse like control
+    - MMC56X3 Magnetometer input
+    - SHARPGP2Y Distance Sensing
+    - MAX9814/SPW2430 Microphone Input
+  - Screenspace Shaders for manipulating 3D rendered frames with 2D modifications
+    - Fisheye distortion
+    - Glitch distortion
+    - Box/Radial blur
+    - Magnetic Lens distortion
+    - Phase Shifting
+  - Live object manipulation
+    - Position/Scale/Rotation
+    - Distortion with custom object deformer
+      - Modifies 3D space via transformation functions
+      - Perspective Deform
+      - Sinusoidal Deform
+      - Dropwave Deform
+    - Automatic 3D object alignment
+      - Allows alignment of center of volume or mass to a target coordinate
+      - Fit alignment to a plane
+        - Allows users to rapidly add their own model with any scale/rotation and it will autofit to a target size and plane
+  - Custom Optimized Math Library
+    - Rotation library with support for Axis Angles, Direction Angles(Custom), Euler Angles, Quaternions, Rotation Matrices, Yaw-Pitch-Roll
+    - Vector2D and Vector3D Library
+    - Quaternion Library
+    - Kalman and Running Average Filters for Quaternion Space, Cartesian Space
+  - Automated Testing to verify custom math libary
+    
+  Doxygen genereated documentation from sourcecode:
+
+iframe: https://coelacant.com/ProtoTracer/
+
+slides:
+  - type: video
+    video_id: C5WwMnbaJ34
+    caption: "Shader with multiply blend modes between two animated GIFs"
+  - type: video
+    video_id: 8uSgCMLcty8
+    caption: "Simplex noise shader with blend mode mixing stripe shader"
+  - type: video
+    video_id: 1AH0N9evXL4
+    caption: "Spiral rainbow shader with multiply blend mode playing Bad Apple as a GIF"
+  - type: video
+    video_id: SXp2C7LbiRM
+    caption: "Dual spiral rainbow shader with lighten blend mode"
+  - type: video
+    video_id: Yc67nFJwqYo
+    caption: "Example of a full keyframed animation"
+  - type: video
+    video_id: TnoXMWCxYpc
+    caption: "External sensor input for controlling the 3D model"
+  - type: video
+    video_id: ucIHCd_vjGA
+    caption: "Rendering a 3D model with 2D textures"
+  - type: video
+    video_id: ZJqEkMUVPH4
+    caption: "Normal shader"
+  - type: video
+    video_id: orijCE6EDM4
+    caption: "Physics simulator with balls in a 3D box"
+  - type: pdf
+    src: /assets/pdfs/ProtogenControllerV2-0.pdf
+    caption: "Controller guide for hardware optimized for ProtoTracer"
+
+{% endproject %}
+
+<!-- OpenDACT -->
+{% project %}
+name: OpenDACT
+
+summary: "OpenDACT: Automatic Delta Kinematics Calibration Software"
+
+links:
+  - name: Github
+    url: https://github.com/coelacant1/OpenDACT
+
+dates: "2014 - 2017"
+
+contributors: "Contributors on GitHub"
+
+description: |-
+  OpenDACT (Open-source Delta Automatic Calibration Tool) is a calibration tool for delta robots. It calibrates generic delta robots and automates calibration of Repetier-firmware-controlled delta robots (primarily 3D printers). The calibration uses forward and inverse kinematics measurements to make adjustments. It takes Z-height readings at key XY points on a flat plate (print bed) to iteratively calculate hardware offsets. Users can manually adjust hardware or apply software offsets to correct for imperfections.
+
+  This software solves for the following mechanical offsets:
+  - Diagonal rod lengths
+  - End effector radius
+  - Horizontal radius
+  - Endstop offsets
+  - Angles of the ABC towers
+
+  For Repetier based robots, these offsets are automatically saved on the controllers EEPROM upon a successful calibration. Z-bed distortion on a newly completed build could have offsets of +/- 2mm across the plate, this tool (assuming issues in the above offsets) can calibrate the systems down to 5-10 microns.
+  
+  This software has been tested and successfully used on small-form factor deltas (100mm plate diameter) and large-form factor deltas (1.5 meter plate diameter).
+
+slides:
+  - type: image
+    src: /assets/images/OpenDACT1.jpg
+    thumb: /assets/images/thumbs/OpenDACT1.jpg
+    caption: "User interface with example calibration of a delta 3D printer running Repetier firmware"
+  - type: image
+    src: /assets/images/OpenDACT2.jpg
+    thumb: /assets/images/thumbs/OpenDACT2.jpg
+    caption: "User interface showing deformation in the physical structure from ideal conditions - can be used to physically tune the machine"
+  - type: image
+    src: /assets/images/OpenDACT4.jpg
+    thumb: /assets/images/thumbs/OpenDACT4.jpg
+    caption: "Full user interface while running a calibration"
+
+{% endproject %}
+
+<!-- Proxmox Load Balancer -->
+{% project %}
+name: PVELoadBalancer
+
+summary: "Proxmox VE Load Balancer"
+
+links:
+  - name: GitHub
+    url: https://github.com/coelacant1/ProxmoxLoadBalancer
+
+dates: "2025 - Now"
+
+contributors: "Solo Project"
+
+description: |-
+  ProxmoxLoadBalancer is a Python tool that balances memory across Proxmox VE cluster nodes. It has two modes of operation:
+
+  - Simulation Mode: Test and visualize load-balancing algorithms in a controlled environment without touching the live cluster.
+  - Live Mode: Uses the Proxmox API to monitor memory usage and migrate VMs to balance load.
+
+  This software is built as a stand-in until ProxmoxVE ships with a built-in cluster load balancer.
+
+iframe: https://coelacant.com/ProxmoxScripts/
+
+slides:
+  - type: image
+    src: /assets/images/PVELoadBalancer3.jpg
+    thumb: /assets/images/thumbs/PVELoadBalancer3.jpg
+    caption: "Example simulated load balance of a 12-node ProxmoxVE cluster with different amounts of memory"
+  - type: image
+    src: /assets/images/PVELoadBalancer1.jpg
+    thumb: /assets/images/thumbs/PVELoadBalancer1.jpg
+    caption: "Example moves from the simulation to balance to equally shared memory"
+  - type: image
+    src: /assets/images/PVELoadBalancer2.jpg
+    thumb: /assets/images/thumbs/PVELoadBalancer2.jpg
+    caption: "Second example of a simulated load-balance but with more extremes in initial conditions"
+  - type: image
+    src: /assets/images/PVELoadBalancer4.jpg
+    thumb: /assets/images/thumbs/PVELoadBalancer4.jpg
+    caption: "Combined simulation of initial load, final load, and moves to get to final load"
+
+{% endproject %}
+
+<!-- Teensy WebHID -->
+{% project %}
+name: WebHID
+
+summary: "Teensy WebHID Firmware Loader"
+
+dates: "2025 - Now"
+
+contributors: "Solo Project"
+
+links:
+  - name: Example Page
+    url: https://coelacant.com/Teensy-Loader-Javascript/Teensy-Loader-Example.html
+  - name: Github
+    url: https://github.com/coelacant1/Teensy-Loader-Javascript
+
+description: |-
+  The Teensy WebHID Loader is a Chromium-based firmware flasher replicating PJRC's Teensy Loader. It parses and uploads HEX and BIN files to Teensy microcontrollers, manages serial connections, and lets end users update device firmware without installing any software.
+
+iframe: https://coelacant.com/Teensy-Loader-Javascript/Teensy-Loader-Example.html
+
+slides:
+  - type: image
+    src: /assets/images/TeensyWebHID3.jpg
+    thumb: /assets/images/thumbs/TeensyWebHID3.jpg
+    caption: "Device selection"
+  - type: image
+    src: /assets/images/TeensyWebHID4.jpg
+    thumb: /assets/images/thumbs/TeensyWebHID4.jpg
+    caption: "Uploading firmware to a Teensy 4.0 microcontroller with the WS2812 3.5mm panel configuration"
+  - type: image
+    src: /assets/images/TeensyWebHID5.jpg
+    thumb: /assets/images/thumbs/TeensyWebHID5.jpg
+    caption: "Firmware upload completed"
+  - type: image
+    src: /assets/images/TeensyWebHID6.jpg
+    thumb: /assets/images/thumbs/TeensyWebHID6.jpg
+    caption: "Serial output from the microcontroller into the browser"
+
+{% endproject %}
+
+<!-- Bambu Lab Cloud API -->
+{% project %}
+name: BambuLabCloudAPI
+
+summary: "Bambu Lab Cloud API: Python Library and Compatibility Layer"
+
+links:
+  - name: PyPI
+    url: https://pypi.org/project/bambu-lab-cloud-api/
+  - name: GitHub
+    url: https://github.com/coelacant1/Bambu-Lab-Cloud-API
+
+dates: "2025 - Now"
+
+contributors: "Solo Project"
+
+description: |-
+  A documentation effort and Python library for communicating with Bambu Lab 3D printers through their Cloud API, MQTT protocol, and local connections. Originally built as a read-only proxy for managing a print farm.
+
+  Features include:
+  - API endpoint reference built from network traffic analysis, split into focused modules (auth, devices, users, files/printing, MQTT, AMS/filament, camera, errors)
+  - Unified Python client (`bambulab`) covering Cloud API, MQTT, local FTP upload, and video streams
+  - Authentication with 2FA / email verification code support and token caching
+  - Real-time MQTT monitoring and control of print state and printer telemetry
+  - File upload via both Cloud API (S3) and local FTP
+  - Video streaming: RTSP for X1 series, JPEG frame streaming for A1/P1 series
+  - Compatibility server that bridges Home Assistant, OctoPrint, and other tools to the Cloud API without enabling developer mode
+  - Strict read-only and full-mode proxy servers with rate limiting for safe gateway use
+  - Comprehensive test suite covering 20+ endpoints, MQTT live data, S3 file upload, and TUTK video credentials
+  - G-code reference documentation for supported printer models
+  - Distributed on PyPI as `bambu-lab-cloud-api`
+
+slides:
+  - type: image
+    src: /assets/images/BambuLabCloudAPI1.jpg
+    thumb: /assets/images/thumbs/BambuLabCloudAPI1.jpg
+    caption: "Live JPEG frame streaming from a Bambu Lab P1S camera through the Python client"
+  - type: image
+    src: /assets/images/BambuLabCloudAPI2.jpg
+    thumb: /assets/images/thumbs/BambuLabCloudAPI2.jpg
+    caption: "Comprehensive test suite startup: enumerating three P1S printers with model, online state, print status, nozzle, and access codes via the Cloud API"
+  - type: image
+    src: /assets/images/BambuLabCloudAPI3.jpg
+    thumb: /assets/images/thumbs/BambuLabCloudAPI3.jpg
+    caption: "Device version, AMS filament info, print status, user profile, and TTCode camera credentials returned by the Cloud API"
+  - type: image
+    src: /assets/images/BambuLabCloudAPI4.jpg
+    thumb: /assets/images/thumbs/BambuLabCloudAPI4.jpg
+    caption: "TUTK P2P video credentials and a live MQTT push_status stream with the full 63-field printer state captured by the client"
+  - type: image
+    src: /assets/images/BambuLabCloudAPI5.jpg
+    thumb: /assets/images/thumbs/BambuLabCloudAPI5.jpg
+    caption: "Parsed MQTT messages (temperatures, fans, AMS units, layer/progress) followed by the file upload flow generating S3 signed URLs"
+  - type: image
+    src: /assets/images/BambuLabCloudAPI6.jpg
+    thumb: /assets/images/thumbs/BambuLabCloudAPI6.jpg
+    caption: "Upload to S3 confirmed, cloud file listing retrieved, and the full 20/20 test suite passing end-to-end"
+
+{% endproject %}
+
 ## **Advanced Manufacturing**
 <!-- Advanced Manufacturing Technologies -->
 {% project %}
@@ -2003,43 +1952,29 @@ slides:
 
 {% endproject %}
 
-<!-- Active Directory Management -->
+<!-- Proxmox GPU Passthrough Optimizations -->
 {% project %}
-name: ActiveDirectory
+name: ProxmoxGPU
 
-summary: "Active Directory Management"
+summary: "Proxmox GPU Passthrough for Workstations"
 
-dates: "2019 - Now"
+links:
+  - name: GitHub
+    url: https://github.com/coelacant1/PVEGPUPassthroughGuide
 
-contributors: "Solo Management and Operation"
+dates: "2025 - Now"
+
+contributors: "Solo Project"
 
 description: |-
-  Active Directory Management (500+ users)
-
-  - Self-Service Password Management
-    - Automated portals enable users to reset and change their own passwords securely
-    - MFA using TOTP for identity verification
-  - Recurring Self-Audits
-    - Scheduled scans of user accounts and group memberships to detect inactive or orphaned objects
-    - Automated reports on password-policy compliance and access entitlements
-  - Scalability and Concurrency
-    - Supports ~500 users without performance degradation
-    - High-availability domain controllers and load-balanced authentication
-  - AD-Backed Network Access
-    - Wi-Fi Access: 802.1X authentication against AD for per-user connectivity
-    - VPN Access: AD credential validation for remote-user tunnels
-  - Group-Based Policy Management
-    - Role and department-based group management and network VLAN assignments
-    - Dynamic group memberships allow policies to follow users as they change roles
-  - Group Provisioning
-    - Integration with HR/authoritative systems to import new users and remove old users
-    - AD group creation and membership updates via scripted exports
+  A guide to running Proxmox VE as the base operating system for a high-performance workstation. Covers GPU and USB controller passthrough; multi-NUMA-node CPU optimization; BIOS and GRUB tweaks; VFIO module setup and driver blacklisting; microcode updates and GPU ROMs; tuning CPU affinity; network-stack optimizations; Windows/QEMU adjustments for Easy Anti-Cheat compatibility; example VM setups; and benchmarking results.
+  
+  This enables users to run high-performance workstations in various configurations while keeping things easy to manage, since each VM can be tuned for its specific OS or software.
 
 slides:
-  - type: image
-    src: /assets/images/AD1.jpg
-    thumb: /assets/images/thumbs/AD1.jpg
-    caption: "Screen-cap of the current state of the active directory, ~2500 users, ~500 enabled in-use accounts, ~2000 accounts disabled (users that may return)"
+  - type: pdf
+    src: /assets/pdfs/PVEGPUPassthroughGuide.pdf
+    caption: "The complete PDF guide from the Github markdown files"
 
 {% endproject %}
 
