@@ -6,7 +6,9 @@ description: Portfolio
 
 <!-- # **Meet Coela**{: .typewriter } -->
 
-Engineer and developer who solves problems with hardware, software, and automation. Building performant, modular, and reliable systems-from embedded devices and robotics to virtualization and infrastructure automation.
+Embedded software, electrical, and systems engineer with 8+ years shipping firmware and hardware across defense, industrial, and consumer applications. **Custom mixed-signal and power PCB design** in Altium, **bare-metal and RTOS firmware**, motion and motor control, hardware security analysis, and the **Proxmox/Ceph platforms** behind it all.
+
+*Some of my professional work is not publicly shareable; the projects below are the subset I can show. Selected work spans embedded firmware, mixed-signal hardware, motion control, and large-scale compute infrastructure.*
 
 ## **Product Prototyping and Engineering**
 <!-- Stewart Platform -->
@@ -25,6 +27,13 @@ links:
 
 description: |-
   The Stewart Platform project is an adaptation of a commercial system. The machine originally shipped with MDBox motion controllers, controlled via ethernet. Because of high latency it was adapted with a custom controller, upgraded 1000W AC servos for the linear actuators, and custom firmware and software. This was the start of the AetherControl project detailed above. The attached repository contains the interface code that takes target XYZ Cartesian coordinates and Euler rotations, then computes the six actuator lengths for AetherControl. The goal of the project was to adapt the system to handle high-frequency vibration and high-speed motion for research on flight dynamics.
+
+  Hardware specifications and rebuild details:
+  - 1,000 lb payload capacity, 0.45 m/s peak linear velocity, 1G upward acceleration
+  - Six 1000W AC servos driven directly by a single custom controller, replacing two networked controllers with ~100 ms update latency
+  - Motor selection done as a trade study across stepper, BLDC, and AC servo options sized for the target torque/inertia and dynamic response
+  - Custom power electronics, real-time C++ firmware, and an inverse-kinematics simulator validated end-to-end before integration
+  - Now the experimental backbone for ongoing university aerospace dynamics research, supporting **10+ peer-reviewed publications** across ASEE, ASME, and aerospace-engineering venues, plus external industry collaborations
 
   The inverse kinematics repository allows for custom user-defined configuration parameters, taking in:
   - Base Plate Radius
@@ -75,7 +84,7 @@ links:
     url: https://github.com/coelacant1/CoelaPNP
 
 description: |-
-  This project started was to create a small yet capable Pick-and-Place machine. This machine has been used to manufacture RGB LED displays which each have over 500 LEDs, power distribution boards, custom LED control electronics, etc.
+  Designed and built a custom CoreXY pick-and-place machine for in-house SMT assembly of RGB LED displays (500+ LEDs each), power-distribution boards, and custom LED control electronics.
   
   Features:
   - OpenPNP for software control
@@ -176,152 +185,22 @@ slides:
     src: /assets/images/PnP22.jpg
     thumb: /assets/images/thumbs/PnP22.jpg
     caption: "CAD of the first PnP iteration"
-{% endproject %}
-
-<!-- Delta 3D Printer -->
-{% project %}
-name: Delta3D
-
-summary: "Custom High-Speed Delta 3D Printer"
-
-dates: "2014 - 2019"
-
-contributors: "Solo Project"
-
-description: |-
-  This project started in the era of the Prusa Mendel/i3 designs. Required faster print times than available 3D printers in the market, designed and built this system to solve that problem.
-
-  Features:
-  - 270mm build diameter
-  - ~490mm build height
-  - Printing travel speeds up to 500mm/s
-  - Printing speeds with extrusion up to 150mm/s (layer height dependent)
-  - Accelerations up to 10m/s^2
-  - 32-bit controller using Smoothieware/Marlin (previously 8-bit with Repetier)
-  - Custom frame and design
-  - Custom, compact end-effector and extruder combo
-  - Automatic bed leveling using FSRs integrated into the bed mounts
-
-slides:
   - type: image
-    src: /assets/images/Delta8.jpg
-    thumb: /assets/images/thumbs/Delta8.jpg
-    caption: "Picture of the Delta 3D printer alongside a 180mmx180mmx180mm 3D printer"
+    src: /assets/images/PnP23.jpg
+    thumb: /assets/images/thumbs/PnP23.jpg
+    caption: "Pick-and-Place machine in operation"
   - type: image
-    src: /assets/images/Delta7.jpg
-    thumb: /assets/images/thumbs/Delta7.jpg
-    caption: "Upgraded end-effector system with dual gear drive for the extruder"
+    src: /assets/images/PnP24.jpg
+    thumb: /assets/images/thumbs/PnP24.jpg
+    caption: "OpenPNP setup with fiducial alignment and feeder configuration"
   - type: image
-    src: /assets/images/Delta5.jpg
-    thumb: /assets/images/thumbs/Delta5.jpg
-    caption: "Force-Sensing Resistors for bed calibration, using built in sliders that constrain the motion and prevent the bed from falling off"
+    src: /assets/images/PnP25.jpg
+    thumb: /assets/images/thumbs/PnP25.jpg
+    caption: "OpenPNP job view during a board assembly run"
   - type: image
-    src: /assets/images/Delta3.jpg
-    thumb: /assets/images/thumbs/Delta3.jpg
-    caption: "Belt structure for the upgraded extruder"
-  - type: image
-    src: /assets/images/Delta1.jpg
-    thumb: /assets/images/thumbs/Delta1.jpg
-    caption: "Delta frame prior to upgrading the power system and wiring"
-  - type: video
-    video_id: Am7Ycc9Rg_M
-    caption: "First test print with the upgraded delta"
-  - type: video
-    video_id: k7pzi0IPiGI
-    caption: "Normal/low print speed test with the previous extruder design"
-  - type: video
-    video_id: LGvfJACLQG8
-    caption: "Test print of a vacuum forming buck"
-  - type: video
-    video_id: 7CEiR0AMyPc
-    caption: "Final print at low-speed of the vacuum forming buck"
-
-{% endproject %}
-
-<!-- 4-Axis Cutter + Fusion Post Processor -->
-{% project %}
-name: 4AxisCutter
-
-summary: "Custom 4-Axis Machines and Fusion 360 Post Processors"
-
-links:
-  - name: Github
-    url: https://github.com/coelacant1/4-Axis-Fusion360-Post-Processor
-
-dates: "2023 - 2024"
-
-contributors: "Solo Project"
-
-description: |-
-  This project primarily is a custom-built Fusion 360 post-processor for multi-axis laser cutting and engraving. It was created to cut complex shapes into vacuum-formed plastic visors. The software is a Fusion 360 post-processor that uses the machine's hardware configuration to convert 4-axis toolpaths into G-code for a custom 4-axis laser cutter.
-
-  The machine is an XYZ motion system with an additional large rotary axis that has an integrated fume exhaust system.
-
-slides:
-  - type: image
-    src: /assets/images/4Axis3.jpg
-    thumb: /assets/images/thumbs/4Axis3.jpg
-    caption: "Final assembly of the 4-axis laser cutter"
-  - type: image
-    src: /assets/images/4Axis1.jpg
-    thumb: /assets/images/thumbs/4Axis1.jpg
-    caption: "Rear-view of the laser cutter"
-  - type: image
-    src: /assets/images/4Axis2.jpg
-    thumb: /assets/images/thumbs/4Axis2.jpg
-    caption: "Wiring for the laser cutter"
-  - type: video
-    video_id: 26WvXgYY3GE
-    caption: "Simulation using a custom Fusion 360 post processor"
-  - type: video
-    video_id: vq9g52vjKNk
-    caption: "Testing the laser cutter (without power on the diode)"
-
-{% endproject %}
-
-<!-- 4-Axis Automated Gimbal -->
-{% project %}
-name: 4AxisGimbal
-
-summary: "4-Axis Automated Gimbal for MEMS-Based Motion Processor Testing"
-
-links:
-  - name: Github
-    url: https://github.com/coelacant1/GimbalSimulator
-
-dates: "2018 - 2020"
-
-contributors: "Solo Project"
-
-description: |-
-  The 4-axis gimbal is the primary tool in a larger project. This project required accurate calibration of low-cost MPU6050 motion sensors. To perform the calibration a custom 4-axis motion system (3 rotational axes and 1 linear axis) closely follows a path while capturing the data (acceleration/angular velocity and for some also the magnetic field) from multiple inertial measurement units. A separate tool-the linked GitHub repository-simulates the system and generates ideal theoretical sensor outputs. Comparing real and simulated data is used to calibrate the system and develop filters for the sensors adjusted outputs. 
-
-slides:
-  - type: video
-    video_id: eGvnqaCpQ50
-    caption: "Homing sequence and test move with the assembled motion system"
-  - type: video
-    video_id: KaQvgXYtTIc
-    caption: "Live output of the 4 accelerometers and 4 gyroscopes - this data is captured for the calibration process"
-  - type: video
-    video_id: degD95T-_Mg
-    caption: "Rendered path of a travel move"
-  - type: image
-    src: /assets/images/Gimbal11.jpg
-    thumb: /assets/images/thumbs/Gimbal11.jpg
-    caption: "Side view of the gimbal"
-  - type: image
-    src: /assets/images/Gimbal9.jpg
-    thumb: /assets/images/thumbs/Gimbal9.jpg
-    caption: "MPU6050 reading hardware"
-  - type: image
-    src: /assets/images/Gimbal8.jpg
-    thumb: /assets/images/thumbs/Gimbal8.jpg
-    caption: "Quarter view of the gimbal"
-  - type: image
-    src: /assets/images/Gimbal7.jpg
-    thumb: /assets/images/thumbs/Gimbal7.jpg
-    caption: "Top view"
+    src: /assets/images/PnP26.jpg
+    thumb: /assets/images/thumbs/PnP26.jpg
+    caption: "OpenPNP machine controls and live camera feed"
 
 {% endproject %}
 
@@ -336,7 +215,7 @@ dates: "2014 - Now"
 contributors: "Solo Projects"
 
 description: |-
-  Designed and built custom power-conversion, motion‑control systems, and other electronics:
+  Designed and brought up mixed-signal, power-conversion, LED-control, sensor, and motion-control PCBs for production hardware, lab equipment, and custom automation systems:
   - Custom Buck Power Regulators: Gallium nitride-based buck converters stepping 60 V down to 5 V at up to 20 A
   - LoRa Remote Firework Igniter: 12-channel, 2 A LoRa-based firework-igniter controller prototype
   - Haptics Research Motor Driver: DC motor driver with sensor feedback for inverted-pendulum and force-feedback experiments
@@ -447,6 +326,72 @@ slides:
     src: /assets/pdfs/PNPController.pdf
     caption: "Pick n Place Controller schematic"
 
+  - type: image
+    src: /assets/images/Electronics35.jpg
+    thumb: /assets/images/thumbs/Electronics35.jpg
+    caption: "Power electronics assembly bench"
+  - type: image
+    src: /assets/images/Electronics36.jpg
+    thumb: /assets/images/thumbs/Electronics36.jpg
+    caption: "Power electronics under test"
+  - type: image
+    src: /assets/images/Electronics37.jpg
+    thumb: /assets/images/thumbs/Electronics37.jpg
+    caption: "Detail view of power-conversion hardware"
+
+{% endproject %}
+
+<!-- 4-Axis Automated Gimbal -->
+{% project %}
+name: 4AxisGimbal
+
+summary: "4-Axis Automated Gimbal for MEMS-Based Motion Processor Testing"
+
+links:
+  - name: Github
+    url: https://github.com/coelacant1/GimbalSimulator
+
+dates: "2018 - 2020"
+
+contributors: "Solo Project"
+
+description: |-
+  The 4-axis gimbal is the primary tool in a larger project. This project required accurate calibration of low-cost MPU6050 motion sensors. To perform the calibration a custom 4-axis motion system (3 rotational axes and 1 linear axis) closely follows a path while capturing the data (acceleration/angular velocity and for some also the magnetic field) from multiple inertial measurement units. A separate tool-the linked GitHub repository-simulates the system and generates ideal theoretical sensor outputs. Comparing real and simulated data is used to calibrate the system and develop filters for the sensors adjusted outputs. 
+
+slides:
+  - type: video
+    video_id: eGvnqaCpQ50
+    caption: "Homing sequence and test move with the assembled motion system"
+  - type: video
+    video_id: KaQvgXYtTIc
+    caption: "Live output of the 4 accelerometers and 4 gyroscopes - this data is captured for the calibration process"
+  - type: video
+    video_id: degD95T-_Mg
+    caption: "Rendered path of a travel move"
+  - type: image
+    src: /assets/images/Gimbal11.jpg
+    thumb: /assets/images/thumbs/Gimbal11.jpg
+    caption: "Side view of the gimbal"
+  - type: image
+    src: /assets/images/Gimbal9.jpg
+    thumb: /assets/images/thumbs/Gimbal9.jpg
+    caption: "MPU6050 reading hardware"
+  - type: image
+    src: /assets/images/Gimbal8.jpg
+    thumb: /assets/images/thumbs/Gimbal8.jpg
+    caption: "Quarter view of the gimbal"
+  - type: image
+    src: /assets/images/Gimbal7.jpg
+    thumb: /assets/images/thumbs/Gimbal7.jpg
+    caption: "Top view"
+
+  - type: video
+    video_id: EvepNOwMKOs
+    caption: "Live motion test of the second prototype 4-axis gimbal"
+  - type: video
+    video_id: -dxPHRuCaik
+    caption: "Motion sequence demonstrating the gimbal's range on the 3-axis gimbal prototype"
+
 {% endproject %}
 
 <!-- High-Speed CoreXY 3D Printer -->
@@ -499,6 +444,11 @@ slides:
     thumb: /assets/images/thumbs/Voron8.jpg
     caption: "Wiring for the machine"
 
+  - type: image
+    src: /assets/images/Voron9.jpg
+    thumb: /assets/images/thumbs/Voron9.jpg
+    caption: "Voron during a long-running benchmark print"
+
 {% endproject %}
 
 <!-- Wearable 3D Designs -->
@@ -522,23 +472,14 @@ description: |-
 
 slides:
   - type: video
-    video_id: dfjvdJtsRFg
-    caption: "Full-color RGB test of the display system - Gamma design"
-  - type: video
     video_id: CoMETUpcQyA
     caption: "Internal stereoscopic vision system on the Gamma Design"
   - type: video
     video_id: cp83inwCs3M
     caption: "Display testing the vision system"
   - type: video
-    video_id: ii_2rAg5L5c
-    caption: "Test of an assembled Delta design"
-  - type: video
-    video_id: 8PgzrYZm6BE
-    caption: "Test of an assembled Beta design"
-  - type: video
-    video_id: u2CADiNy3Wo
-    caption: "Face display and close ups of the Gamma"
+    video_id: dfjvdJtsRFg
+    caption: "Full-color RGB test of the display system - Gamma design"
   - type: video
     video_id: h3FrI2zM1bI
     caption: "Power testing with 25% max brightness - full white will draw over 100A at 5V"
@@ -599,6 +540,171 @@ slides:
 
 {% endproject %}
 
+<!-- Delta 3D Printer -->
+{% project %}
+name: Delta3D
+
+summary: "Custom High-Speed Delta 3D Printer"
+
+dates: "2014 - 2019"
+
+contributors: "Solo Project"
+
+description: |-
+  This project started in the era of the Prusa Mendel/i3 designs. Required faster print times than available 3D printers in the market, designed and built this system to solve that problem.
+
+  Features:
+  - 270mm build diameter
+  - ~490mm build height
+  - Printing travel speeds up to 500mm/s
+  - Printing speeds with extrusion up to 150mm/s (layer height dependent)
+  - Accelerations up to 10m/s^2
+  - 32-bit controller using Smoothieware/Marlin (previously 8-bit with Repetier)
+  - Custom frame and design
+  - Custom, compact end-effector and extruder combo
+  - Automatic bed leveling using FSRs integrated into the bed mounts
+
+slides:
+  - type: image
+    src: /assets/images/Delta8.jpg
+    thumb: /assets/images/thumbs/Delta8.jpg
+    caption: "Picture of the Delta 3D printer alongside a 180mmx180mmx180mm 3D printer"
+  - type: image
+    src: /assets/images/Delta7.jpg
+    thumb: /assets/images/thumbs/Delta7.jpg
+    caption: "Upgraded end-effector system with dual gear drive for the extruder"
+  - type: image
+    src: /assets/images/Delta5.jpg
+    thumb: /assets/images/thumbs/Delta5.jpg
+    caption: "Force-Sensing Resistors for bed calibration, using built in sliders that constrain the motion and prevent the bed from falling off"
+  - type: image
+    src: /assets/images/Delta3.jpg
+    thumb: /assets/images/thumbs/Delta3.jpg
+    caption: "Belt structure for the upgraded extruder"
+  - type: image
+    src: /assets/images/Delta1.jpg
+    thumb: /assets/images/thumbs/Delta1.jpg
+    caption: "Delta frame prior to upgrading the power system and wiring"
+  - type: video
+    video_id: Am7Ycc9Rg_M
+    caption: "First test print with the upgraded delta"
+  - type: video
+    video_id: k7pzi0IPiGI
+    caption: "Normal/low print speed test with the previous extruder design"
+  - type: video
+    video_id: LGvfJACLQG8
+    caption: "Test print of a vacuum forming buck"
+  - type: video
+    video_id: 7CEiR0AMyPc
+    caption: "Final print at low-speed of the vacuum forming buck"
+
+  - type: image
+    src: /assets/images/Delta9.jpg
+    thumb: /assets/images/thumbs/Delta9.jpg
+    caption: "Delta printer with the upgraded extruder during a long print"
+
+{% endproject %}
+
+<!-- BattleBot -->
+{% project %}
+name: BattleBot
+
+summary: "Beetleweight Combat Robot"
+
+dates: "2023 - 2024"
+
+contributors: "with co-worker"
+
+description: |-
+  - Designed and constructed a 3 lb beetleweight combat robot featuring high-torque motors, LiPo power management, an all-wheel drivetrain (4 wheels) optimized for speed and acceleration, a vertical spinner weapon, and custom armor
+  - Iterated through two versions, with the second optimizing weight distribution, drivetrain efficiency, and weapon performance
+
+slides:
+  - type: video
+    video_id: ppC4N1T0amQ
+    caption: First version of the beetleweight battlebot - all wheel drive (4 wheels) with a vertical spinner
+  - type: video
+    video_id: YiWmP6NCud8
+    caption: Second, more optimized version of the beetleweight battlebot - all wheel drive (4 wheels) with a vertical spinner
+  - type: image
+    src: /assets/images/BattleBot1.jpg
+    thumb: /assets/images/thumbs/BattleBot1.jpg
+    caption: "Beetleweight battlebot build photo"
+  - type: image
+    src: /assets/images/BattleBot2.jpg
+    thumb: /assets/images/thumbs/BattleBot2.jpg
+    caption: "Beetleweight battlebot build photo"
+  - type: image
+    src: /assets/images/BattleBot3.jpg
+    thumb: /assets/images/thumbs/BattleBot3.jpg
+    caption: "Beetleweight battlebot build photo"
+  - type: image
+    src: /assets/images/BattleBot4.jpg
+    thumb: /assets/images/thumbs/BattleBot4.jpg
+    caption: "Beetleweight battlebot build photo"
+  - type: image
+    src: /assets/images/BattleBot5.jpg
+    thumb: /assets/images/thumbs/BattleBot5.jpg
+    caption: "Beetleweight battlebot build photo"
+  - type: image
+    src: /assets/images/BattleBot6.jpg
+    thumb: /assets/images/thumbs/BattleBot6.jpg
+    caption: "Beetleweight battlebot build photo"
+  - type: image
+    src: /assets/images/BattleBot7.jpg
+    thumb: /assets/images/thumbs/BattleBot7.jpg
+    caption: "Beetleweight battlebot build photo"
+  - type: image
+    src: /assets/images/BattleBot8.jpg
+    thumb: /assets/images/thumbs/BattleBot8.jpg
+    caption: "Beetleweight battlebot build photo"
+  - type: image
+    src: /assets/images/BattleBot10.jpg
+    thumb: /assets/images/thumbs/BattleBot10.jpg
+    caption: "Beetleweight battlebot build photo"
+{% endproject %}
+
+<!-- 4-Axis Cutter + Fusion Post Processor -->
+{% project %}
+name: 4AxisCutter
+
+summary: "Custom 4-Axis Machines and Fusion 360 Post Processors"
+
+links:
+  - name: Github
+    url: https://github.com/coelacant1/4-Axis-Fusion360-Post-Processor
+
+dates: "2023 - 2024"
+
+contributors: "Solo Project"
+
+description: |-
+  This project primarily is a custom-built Fusion 360 post-processor for multi-axis laser cutting and engraving. It was created to cut complex shapes into vacuum-formed plastic visors. The software is a Fusion 360 post-processor that uses the machine's hardware configuration to convert 4-axis toolpaths into G-code for a custom 4-axis laser cutter.
+
+  The machine is an XYZ motion system with an additional large rotary axis that has an integrated fume exhaust system.
+
+slides:
+  - type: image
+    src: /assets/images/4Axis3.jpg
+    thumb: /assets/images/thumbs/4Axis3.jpg
+    caption: "Final assembly of the 4-axis laser cutter"
+  - type: image
+    src: /assets/images/4Axis1.jpg
+    thumb: /assets/images/thumbs/4Axis1.jpg
+    caption: "Rear-view of the laser cutter"
+  - type: image
+    src: /assets/images/4Axis2.jpg
+    thumb: /assets/images/thumbs/4Axis2.jpg
+    caption: "Wiring for the laser cutter"
+  - type: video
+    video_id: 26WvXgYY3GE
+    caption: "Simulation using a custom Fusion 360 post processor"
+  - type: video
+    video_id: vq9g52vjKNk
+    caption: "Testing the laser cutter (without power on the diode)"
+
+{% endproject %}
+
 <!-- Dual Tilt Quadcopter -->
 {% project %}
 name: DTQuadcopter
@@ -635,6 +741,43 @@ slides:
     video_id: Q-hpOqeRDjg
     caption: "Older example of the simulation which had several additional failures that caused unpredictable paths"
 
+  - type: video
+    video_id: MQUCevVmJVE
+    caption: "Hardware-in-the-loop test of the dual-tilt rotor control system"
+  - type: video
+    video_id: epf3nKa8z3w
+    caption: "Servo and motor coordination test on the assembled quadcopter"
+  - type: image
+    src: /assets/images/DTQuadcopter4.jpg
+    thumb: /assets/images/thumbs/DTQuadcopter4.jpg
+    caption: "CAD render of the rotor tilt mechanism"
+  - type: image
+    src: /assets/images/DTQuadcopter5.jpg
+    thumb: /assets/images/thumbs/DTQuadcopter5.jpg
+    caption: "Control flow diagram for the tilt-rotor dynamics"
+
+{% endproject %}
+
+<!-- Consumer Electronics Production -->
+{% project %}
+name: ConsumerElectronicsProduction
+
+summary: "Small-Batch Consumer Electronics Production"
+
+dates: "2020 - Now"
+
+contributors: "Solo Project"
+
+description: |-
+  Founded and operated a small electronics business that took custom wearable-display and LED-controller hardware from prototype through production, firmware release, fulfillment, and customer support.
+
+  Beyond prototyping, several of the projects on this page were taken to small-batch production and shipped to customers worldwide. This involved owning the full pipeline end-to-end:
+  - Custom mixed-signal and power PCB design in Altium - LED drivers (HUB75, WS2812), USB-C PD, DC-DC buck converters, and motor/sensor controllers
+  - In-house SMT assembly down to 0402 components - stencil printing, custom CoreXY pick-and-place, reflow, microscope rework, and functional test
+  - Production fixtures - test harnesses, calibration jigs, programming rigs, and packaging tooling
+  - Firmware build and release pipelines, customer-facing documentation, and direct customer support for hardware and firmware issues
+  - Multiple PCB designs taken from prototype to production
+  The wearable display, LED controller, and protogen-platform projects below all flowed through this pipeline.
 {% endproject %}
 
 <!-- Other Projects-->
@@ -648,48 +791,29 @@ links:
     url: https://github.com/coelacant1/Protogen-3D-Prints
 
 description: |-
-  - Electrospinner: Designed and built an automated electrospinning device for researching polymer nanofibers (With Co-Worker)
   - Custom Print Farm: Designed and built custom compact and portable CoreXY stackable 3D printer farm (With Co-Workers)
   - Tripteron 3D Printer: Developed a Cartesian-parallel 3D printer prototype
   - Reflow Heater Controller: Created hardware and firmware for a reflow heater, featuring PID temperature control and programmable profiles
   - Printer Conversion for PEEK/Ultem: Modified a Stratasys FDM printer's hot end, control electronics, and build chamber to print high-temperature materials (PEEK/Ultem/Polycarbonate)
   - Ozone Water Treatment System: Created a residential ozone generator for point-of-entry water sanitation, including ozone injection and feedback control with dissolved-ozone sensors
-  - Environment Monitoring System: Built a networked sensor station (BME280 + ESP8266) for temperature, humidity, and pressure monitoring, with data upload to a cloud dashboard and low-power deep-sleep operation
   - Face Shield Production (COVID, 6,000+ units): Organized and scaled PETG face-shield fabrication using laser-cut visors, injection-molded frames, and die-cut elastic (with co-worker)
-  - Battlebot: Designed and constructed a 3 lb combat robot featuring high-torque motors, LiPo power management, an all-wheel drivetrain optimized for speed and acceleration, and custom armor (with co-worker)
   - High-Speed USB Current Device: Created a portable measurement device capable of sampling voltage and current at kilohertz rates-ideal for reverse-engineering ongoing tasks on electronics
   - Medical Mattress Squeeze Table: Built a pneumatic squeeze-table assembly used in medical mattress manufacturing (with Co-Worker)
   - Medical Mattress/Pad Heater: Built custom heating apparatus for sealing seams on medical mattress pads (with Co-Worker)
   - Window Clip Manufacturing: Recreated obsolete window-clip parts via bulk additive manufacturing to replace thousands of failed components (with co-worker)
   - Multi-Color FDM Production: Designed prototype parts for a consumer product and managed printing and post-processing of 500 multi-color FDM components
-  - Custom Drives Hardware: Designed and built drives electronics for three-phase AC motors, inductive motors, and DC motors in a single enclosure
-  - Topographic Map: Designed and created 12'x5' topographic map for education and research center (with Co-Worker)
+  - Custom 10ft Delta 3D Printer: Co-designed and built a 10ft tall x 6ft wide large-format Delta 3D printer prototype in 45 days; used OpenDACT for kinematic calibration on a 4 ft diameter bed (with Co-Workers)
+  - High-Precision Stroboscope: Microcontroller-driven LED stroboscope with custom optics, power electronics, and a CNC-machined enclosure for high-speed photography and rotating-machinery analysis
+  - Programmable Electrospinner: Automated electrospinning device with high-voltage power supply, syringe-pump control, and a programmable interface for polymer-nanofiber research
+  - Multi-Mode Motor Drives Hardware: Three-phase AC, BLDC, and brushed-DC motor controller in a single enclosure, with integrated power electronics and a common control interface used across multiple research projects
+  - Biomedical Haptics Driver: Motor and actuator driver hardware for a biomedical haptics research prototype
+  - Environmental Monitoring System: Networked sensor stations (BME280 + ESP-class MCUs) for temperature, humidity, and pressure logging with cloud upload and low-power deep-sleep operation
 
 slides:
-  - type: image
-    src: /assets/images/CAD26.jpg
-    thumb: /assets/images/thumbs/CAD26.jpg
-    caption: "Render of the stroboscope enclosure"
-  - type: image
-    src: /assets/images/CAD23.jpg
-    thumb: /assets/images/thumbs/CAD23.jpg
-    caption: "View of the internals of the stroboscope enclosure"
-  - type: image
-    src: /assets/images/Electronics3.jpg
-    thumb: /assets/images/thumbs/Electronics3.jpg
-    caption: "Electronics of the stroboscope"
-  - type: image
-    src: /assets/images/Electronics7.jpg
-    thumb: /assets/images/thumbs/Electronics7.jpg
-    caption: "Electronics and test fit in the stroboscope enclsoure"
   - type: image
     src: /assets/images/AdvancedAdditive1.jpg
     thumb: /assets/images/thumbs/AdvancedAdditive1.jpg
     caption: "Copper DMLS metal prints with integrated cooling channels"
-  - type: image
-    src: /assets/images/CAD20.jpg
-    thumb: /assets/images/thumbs/CAD20.jpg
-    caption: "CAD for the Drives Hardware"
   - type: image
     src: /assets/images/Electronics9.jpg
     thumb: /assets/images/thumbs/Electronics9.jpg
@@ -698,10 +822,6 @@ slides:
     src: /assets/images/Electronics29.jpg
     thumb: /assets/images/thumbs/Electronics29.jpg
     caption: "Controllers for LED driving"
-  - type: image
-    src: /assets/images/Electronics32.jpg
-    thumb: /assets/images/thumbs/Electronics32.jpg
-    caption: "Environmental temperature monitors"
   - type: image
     src: /assets/images/Electronics27.jpg
     thumb: /assets/images/thumbs/Electronics27.jpg
@@ -722,11 +842,76 @@ slides:
     src: /assets/images/Electronics24.jpg
     thumb: /assets/images/thumbs/Electronics24.jpg
     caption: "LED Controllers after pick-and-placing and reflow"
-  - type: pdf
-    src: /assets/pdfs/KS35_ElectronicKitGuide_V1-0.pdf
-    caption: "Guide for the open-source electronics for the 8-Channel LED Controller"
+  - type: image
+    src: /assets/images/Misc1.jpg
+    thumb: /assets/images/thumbs/Misc1.jpg
+    caption: "Miscellaneous prototyping work"
+  - type: image
+    src: /assets/images/Misc2.jpg
+    thumb: /assets/images/thumbs/Misc2.jpg
+    caption: "Miscellaneous prototyping work"
+  - type: image
+    src: /assets/images/Misc3.jpg
+    thumb: /assets/images/thumbs/Misc3.jpg
+    caption: "Miscellaneous prototyping work"
+  - type: image
+    src: /assets/images/Misc4.jpg
+    thumb: /assets/images/thumbs/Misc4.jpg
+    caption: "Miscellaneous prototyping work"
+  - type: image
+    src: /assets/images/Misc6.jpg
+    thumb: /assets/images/thumbs/Misc6.jpg
+    caption: "Miscellaneous prototyping work"
+  - type: image
+    src: /assets/images/Misc7.jpg
+    thumb: /assets/images/thumbs/Misc7.jpg
+    caption: "Miscellaneous prototyping work"
+  - type: image
+    src: /assets/images/Misc8.jpg
+    thumb: /assets/images/thumbs/Misc8.jpg
+    caption: "Miscellaneous prototyping work"
+  - type: image
+    src: /assets/images/Misc9.jpg
+    thumb: /assets/images/thumbs/Misc9.jpg
+    caption: "Miscellaneous prototyping work"
+  - type: image
+    src: /assets/images/CAD26.jpg
+    thumb: /assets/images/thumbs/CAD26.jpg
+    caption: "Render of the stroboscope enclosure"
+  - type: image
+    src: /assets/images/CAD23.jpg
+    thumb: /assets/images/thumbs/CAD23.jpg
+    caption: "View of the internals of the stroboscope enclosure"
+  - type: image
+    src: /assets/images/Electronics3.jpg
+    thumb: /assets/images/thumbs/Electronics3.jpg
+    caption: "Electronics of the stroboscope"
+  - type: image
+    src: /assets/images/Electronics7.jpg
+    thumb: /assets/images/thumbs/Electronics7.jpg
+    caption: "Electronics and test fit in the stroboscope enclosure"
+  - type: video
+    video_id: X0HMRT9F_YY
+    caption: "Prototype electrospinner with the high voltage power supply set up for testing"
+  - type: image
+    src: /assets/images/CAD20.jpg
+    thumb: /assets/images/thumbs/CAD20.jpg
+    caption: "CAD for the multi-mode motor drives hardware (3-phase AC / BLDC / DC)"
+  - type: image
+    src: /assets/images/Electronics32.jpg
+    thumb: /assets/images/thumbs/Electronics32.jpg
+    caption: "Networked environmental monitoring stations"
+  - type: image
+    src: /assets/images/10ftDelta.jpg
+    thumb: /assets/images/thumbs/10ftDelta.jpg
+    caption: "10ft tall delta-style 3D printer laying on its side - had to be moved to a separate room to go vertical"
+  - type: image
+    src: /assets/images/10ftDeltaTest.jpg
+    thumb: /assets/images/thumbs/10ftDeltaTest.jpg
+    caption: "First test print of the large-format delta 3D printer"
 
 {% endproject %}
+
 
 ## **Software and Embedded Systems Development**
 {% project %}
@@ -758,7 +943,8 @@ description: |-
   - Layered modular architecture for easy customization and extension
   - Support for sensor calibration and automated testing routines
   - Optimized for ARM Cortex-M microcontrollers with efficient resource use
-  - Custom PathPlanner optimizing for up to the number of GPIO pins available to drive the system
+  - Deterministic path planner for high-channel-count step generation on GPIO-constrained ARM microcontrollers
+  - Demonstrated in production on an in-house custom CoreXY pick-and-place at sustained 800 mm/s travel and 2G acceleration
 
 slides:
   - type: video
@@ -785,267 +971,114 @@ slides:
 
 {% endproject %}
 
-<!-- Radtel RT-950 Pro Firmware -->
+<!-- OpenDACT -->
 {% project %}
-name: RT950ProFirmware
+name: OpenDACT
 
-summary: "RT-950 Pro: Open-Source Handheld Radio Firmware"
+summary: "OpenDACT: Automatic Delta Kinematics Calibration Software"
 
 links:
-  - name: GitHub
-    url: https://github.com/coelacant1/Radtel-RT950-Pro-Firmware
+  - name: Github
+    url: https://github.com/coelacant1/OpenDACT
 
-dates: "2025 - Now"
+dates: "2014 - 2017"
 
 contributors: "Contributors on GitHub"
 
 description: |-
-  Open-source bare-metal firmware for the Radtel RT-950 Pro handheld radio, targeting the Artery AT32F403A (ARM Cortex-M4F @ 120 MHz, 1 MB flash, 96 KB SRAM). The custom firmware loads via the OEM bootloader using the standard `.BTF` update flow with no CRC or signature, so users can flash it through the existing OEM tool.
+  *Open-source - 53+ stars on [GitHub](https://github.com/coelacant1/OpenDACT), with an active international user base.*
 
-  Hardware bring-up confirmed on real hardware:
-  - ST7789V 240x320 LCD via 8080 parallel bus with custom text rendering
-  - Status LEDs, dual backlights, power latch, and band relay control
-  - Boot, GPIO, and display fully functional under custom firmware
+  OpenDACT (Open-source Delta Automatic Calibration Tool) is a calibration tool for delta robots. It calibrates generic delta robots and automates calibration of Repetier-firmware-controlled delta robots (primarily 3D printers). The calibration uses forward and inverse kinematics measurements to make adjustments. It takes Z-height readings at key XY points on a flat plate (print bed) to iteratively calculate hardware offsets. Users can manually adjust hardware or apply software offsets to correct for imperfections.
 
-  Implemented (code-complete, hardware testing in progress):
-  - Drivers: GPIO, SPI2 (flash), bit-bang SPI for BK4829, bit-bang I2C for SI4732, multiple UARTs, ADC2, DAC1+TIM6+DMA, dual-channel DMA, ST7789V 8080 parallel
-  - RF: dual BK4829 transceiver driver with frequency programming, TX power control, and flash-stored calibration tables
-  - Application: dual VFO (A/B/C), PTT with active-low relay routing, debounced keypad scanner, rotary encoder, S-meter, hierarchical 12-category menu, frequency entry
-  - Digital modes: APRS (hardware FSK via BK4829, MIC-E packets), DTMF encode/decode, CTCSS/DCS tone generation
-  - Receivers: SI4732 AM/FM/SSB broadcast, FM presets, NOAA weather channels
-  - Storage: SPI flash layout for 990 channels, VFO configs and settings, wear-leveled NV storage, CPS programming over UART4
-  - Comms: GPS NMEA parser, BLE data bridge, VOX
-  - UI: splash screen, zone browser, text input, scanner, spectrum analyzer
-  - Cross-band repeat with band-specific relay routing and verified PTT polarity for PA safety
-  - Tooling: BTF firmware encrypt/decrypt, CPS flash read/write, serial firmware uploader with auto-restart
-  - Hardware self-test suite covering backlight, UART, LCD, BK4829/SI4732 chip IDs, SPI flash JEDEC ID, ADC, DAC tone, keypad, GPS, and full system diagnostics
+  This software solves for the following mechanical offsets:
+  - Diagonal rod lengths
+  - End effector radius
+  - Horizontal radius
+  - Endstop offsets
+  - Angles of the ABC towers
+
+  For Repetier based robots, these offsets are automatically saved on the controllers EEPROM upon a successful calibration. Z-bed distortion on a newly completed build could have offsets of +/- 2mm across the plate, this tool (assuming issues in the above offsets) can calibrate the systems down to 5-10 microns.
+  
+  This software has been tested and successfully used on small-form factor deltas (100mm plate diameter) and large-form factor deltas (1.5 meter plate diameter).
 
 slides:
   - type: image
-    src: /assets/images/RT950Pro1.jpg
-    thumb: /assets/images/thumbs/RT950Pro1.jpg
-    caption: "Custom firmware running the hardware self-test on a real RT-950 Pro: AT32F403A + ST7789V LCD + dual BK4829 + SI4732 detected, GPIO/LED/backlight/band-relay/LCD bus verified"
+    src: /assets/images/OpenDACT1.jpg
+    thumb: /assets/images/thumbs/OpenDACT1.jpg
+    caption: "User interface with example calibration of a delta 3D printer running Repetier firmware"
+  - type: image
+    src: /assets/images/OpenDACT2.jpg
+    thumb: /assets/images/thumbs/OpenDACT2.jpg
+    caption: "User interface showing deformation in the physical structure from ideal conditions - can be used to physically tune the machine"
+  - type: image
+    src: /assets/images/OpenDACT4.jpg
+    thumb: /assets/images/thumbs/OpenDACT4.jpg
+    caption: "Full user interface while running a calibration"
 
 {% endproject %}
 
-<!-- ProxmoxScripts -->
+<!-- Bambu Lab Cloud API -->
 {% project %}
-name: ProxmoxScripts
+name: BambuLabCloudAPI
 
-summary: "ProxmoxScripts for Automated Infrastracture Management"
+summary: "Bambu Lab Cloud API: Python Library and Compatibility Layer"
 
 links:
-  - name: Website
-    url: https://coelacant.com/ProxmoxScripts/
+  - name: PyPI
+    url: https://pypi.org/project/bambu-lab-cloud-api/
   - name: GitHub
-    url: https://github.com/coelacant1/ProxmoxScripts
-
-dates: "2024 - Now"
-
-contributors: "Contributors on GitHub"
-
-description: |-
-  ProxmoxScripts is a collection of Bash scripts for streamlining and automating the management of Proxmox Virtual Environment (PVE) clusters. This was developed to help manage and automate Proxmox virtualization infrastructure. The scripts are accessible via a console-based menu for overview, navigation, and execution. Users can read help information for each script as well as get a description of required parameters.
-
-  Features include: 
-  - Cluster configuration tools
-    - Adding Nodes - Remote configuration with IP
-    - Cluster Creation - From list of IPs
-    - Cluster Deletion - Separating all nodes from cluster
-  - Firewall management
-    - Bulk LXC/VM Firewall Management
-    - Automated host default firewall configuration
-  - High Availability
-    - Create HA Group and add nodes 
-    - Bulk add LXC/VMs to HA group
-  - Host Automation and Configuration
-    - Remove local-lvm storage and expand local storage (for Hyper-Converged setups)
-    - Bulk Microcode configuration/Timezone Configuration/Upgrades
-    - Generic PWM and Dell IPMI hardware fan control adapting to CPU temperatures
-    - Enable CPU Scaling Governer
-    - Enable GPU Passthrough to VM
-    - Enable IOMMU
-    - Enable GPU Sharing with LXC
-    - Optimize for X3D hardware
-    - Live memory testing
-    - System optimization for nested virtualization
-  - LXC and VM Configuration and Management
-  - Networking
-    - Bulk adding network bonds
-    - List all VM/LXC IDs with their associated MAC address
-    - Bulk set DNS on cluster
-    - Find VM ID from MAC address
-    - Automated host-to-host network speed test
-    - Bulk update network interface names 
-    - Bulk host uplink speed test
-  - Remote VM/LXC Management
-    - Integration with Apache Guacamole
-      - Bulk add/delete RDP connections
-      - Bulk add/remove SFTP server to RDP connections
-      - Bulk list RDP configuration
-      - Bulk update/remove drive redirection
-      - Pull Guacamole authentication token
-    - Configuration of virtual machine static IPs over SSH for Debian/Ubuntu/Windows
-  - Generate a resource report for all VMs/LXCs
-  - Automated penetration testing/port scanning
-  - Storage Automation
-    - Ceph Configuration
-      - Bulk create OSDs
-      - Edit crushmap (decompiles, prints directory, allows user edit, then recompile)
-      - Bulk restart managers/monitors/metadata servers/OSDs
-      - Set pool to minimum size of 1 and to a size of 1 (testing/temporary data)
-      - Create automated deep scrubbing with a chron job
-      - Automate creating a single drive Ceph node (shares host OS and Ceph data)
-      - Bulk OSD sparsify
-      - Bulk start stopped disks
-      - Full data wipe on specified disk (clear Ceph and all remnants of user data)
-    - Disk Benchmarking
-    - Bulk VM disk deletion
-    - Bulk VM disk deletion for disks with snapshots
-    - Trim all filesystems of resources using Qemu Agent or LXC
-    - Automate disk spin down
-    - Pass host directory to LXC
-    - Update stale mounts
-  - Custom User Interface library
-
-iframe: https://coelacant.com/ProxmoxScripts/
-
-slides:
-  - type: image
-    src: /assets/images/ProxmoxScripts1.jpg
-    thumb: /assets/images/thumbs/ProxmoxScripts1.jpg
-    caption: "Multi-pane view of the CCPVE terminal interface running scripts across the cluster"
-  - type: image
-    src: /assets/images/ProxmoxScripts2.jpg
-    thumb: /assets/images/thumbs/ProxmoxScripts2.jpg
-    caption: "CCPVE menus, host overview, and script execution shown side by side"
-  - type: image
-    src: /assets/images/ProxmoxScripts3.jpg
-    thumb: /assets/images/thumbs/ProxmoxScripts3.jpg
-    caption: "Invoking a script through the single-line online bootstrap command"
-
-{% endproject %}
-
-<!-- pAWS - Proxmox Automated Web Services -->
-{% project %}
-name: ProxmoxAutomatedWebServices
-
-summary: "pAWS: Self-Hosted Cloud on Proxmox VE"
-
-links:
-  - name: GitHub
-    url: https://github.com/coelacant1/Proxmox-Automated-Web-Services
+    url: https://github.com/coelacant1/Bambu-Lab-Cloud-API
 
 dates: "2025 - Now"
 
 contributors: "Solo Project"
 
 description: |-
-  pAWS (Proxmox Automated Web Services) is a self-hosted, AWS-like infrastructure platform built on Proxmox VE. It provides multi-tenant compute, networking, storage, backups, and monitoring through a unified web UI and REST API, turning a Proxmox cluster into a managed cloud-style environment.
+  *Open-source - 108+ stars on [GitHub](https://github.com/coelacant1/Bambu-Lab-Cloud-API). Deployed as the data layer for a 40+ printer industrial digital-twin research project for a major aerospace prime.*
 
-  Targeted feature set:
-  - Compute: VMs and LXC containers from templates with full lifecycle management, browser-based console (noVNC/xterm.js), snapshots, and import/export
-  - Networking: VPCs with subnets, security groups, service endpoints, and DNS
-  - Storage: S3-compatible object storage backed by Ceph RadosGW, with file browser, sharing, and presigned URLs
-  - Backups: Proxmox Backup Server integration with scheduled plans and point-in-time restore
-  - Monitoring: per-resource metrics, alarms, and log aggregation
-  - Auth: local accounts (JWT) plus OAuth2/OIDC, with RBAC roles (Admin/Operator/Member/Viewer)
-  - Admin: user management, template catalog, quotas, and audit logging
-
-  Stack:
-  - Frontend: React 19, TypeScript, Vite, Tailwind CSS v4
-  - Backend: Python 3.11+, FastAPI, async SQLAlchemy 2, Pydantic v2
-  - Data: PostgreSQL 16, Redis 7, Celery
-  - Infrastructure: Proxmox VE 8+, Ceph RadosGW, Proxmox Backup Server
-  - Cluster credentials are AES-256-GCM encrypted at rest using a stable master key
-
-slides:
-  - type: image
-    src: /assets/images/pAWS1.jpg
-    thumb: /assets/images/thumbs/pAWS1.jpg
-    caption: "pAWS dashboard giving a single view of compute, storage, and cluster health"
-  - type: image
-    src: /assets/images/pAWS2.jpg
-    thumb: /assets/images/thumbs/pAWS2.jpg
-    caption: "Container/VM overview with lifecycle controls"
-  - type: image
-    src: /assets/images/pAWS3.jpg
-    thumb: /assets/images/thumbs/pAWS3.jpg
-    caption: "Browser-based VNC console for direct VM access"
-  - type: image
-    src: /assets/images/pAWS4.jpg
-    thumb: /assets/images/thumbs/pAWS4.jpg
-    caption: "Administration panel for users, infrastructure connections, and templates"
-
-{% endproject %}
-
-<!-- Koilo Engine -->
-{% project %}
-name: KoiloEngine
-
-summary: "Koilo Engine: C++ Game Engine with Runtime Scripting"
-
-links:
-  - name: GitHub
-    url: https://github.com/coelacant1/Koilo-Engine
-
-dates: "2025 - Now"
-
-contributors: "Solo Project"
-
-description: |-
-  Koilo Engine is a compact C++17 game engine designed to run across both desktop systems and resource-constrained microcontrollers. Scenes and game logic are authored in KoiloScript (`.ks`), a bytecode-compiled scripting language with full access to engine internals through runtime reflection. This is the spiritual successor to ProtoTracer, generalizing the renderer and physics core into a portable engine usable on both PCs and embedded targets.
-
-  Targets include Linux, Windows, Raspberry Pi, Teensy 4.x, ESP32-S3, and STM32.
+  A documentation effort and Python library for communicating with Bambu Lab 3D printers through their Cloud API, MQTT protocol, and local connections. Originally built as a read-only proxy and data layer for a 43-printer fleet / digital-twin workflow, then generalized into a library for monitoring and controlling print farms without needing developer mode on the printers.
 
   Features include:
-  - Multi-backend rendering with a common interface
-    - Vulkan, OpenGL 3.3, and a CPU software rasterizer
-    - KSL shaders compile to both GLSL and CPU from the same source
-  - KoiloScript scripting language
-    - Variables, functions, classes, coroutines, signals, imports, operator overloading
-    - Direct calls into C++ objects through a reflection bridge
-  - Reflection system for exposing C++ classes to scripts via macros (no external codegen)
-  - Hot-reloadable dynamic modules (`.so`/`.dll`) with lifecycle hooks and phased init
-  - Scene graph and ECS with transform propagation and dense component storage
-  - Animation: skeletal playback, keyframe camera tracks, morph target blending, material animation
-  - Optimized math library: vectors, quaternions, matrices, transforms, splines, spatial indexing, noise, Kalman filters, FFT
-  - Asset pipeline with the KoiloMesh format (morph targets) and OBJ/FBX offline conversion
-  - Optional subsystems: AI (pathfinding, behavior trees, FSM), SDL2 audio, particles, LED panel output, HTTP live preview
+  - API endpoint reference built from network traffic analysis, split into focused modules (auth, devices, users, files/printing, MQTT, AMS/filament, camera, errors)
+  - Unified Python client (`bambulab`) covering Cloud API, MQTT, local FTP upload, and video streams
+  - Authentication with 2FA / email verification code support and token caching
+  - Real-time MQTT monitoring and control of print state and printer telemetry
+  - File upload via both Cloud API (S3) and local FTP
+  - Video streaming: RTSP for X1 series, JPEG frame streaming for A1/P1 series
+  - Compatibility server that bridges Home Assistant, OctoPrint, and other tools to the Cloud API without enabling developer mode
+  - Strict read-only and full-mode proxy servers with rate limiting for safe gateway use
+  - Comprehensive test suite covering 20+ endpoints, MQTT live data, S3 file upload, and TUTK video credentials
+  - G-code reference documentation for supported printer models
+  - Distributed on PyPI as `bambu-lab-cloud-api`
 
 slides:
   - type: image
-    src: /assets/images/Koilo8.jpg
-    thumb: /assets/images/thumbs/Koilo8.jpg
-    caption: "UI demo running on top of the engine"
+    src: /assets/images/BambuLabCloudAPI1.jpg
+    thumb: /assets/images/thumbs/BambuLabCloudAPI1.jpg
+    caption: "Live JPEG frame streaming from a Bambu Lab P1S camera through the Python client"
   - type: image
-    src: /assets/images/Koilo1.jpg
-    thumb: /assets/images/thumbs/Koilo1.jpg
-    caption: "3D scene rendered in Koilo Engine with KSL materials and an orbiting camera"
+    src: /assets/images/BambuLabCloudAPI2.jpg
+    thumb: /assets/images/thumbs/BambuLabCloudAPI2.jpg
+    caption: "Comprehensive test suite startup: enumerating three P1S printers with model, online state, print status, nozzle, and access codes via the Cloud API"
   - type: image
-    src: /assets/images/Koilo2.jpg
-    thumb: /assets/images/thumbs/Koilo2.jpg
-    caption: "OBJ model loaded with textures and a keyframe camera track"
+    src: /assets/images/BambuLabCloudAPI3.jpg
+    thumb: /assets/images/thumbs/BambuLabCloudAPI3.jpg
+    caption: "Device version, AMS filament info, print status, user profile, and TTCode camera credentials returned by the Cloud API"
   - type: image
-    src: /assets/images/Koilo3.jpg
-    thumb: /assets/images/thumbs/Koilo3.jpg
-    caption: "Multi-mesh stress test comparing GPU and software renderer output"
+    src: /assets/images/BambuLabCloudAPI4.jpg
+    thumb: /assets/images/thumbs/BambuLabCloudAPI4.jpg
+    caption: "TUTK P2P video credentials and a live MQTT push_status stream with the full 63-field printer state captured by the client"
   - type: image
-    src: /assets/images/Koilo4.jpg
-    thumb: /assets/images/thumbs/Koilo4.jpg
-    caption: "2D space shooter sample using signals, coroutines, collision, and wave spawning"
+    src: /assets/images/BambuLabCloudAPI5.jpg
+    thumb: /assets/images/thumbs/BambuLabCloudAPI5.jpg
+    caption: "Parsed MQTT messages (temperatures, fans, AMS units, layer/progress) followed by the file upload flow generating S3 signed URLs"
   - type: image
-    src: /assets/images/Koilo5.jpg
-    thumb: /assets/images/thumbs/Koilo5.jpg
-    caption: "KoiloScript language feature showcase"
-  - type: image
-    src: /assets/images/Koilo6.jpg
-    thumb: /assets/images/thumbs/Koilo6.jpg
-    caption: "Dynamic module loading via the runtime reflection bridge"
+    src: /assets/images/BambuLabCloudAPI6.jpg
+    thumb: /assets/images/thumbs/BambuLabCloudAPI6.jpg
+    caption: "Upload to S3 confirmed, cloud file listing retrieved, and the full 20/20 test suite passing end-to-end"
 
 {% endproject %}
 
-<!-- AetherControl -->
 <!-- ProtoTracer -->
 {% project %}
 name: ProtoTracer
@@ -1063,6 +1096,8 @@ dates: "2020 - Now"
 contributors: "Contributors on GitHub"
 
 description: |-
+  *Open-source - 205+ stars, 50+ forks on [GitHub](https://github.com/coelacant1/ProtoTracer).*
+
   ProtoTracer is a C++ based 3D rendering engine optimized for microcontrollers. It calculates dynamic 3D scenes in real-time, reacting to sensor or user inputs to adapt the output. This software is designed to be modular for use in other projects.
   
   This includes features such as: 
@@ -1151,97 +1186,115 @@ slides:
   - type: video
     video_id: orijCE6EDM4
     caption: "Physics simulator with balls in a 3D box"
-  - type: pdf
-    src: /assets/pdfs/ProtogenControllerV2-0.pdf
-    caption: "Controller guide for hardware optimized for ProtoTracer"
 
 {% endproject %}
 
-<!-- OpenDACT -->
+<!-- Koilo Engine -->
 {% project %}
-name: OpenDACT
+name: KoiloEngine
 
-summary: "OpenDACT: Automatic Delta Kinematics Calibration Software"
-
-links:
-  - name: Github
-    url: https://github.com/coelacant1/OpenDACT
-
-dates: "2014 - 2017"
-
-contributors: "Contributors on GitHub"
-
-description: |-
-  OpenDACT (Open-source Delta Automatic Calibration Tool) is a calibration tool for delta robots. It calibrates generic delta robots and automates calibration of Repetier-firmware-controlled delta robots (primarily 3D printers). The calibration uses forward and inverse kinematics measurements to make adjustments. It takes Z-height readings at key XY points on a flat plate (print bed) to iteratively calculate hardware offsets. Users can manually adjust hardware or apply software offsets to correct for imperfections.
-
-  This software solves for the following mechanical offsets:
-  - Diagonal rod lengths
-  - End effector radius
-  - Horizontal radius
-  - Endstop offsets
-  - Angles of the ABC towers
-
-  For Repetier based robots, these offsets are automatically saved on the controllers EEPROM upon a successful calibration. Z-bed distortion on a newly completed build could have offsets of +/- 2mm across the plate, this tool (assuming issues in the above offsets) can calibrate the systems down to 5-10 microns.
-  
-  This software has been tested and successfully used on small-form factor deltas (100mm plate diameter) and large-form factor deltas (1.5 meter plate diameter).
-
-slides:
-  - type: image
-    src: /assets/images/OpenDACT1.jpg
-    thumb: /assets/images/thumbs/OpenDACT1.jpg
-    caption: "User interface with example calibration of a delta 3D printer running Repetier firmware"
-  - type: image
-    src: /assets/images/OpenDACT2.jpg
-    thumb: /assets/images/thumbs/OpenDACT2.jpg
-    caption: "User interface showing deformation in the physical structure from ideal conditions - can be used to physically tune the machine"
-  - type: image
-    src: /assets/images/OpenDACT4.jpg
-    thumb: /assets/images/thumbs/OpenDACT4.jpg
-    caption: "Full user interface while running a calibration"
-
-{% endproject %}
-
-<!-- Proxmox Load Balancer -->
-{% project %}
-name: PVELoadBalancer
-
-summary: "Proxmox VE Load Balancer"
+summary: "Koilo Engine: C++ Game Engine with Runtime Scripting"
 
 links:
   - name: GitHub
-    url: https://github.com/coelacant1/ProxmoxLoadBalancer
+    url: https://github.com/coelacant1/Koilo-Engine
 
 dates: "2025 - Now"
 
 contributors: "Solo Project"
 
 description: |-
-  ProxmoxLoadBalancer is a Python tool that balances memory across Proxmox VE cluster nodes. It has two modes of operation:
+  Koilo Engine is a compact C++17 game engine designed to run across both desktop systems and resource-constrained microcontrollers. Scenes and game logic are authored in KoiloScript (`.ks`), a bytecode-compiled scripting language with full access to engine internals through runtime reflection. This is the spiritual successor to ProtoTracer, generalizing the renderer and physics core into a portable engine usable on both PCs and embedded targets.
 
-  - Simulation Mode: Test and visualize load-balancing algorithms in a controlled environment without touching the live cluster.
-  - Live Mode: Uses the Proxmox API to monitor memory usage and migrate VMs to balance load.
+  Targets include Linux, Windows, Raspberry Pi, Teensy 4.x, ESP32-S3, and STM32.
 
-  This software is built as a stand-in until ProxmoxVE ships with a built-in cluster load balancer.
-
-iframe: https://coelacant.com/ProxmoxScripts/
+  Features include:
+  - Multi-backend rendering with a common interface
+    - Vulkan, OpenGL 3.3, and a CPU software rasterizer
+    - KSL shaders compile to both GLSL and CPU from the same source
+  - KoiloScript scripting language
+    - Variables, functions, classes, coroutines, signals, imports, operator overloading
+    - Direct calls into C++ objects through a reflection bridge
+  - Reflection system for exposing C++ classes to scripts via macros (no external codegen)
+  - Hot-reloadable dynamic modules (`.so`/`.dll`) with lifecycle hooks and phased init
+  - Scene graph and ECS with transform propagation and dense component storage
+  - Animation: skeletal playback, keyframe camera tracks, morph target blending, material animation
+  - Optimized math library: vectors, quaternions, matrices, transforms, splines, spatial indexing, noise, Kalman filters, FFT
+  - Asset pipeline with the KoiloMesh format (morph targets) and OBJ/FBX offline conversion
+  - Optional subsystems: AI (pathfinding, behavior trees, FSM), SDL2 audio, particles, LED panel output, HTTP live preview
 
 slides:
   - type: image
-    src: /assets/images/PVELoadBalancer3.jpg
-    thumb: /assets/images/thumbs/PVELoadBalancer3.jpg
-    caption: "Example simulated load balance of a 12-node ProxmoxVE cluster with different amounts of memory"
+    src: /assets/images/Koilo8.jpg
+    thumb: /assets/images/thumbs/Koilo8.jpg
+    caption: "UI demo running on top of the engine"
   - type: image
-    src: /assets/images/PVELoadBalancer1.jpg
-    thumb: /assets/images/thumbs/PVELoadBalancer1.jpg
-    caption: "Example moves from the simulation to balance to equally shared memory"
+    src: /assets/images/Koilo1.jpg
+    thumb: /assets/images/thumbs/Koilo1.jpg
+    caption: "3D scene rendered in Koilo Engine with KSL materials and an orbiting camera"
   - type: image
-    src: /assets/images/PVELoadBalancer2.jpg
-    thumb: /assets/images/thumbs/PVELoadBalancer2.jpg
-    caption: "Second example of a simulated load-balance but with more extremes in initial conditions"
+    src: /assets/images/Koilo2.jpg
+    thumb: /assets/images/thumbs/Koilo2.jpg
+    caption: "OBJ model loaded with textures and a keyframe camera track"
   - type: image
-    src: /assets/images/PVELoadBalancer4.jpg
-    thumb: /assets/images/thumbs/PVELoadBalancer4.jpg
-    caption: "Combined simulation of initial load, final load, and moves to get to final load"
+    src: /assets/images/Koilo3.jpg
+    thumb: /assets/images/thumbs/Koilo3.jpg
+    caption: "Multi-mesh stress test comparing GPU and software renderer output"
+  - type: image
+    src: /assets/images/Koilo4.jpg
+    thumb: /assets/images/thumbs/Koilo4.jpg
+    caption: "2D space shooter sample using signals, coroutines, collision, and wave spawning"
+  - type: image
+    src: /assets/images/Koilo5.jpg
+    thumb: /assets/images/thumbs/Koilo5.jpg
+    caption: "KoiloScript language feature showcase"
+  - type: image
+    src: /assets/images/Koilo6.jpg
+    thumb: /assets/images/thumbs/Koilo6.jpg
+    caption: "Dynamic module loading via the runtime reflection bridge"
+
+{% endproject %}
+
+<!-- RT-950 Pro Firmware -->
+{% project %}
+name: RT950Firmware
+
+summary: "RT-950 Pro: Open-Source Handheld Radio Firmware"
+
+links:
+  - name: GitHub
+    url: https://github.com/coelacant1/Radtel-RT950-Pro-Firmware
+
+dates: "2025 - Now"
+
+contributors: "Contributors on GitHub"
+
+description: |-
+  Open-source bare-metal firmware for the Radtel RT-950 Pro handheld radio, targeting the Artery AT32F403A (ARM Cortex-M4F @ 120 MHz, 1 MB flash, 96 KB SRAM). Built by reverse-engineering the stock firmware from disassembly into thousands of annotated assembly instructions, then reconstructing drivers, peripheral access, and protocol behavior in maintainable C. The custom firmware loads through the OEM bootloader using the standard `.BTF` update flow with no CRC or signature, so users can flash it through the existing OEM tool.
+
+  Hardware bring-up confirmed on real hardware:
+  - ST7789V 240x320 LCD via 8080 parallel bus with custom text rendering
+  - Status LEDs, dual backlights, power latch, and band relay control
+  - Boot, GPIO, and display fully functional under custom firmware
+
+  Implemented (code-complete, hardware testing in progress):
+  - Drivers: GPIO, SPI2 (flash), bit-bang SPI for BK4829, bit-bang I2C for SI4732, multiple UARTs, ADC2, DAC1+TIM6+DMA, dual-channel DMA, ST7789V 8080 parallel
+  - RF: dual BK4829 transceiver driver with frequency programming, TX power control, and flash-stored calibration tables
+  - Application: dual VFO (A/B/C), PTT with active-low relay routing, debounced keypad scanner, rotary encoder, S-meter, hierarchical 12-category menu, frequency entry
+  - Digital modes: APRS (hardware FSK via BK4829, MIC-E packets), DTMF encode/decode, CTCSS/DCS tone generation
+  - Receivers: SI4732 AM/FM/SSB broadcast, FM presets, NOAA weather channels
+  - Storage: SPI flash layout for 990 channels, VFO configs and settings, wear-leveled NV storage, CPS programming over UART4
+  - Comms: GPS NMEA parser, BLE data bridge, VOX
+  - UI: splash screen, zone browser, text input, scanner, spectrum analyzer
+  - Cross-band repeat with band-specific relay routing and verified PTT polarity for PA safety
+  - Tooling: BTF firmware encrypt/decrypt, CPS flash read/write, serial firmware uploader with auto-restart
+  - Hardware self-test suite covering backlight, UART, LCD, BK4829/SI4732 chip IDs, SPI flash JEDEC ID, ADC, DAC tone, keypad, GPS, and full system diagnostics
+
+slides:
+  - type: image
+    src: /assets/images/RT950Pro1.jpg
+    thumb: /assets/images/thumbs/RT950Pro1.jpg
+    caption: "Custom firmware running the hardware self-test on a real RT-950 Pro: AT32F403A + ST7789V LCD + dual BK4829 + SI4732 detected, GPIO/LED/backlight/band-relay/LCD bus verified"
 
 {% endproject %}
 
@@ -1286,67 +1339,167 @@ slides:
 
 {% endproject %}
 
-<!-- Bambu Lab Cloud API -->
+
+## **Advanced Manufacturing**
+<!-- Pick and Place Line -->
 {% project %}
-name: BambuLabCloudAPI
+name: PicknPlaceLine
 
-summary: "Bambu Lab Cloud API: Python Library and Compatibility Layer"
+summary: "Installation and Operation of Automated Pick-and-Place Assembly Line"
 
-links:
-  - name: PyPI
-    url: https://pypi.org/project/bambu-lab-cloud-api/
-  - name: GitHub
-    url: https://github.com/coelacant1/Bambu-Lab-Cloud-API
+dates: "2019 - 2021"
 
-dates: "2025 - Now"
-
-contributors: "Solo Project"
+contributors: "Solo Project | Assistance with Moving Equipment"
 
 description: |-
-  A documentation effort and Python library for communicating with Bambu Lab 3D printers through their Cloud API, MQTT protocol, and local connections. Originally built as a read-only proxy for managing a print farm.
+  Led the installation, configuration, and operation of an automated pick-and-place assembly line, overseeing the import of the equipment and integrating it within our facility. This project required infrastructure planning, and teardown/rebuild of machinery to match our requirements.
 
-  Features include:
-  - API endpoint reference built from network traffic analysis, split into focused modules (auth, devices, users, files/printing, MQTT, AMS/filament, camera, errors)
-  - Unified Python client (`bambulab`) covering Cloud API, MQTT, local FTP upload, and video streams
-  - Authentication with 2FA / email verification code support and token caching
-  - Real-time MQTT monitoring and control of print state and printer telemetry
-  - File upload via both Cloud API (S3) and local FTP
-  - Video streaming: RTSP for X1 series, JPEG frame streaming for A1/P1 series
-  - Compatibility server that bridges Home Assistant, OctoPrint, and other tools to the Cloud API without enabling developer mode
-  - Strict read-only and full-mode proxy servers with rate limiting for safe gateway use
-  - Comprehensive test suite covering 20+ endpoints, MQTT live data, S3 file upload, and TUTK video credentials
-  - G-code reference documentation for supported printer models
-  - Distributed on PyPI as `bambu-lab-cloud-api`
+  The final setup included:
+  - Semi-Automatic Solder Paste Screen Printer (KAYO-5088)
+  - Manual Screen Printer (KAYO-P1000)
+  - Solder Paste Mixer (KAYO-500S)
+  - Automatic PCB Unloader (KAYO-50S)
+  - 2X Inspection Conveyors (KAYO-ICO6)
+  - Automatic Pick-and-Place Machine (KAYO-A4L)
+  - Convection Reflow Oven (KAYO-RF430)
+  - Automatic PCB Loader (KAYO-50P)
+  - Post Inspection Station (Digital Microscope/Testing Hardware)
 
 slides:
   - type: image
-    src: /assets/images/BambuLabCloudAPI1.jpg
-    thumb: /assets/images/thumbs/BambuLabCloudAPI1.jpg
-    caption: "Live JPEG frame streaming from a Bambu Lab P1S camera through the Python client"
+    src: /assets/images/AssemblyLine6.jpg
+    thumb: /assets/images/thumbs/AssemblyLine6.jpg
+    caption: "Final implementation of a Kayo SMT assembly line"
   - type: image
-    src: /assets/images/BambuLabCloudAPI2.jpg
-    thumb: /assets/images/thumbs/BambuLabCloudAPI2.jpg
-    caption: "Comprehensive test suite startup: enumerating three P1S printers with model, online state, print status, nozzle, and access codes via the Cloud API"
+    src: /assets/images/AssemblyLine1.jpg
+    thumb: /assets/images/thumbs/AssemblyLine1.jpg
+    caption: "Process of assembly for the Kayo Pick n Place"
   - type: image
-    src: /assets/images/BambuLabCloudAPI3.jpg
-    thumb: /assets/images/thumbs/BambuLabCloudAPI3.jpg
-    caption: "Device version, AMS filament info, print status, user profile, and TTCode camera credentials returned by the Cloud API"
+    src: /assets/images/AssemblyLine3.jpg
+    thumb: /assets/images/thumbs/AssemblyLine3.jpg
+    caption: "Assembled frame for the Pick n Place"
   - type: image
-    src: /assets/images/BambuLabCloudAPI4.jpg
-    thumb: /assets/images/thumbs/BambuLabCloudAPI4.jpg
-    caption: "TUTK P2P video credentials and a live MQTT push_status stream with the full 63-field printer state captured by the client"
+    src: /assets/images/AssemblyLine4.jpg
+    thumb: /assets/images/thumbs/AssemblyLine4.jpg
+    caption: "Pick n Place assembled"
   - type: image
-    src: /assets/images/BambuLabCloudAPI5.jpg
-    thumb: /assets/images/thumbs/BambuLabCloudAPI5.jpg
-    caption: "Parsed MQTT messages (temperatures, fans, AMS units, layer/progress) followed by the file upload flow generating S3 signed URLs"
-  - type: image
-    src: /assets/images/BambuLabCloudAPI6.jpg
-    thumb: /assets/images/thumbs/BambuLabCloudAPI6.jpg
-    caption: "Upload to S3 confirmed, cloud file listing retrieved, and the full 20/20 test suite passing end-to-end"
+    src: /assets/images/AssemblyLine7.jpg
+    thumb: /assets/images/thumbs/AssemblyLine7.jpg
+    caption: "Internal view of the pick n place"
+  - type: video
+    video_id: dFcBl_joEPg
+    caption: "Testing the first head of the pick n place"
+  - type: video
+    video_id: o89Dq8lxETg
+    caption: "Second Test of the pick n place head"
 
 {% endproject %}
 
-## **Advanced Manufacturing**
+<!-- Makerspace Implementation -->
+{% project %}
+name: Makerspace
+
+summary: "Co-Implementation of a Large-Scale Manufacturing Lab"
+
+dates: "2022 - Now"
+
+contributors: "Co-Author on Funding Grant | Co-Lead on Design, Build-Out, and Operations"
+
+description: |-
+  Co-authored the technical scope for a large-scale, externally funded manufacturing lab, then co-led the design, build-out, and equipment commissioning. Owned the back-end infrastructure-network, compute, lab IT, and capital-equipment uptime-that keeps the space running.
+
+  Scope of work:
+  - Co-author on the funding proposal that brought the space online
+  - Worked directly with the architects on space layout, zoning of fabrication areas, utilities, ventilation, and safety planning
+  - Coordinated with the builders during construction to keep the design intent intact and resolve build-out questions in real time
+  - Filled out the space: specified, sourced, received, and placed all of the equipment
+  - Set up and commissioned the equipment, including additive manufacturing, subtractive machining, electronics, laser, and finishing stations
+  - Continue to assist with running the space day-to-day, including training, maintenance, and process improvements
+
+slides:
+  - type: image
+    src: /assets/images/Shop2.jpg
+    thumb: /assets/images/thumbs/Shop2.jpg
+    caption: "Makerspace build-out and equipment install"
+  - type: image
+    src: /assets/images/Shop3.jpg
+    thumb: /assets/images/thumbs/Shop3.jpg
+    caption: "Makerspace build-out and equipment install"
+  - type: image
+    src: /assets/images/Shop4.jpg
+    thumb: /assets/images/thumbs/Shop4.jpg
+    caption: "Makerspace build-out and equipment install"
+  - type: image
+    src: /assets/images/Shop5.jpg
+    thumb: /assets/images/thumbs/Shop5.jpg
+    caption: "Makerspace build-out and equipment install"
+  - type: image
+    src: /assets/images/Shop6.jpg
+    thumb: /assets/images/thumbs/Shop6.jpg
+    caption: "Makerspace build-out and equipment install"
+  - type: image
+    src: /assets/images/Shop7.jpg
+    thumb: /assets/images/thumbs/Shop7.jpg
+    caption: "Makerspace build-out and equipment install"
+  - type: image
+    src: /assets/images/Shop8.jpg
+    thumb: /assets/images/thumbs/Shop8.jpg
+    caption: "Makerspace build-out and equipment install"
+  - type: image
+    src: /assets/images/Shop9.jpg
+    thumb: /assets/images/thumbs/Shop9.jpg
+    caption: "Makerspace build-out and equipment install"
+  - type: image
+    src: /assets/images/Shop10.jpg
+    thumb: /assets/images/thumbs/Shop10.jpg
+    caption: "Makerspace build-out and equipment install"
+  - type: image
+    src: /assets/images/Shop11.jpg
+    thumb: /assets/images/thumbs/Shop11.jpg
+    caption: "Makerspace build-out and equipment install"
+  - type: image
+    src: /assets/images/Shop12.jpg
+    thumb: /assets/images/thumbs/Shop12.jpg
+    caption: "Makerspace build-out and equipment install"
+  - type: image
+    src: /assets/images/Shop13.jpg
+    thumb: /assets/images/thumbs/Shop13.jpg
+    caption: "Makerspace build-out and equipment install"
+  - type: image
+    src: /assets/images/Shop14.jpg
+    thumb: /assets/images/thumbs/Shop14.jpg
+    caption: "Makerspace build-out and equipment install"
+  - type: image
+    src: /assets/images/Shop15.jpg
+    thumb: /assets/images/thumbs/Shop15.jpg
+    caption: "Makerspace build-out and equipment install"
+  - type: image
+    src: /assets/images/Shop16.jpg
+    thumb: /assets/images/thumbs/Shop16.jpg
+    caption: "Makerspace build-out and equipment install"
+  - type: image
+    src: /assets/images/Shop17.jpg
+    thumb: /assets/images/thumbs/Shop17.jpg
+    caption: "Makerspace build-out and equipment install"
+  - type: image
+    src: /assets/images/Shop18.jpg
+    thumb: /assets/images/thumbs/Shop18.jpg
+    caption: "Makerspace build-out and equipment install"
+  - type: image
+    src: /assets/images/Shop19.jpg
+    thumb: /assets/images/thumbs/Shop19.jpg
+    caption: "Makerspace build-out and equipment install"
+  - type: image
+    src: /assets/images/Shop20.jpg
+    thumb: /assets/images/thumbs/Shop20.jpg
+    caption: "Makerspace build-out and equipment install"
+  - type: image
+    src: /assets/images/Shop21.jpg
+    thumb: /assets/images/thumbs/Shop21.jpg
+    caption: "Makerspace build-out and equipment install"
+
+{% endproject %}
+
 <!-- Advanced Manufacturing Technologies -->
 {% project %}
 name: AdditiveManufacturing
@@ -1358,7 +1511,7 @@ dates: "2022 - Now"
 contributors: "Collaboration with Co-Worker"
 
 description: |-
-  Operator and technician for additive manufacturing platforms. Sharing responsibility for hands‑on testing, day‑to‑day operation, and performing preventative maintenance and repairs.
+  Shared responsibility for commissioning, operating, maintaining, and supporting uptime on advanced additive manufacturing platforms across metal DMLS, SLS, PolyJet, binder jetting, composite FDM, and large FDM printer fleets.
   
   Key systems managed:
   - Xact XM200G (DMLS) - Metal powder handling, build chamber calibration, and print configuration/support creation
@@ -1443,92 +1596,6 @@ slides:
 
 {% endproject %}
 
-
-<!-- Pick and Place Line -->
-{% project %}
-name: PicknPlaceLine
-
-summary: "Installation and Operation of Automated Pick-and-Place Assembly Line"
-
-dates: "2019 - 2021"
-
-contributors: "Solo Project | Assistance with Moving Equipment"
-
-description: |-
-  Led the installation, configuration, and operation of an automated pick-and-place assembly line, overseeing the import of the equipment and integrating it within our facility. This project required infrastructure planning, and teardown/rebuild of machinery to match our requirements.
-
-  The final setup included:
-  - Semi-Automatic Solder Paste Screen Printer (KAYO-5088)
-  - Manual Screen Printer (KAYO-P1000)
-  - Solder Paste Mixer (KAYO-500S)
-  - Automatic PCB Unloader (KAYO-50S)
-  - 2X Inspection Conveyors (KAYO-ICO6)
-  - Automatic Pick-and-Place Machine (KAYO-A4L)
-  - Convection Reflow Oven (KAYO-RF430)
-  - Automatic PCB Loader (KAYO-50P)
-  - Post Inspection Station (Digital Microscope/Testing Hardware)
-
-slides:
-  - type: image
-    src: /assets/images/AssemblyLine6.jpg
-    thumb: /assets/images/thumbs/AssemblyLine6.jpg
-    caption: "Final implementation of a Kayo SMT assembly line"
-  - type: image
-    src: /assets/images/AssemblyLine1.jpg
-    thumb: /assets/images/thumbs/AssemblyLine1.jpg
-    caption: "Process of assembly for the Kayo Pick n Place"
-  - type: image
-    src: /assets/images/AssemblyLine3.jpg
-    thumb: /assets/images/thumbs/AssemblyLine3.jpg
-    caption: "Assembled frame for the Pick n Place"
-  - type: image
-    src: /assets/images/AssemblyLine4.jpg
-    thumb: /assets/images/thumbs/AssemblyLine4.jpg
-    caption: "Pick n Place assembled"
-  - type: image
-    src: /assets/images/AssemblyLine7.jpg
-    thumb: /assets/images/thumbs/AssemblyLine7.jpg
-    caption: "Internal view of the pick n place"
-  - type: video
-    video_id: dFcBl_joEPg
-    caption: "Testing the first head of the pick n place"
-  - type: video
-    video_id: o89Dq8lxETg
-    caption: "Second Test of the pick n place head"
-
-{% endproject %}
-
-<!-- Large Scale 3d Printing -->
-{% project %}
-name: LargePrinter
-
-summary: "Design and Creation of Large-Scale Custom Printers"
-
-dates: "2015 - Now"
-
-contributors: "Design/Software | Project with Two Co-Workers"
-
-description: |-
-  Collaborated with two engineers to build a large-format Delta 3D printer prototype (10ft tall x 6ft wide) in 45 days. Although intended as a proof of concept, it produced usable parts up to 6ft tall.
-  
-  Contributions:
-  - Kinematic Calibration: Leveraged OpenDACT to compute all machine kinematic parameters (arm lengths, endstop offsets, carriage geometry) for a 4 ft‑diameter bed
-  - Prototype Mechanical Design: Co‑designed structural linkages, custom brackets, and frame supports; specified and validated actuators and carriage assemblies
-  - Motion and Slicer Tuning: Developed and refined slicing profiles and motion parameters (speeds, accelerations, jerk limits)
-  - Delivery: Helped all stages-from concept through calibration and test prints-within a 45‑day schedule, and ended with a production‑capable prototype
-
-slides:
-  - type: image
-    src: /assets/images/10ftDelta.jpg
-    thumb: /assets/images/thumbs/10ftDelta.jpg
-    caption: "10ft tall delta style 3D printer laying on it's side - had to be moved to a separate room to go vertical"
-  - type: image
-    src: /assets/images/10ftDeltaTest.jpg
-    thumb: /assets/images/thumbs/10ftDeltaTest.jpg
-    caption: "First test print of the large-format delta 3D printer"
-
-{% endproject %}
-
 <!-- Print Farm Implementation and Management -->
 {% project %}
 name: PrintFarm
@@ -1562,18 +1629,25 @@ slides:
 
 {% endproject %}
 
-<!-- Custom Tooling -->
+<!-- Other Manufacturing Expertise -->
 {% project %}
-name: CustomTooling
+name: OtherManufacturing
 
-summary: "Injection Molding, Vacuum Forming, and Specialized Tooling Design"
+summary: "Manufacturing, Tooling, and Fixturing Expertise"
 
 dates: "2011 - Now"
 
-contributors: "Face Shields with Co-Worker | Rest are Solo Projects"
+contributors: "Production tooling shared with Co-Worker | Fixtures and most other work solo"
 
 description: |-
-  Developed tooling solutions for injection molding, vacuum forming, and jig creation for repeated tasks:
+  Programmed, commissioned, maintained, and supported production use of a variety of manufacturing tools, plus designed and built the tooling and fixturing that supports repeated production:
+  - 2X 3/4‑Axis CNC Milling with a Tormach 1100MX and 1X Tormach 440MX
+  - Engraving and cutting with BossLaser Fiber (1X) and CO₂ Lasers (2X) + Rotary
+  - CNC plasma cutting with a Tormach 1300PL
+  - Waterjet cutting with an Omax 1508
+  - 3D scanning with the Creaform Go!SCAN Spark and VXElements software suite
+
+  Tooling and fixturing design (injection molding, vacuum forming, jigs):
   - Injection‑Molded Face Shield Frames: Designed parts optimized for automated injection molding; tooling produced over 6,000 units for local clinics and hospitals
   - Custom Vacuum‑Forming Bucks: Engineered master forms (bucks) for thermoforming complex geometries
   - Visor‑Cutting Jigs: Created fixtures to hold and index vacuum-formed visors for manual and automated trimming
@@ -1581,6 +1655,53 @@ description: |-
   - Custom Production Centering Tools: Designed and fabricated fixtures for CO2 laser and fiber laser etching
 
 slides:
+  - type: video
+    video_id: c9JMAAcL7XQ
+    caption: "Cutting brass on a waterjet"
+  - type: video
+    video_id: 5qvgw3AXIjw
+    caption: "Laser etching brass"
+  - type: video
+    video_id: fTPXXytuasA
+    caption: "Cutting custom foam panels for a headset"
+  - type: video
+    video_id: 62ABiiJnl1c
+    caption: "Installed and configured two Tormach 1100MX machines with tool changers"
+  - type: video
+    video_id: OV2HV-9dwZw
+    caption: "Plasma cutting 3/8 mild steel plates"
+  - type: image
+    src: /assets/images/Manufacturing5.jpg
+    thumb: /assets/images/thumbs/Manufacturing5.jpg
+    caption: "Test cut off of the Tormach 1100MX"
+  - type: image
+    src: /assets/images/Manufacturing9.jpg
+    thumb: /assets/images/thumbs/Manufacturing9.jpg
+    caption: "Second test cut off the Tormach 1100MX"
+  - type: image
+    src: /assets/images/CO2Laser.jpg
+    thumb: /assets/images/thumbs/CO2Laser.jpg
+    caption: "Laser cut EVA foam"
+  - type: image
+    src: /assets/images/Stand1.jpg
+    thumb: /assets/images/thumbs/Stand1.jpg
+    caption: "Custom metal fabrication - plasma cut plates, manual metal working/bending, welding, and powder coating"
+  - type: image
+    src: /assets/images/Stand5.jpg
+    thumb: /assets/images/thumbs/Stand5.jpg
+    caption: "Stand prior to powder-coating"
+  - type: image
+    src: /assets/images/Stand3.jpg
+    thumb: /assets/images/thumbs/Stand3.jpg
+    caption: "Post-baking in the powder-coating oven"
+  - type: image
+    src: /assets/images/Scan1.jpg
+    thumb: /assets/images/thumbs/Scan1.jpg
+    caption: "WIP laser scanning example"
+  - type: image
+    src: /assets/images/Scan2.jpg
+    thumb: /assets/images/thumbs/Scan2.jpg
+    caption: "WIP laser scanning example"
   - type: image
     src: /assets/images/FaceShields0.jpg
     thumb: /assets/images/thumbs/FaceShields0.jpg
@@ -1670,10 +1791,6 @@ slides:
     thumb: /assets/images/thumbs/Tools4.jpg
     caption: "Close-up of the glass jig"
   - type: image
-    src: /assets/images/4Axis3.jpg
-    thumb: /assets/images/thumbs/4Axis3.jpg
-    caption: "Custom tool for cutting vacuum formed visors"
-  - type: image
     src: /assets/images/vacuumformer4.jpg
     thumb: /assets/images/thumbs/vacuumformer4.jpg
     caption: "Cutting guide for a vaccuum formed visor and frame for the custom vacuum forming table"
@@ -1700,80 +1817,108 @@ slides:
 
 {% endproject %}
 
-<!-- Other Manufacturing Expertise -->
+
+## **High-Performance Computing and Systems Infrastructure**
+<!-- ProxmoxScripts -->
 {% project %}
-name: OtherManufacturing
+name: ProxmoxScripts
 
-summary: "Other Manufacturing Technology Expertise"
+summary: "ProxmoxScripts for Automated Infrastracture Management"
 
-dates: "2020 - Now"
+links:
+  - name: Website
+    url: https://coelacant.com/ProxmoxScripts/
+  - name: GitHub
+    url: https://github.com/coelacant1/ProxmoxScripts
 
-contributors: "Share with Co-Worker"
+dates: "2024 - Now"
+
+contributors: "Contributors on GitHub"
 
 description: |-
-  Operator, programmer, and technician for a variety of manufacturing tools:
-  - 2X 3/4‑Axis CNC Milling with a Tormach 1100MX and 1X Tormach 440MX
-  - Engraving and cutting with BossLaser Fiber (1X) and CO₂ Lasers (2X) + Rotary
-  - CNC plasma cutting with a Tormach 1300PL
-  - Waterjet cutting with an Omax 1508
-  - 3D scanning with the Creaform Go!SCAN Spark and VXElements software suite
+  *Open-source - 615+ stars, 39+ forks on [GitHub](https://github.com/coelacant1/ProxmoxScripts).*
+
+  ProxmoxScripts is a collection of Bash scripts for streamlining and automating the management of Proxmox Virtual Environment (PVE) clusters. This was developed to help manage and automate Proxmox virtualization infrastructure. The scripts are accessible via a console-based menu for overview, navigation, and execution. Users can read help information for each script as well as get a description of required parameters.
+
+  Features include: 
+  - Cluster configuration tools
+    - Adding Nodes - Remote configuration with IP
+    - Cluster Creation - From list of IPs
+    - Cluster Deletion - Separating all nodes from cluster
+  - Firewall management
+    - Bulk LXC/VM Firewall Management
+    - Automated host default firewall configuration
+  - High Availability
+    - Create HA Group and add nodes 
+    - Bulk add LXC/VMs to HA group
+  - Host Automation and Configuration
+    - Remove local-lvm storage and expand local storage (for Hyper-Converged setups)
+    - Bulk Microcode configuration/Timezone Configuration/Upgrades
+    - Generic PWM and Dell IPMI hardware fan control adapting to CPU temperatures
+    - Enable CPU Scaling Governer
+    - Enable GPU Passthrough to VM
+    - Enable IOMMU
+    - Enable GPU Sharing with LXC
+    - Optimize for X3D hardware
+    - Live memory testing
+    - System optimization for nested virtualization
+  - LXC and VM Configuration and Management
+  - Networking
+    - Bulk adding network bonds
+    - List all VM/LXC IDs with their associated MAC address
+    - Bulk set DNS on cluster
+    - Find VM ID from MAC address
+    - Automated host-to-host network speed test
+    - Bulk update network interface names 
+    - Bulk host uplink speed test
+  - Remote VM/LXC Management
+    - Integration with Apache Guacamole
+      - Bulk add/delete RDP connections
+      - Bulk add/remove SFTP server to RDP connections
+      - Bulk list RDP configuration
+      - Bulk update/remove drive redirection
+      - Pull Guacamole authentication token
+    - Configuration of virtual machine static IPs over SSH for Debian/Ubuntu/Windows
+  - Generate a resource report for all VMs/LXCs
+  - Automated penetration testing/port scanning
+  - Storage Automation
+    - Ceph Configuration
+      - Bulk create OSDs
+      - Edit crushmap (decompiles, prints directory, allows user edit, then recompile)
+      - Bulk restart managers/monitors/metadata servers/OSDs
+      - Set pool to minimum size of 1 and to a size of 1 (testing/temporary data)
+      - Create automated deep scrubbing with a chron job
+      - Automate creating a single drive Ceph node (shares host OS and Ceph data)
+      - Bulk OSD sparsify
+      - Bulk start stopped disks
+      - Full data wipe on specified disk (clear Ceph and all remnants of user data)
+    - Disk Benchmarking
+    - Bulk VM disk deletion
+    - Bulk VM disk deletion for disks with snapshots
+    - Trim all filesystems of resources using Qemu Agent or LXC
+    - Automate disk spin down
+    - Pass host directory to LXC
+    - Update stale mounts
+  - Custom User Interface library
+
+iframe: https://coelacant.com/ProxmoxScripts/
 
 slides:
-  - type: video
-    video_id: c9JMAAcL7XQ
-    caption: "Cutting brass on a waterjet"
-  - type: video
-    video_id: 5qvgw3AXIjw
-    caption: "Laser etching brass"
-  - type: video
-    video_id: fTPXXytuasA
-    caption: "Cutting custom foam panels for a headset"
-  - type: video
-    video_id: 62ABiiJnl1c
-    caption: "Installed and configured two Tormach 1100MX machines with tool changers"
-  - type: video
-    video_id: OV2HV-9dwZw
-    caption: "Plasma cutting 3/8 mild steel plates"
   - type: image
-    src: /assets/images/Manufacturing5.jpg
-    thumb: /assets/images/thumbs/Manufacturing5.jpg
-    caption: "Test cut off of the Tormach 1100MX"
+    src: /assets/images/ProxmoxScripts1.jpg
+    thumb: /assets/images/thumbs/ProxmoxScripts1.jpg
+    caption: "Multi-pane view of the CCPVE terminal interface running scripts across the cluster"
   - type: image
-    src: /assets/images/Manufacturing9.jpg
-    thumb: /assets/images/thumbs/Manufacturing9.jpg
-    caption: "Second test cut off the Tormach 1100MX"
+    src: /assets/images/ProxmoxScripts2.jpg
+    thumb: /assets/images/thumbs/ProxmoxScripts2.jpg
+    caption: "CCPVE menus, host overview, and script execution shown side by side"
   - type: image
-    src: /assets/images/CO2Laser.jpg
-    thumb: /assets/images/thumbs/CO2Laser.jpg
-    caption: "Laser cut EVA foam"
-  - type: image
-    src: /assets/images/vacuumformer3.jpg
-    thumb: /assets/images/thumbs/vacuumformer3.jpg
-    caption: "Vacuum forming with a Formech former"
-  - type: image
-    src: /assets/images/Stand1.jpg
-    thumb: /assets/images/thumbs/Stand1.jpg
-    caption: "Custom metal fabrication - plasma cut plates, manual metal working/bending, welding, and powder coating"
-  - type: image
-    src: /assets/images/Stand5.jpg
-    thumb: /assets/images/thumbs/Stand5.jpg
-    caption: "Stand prior to powder-coating"
-  - type: image
-    src: /assets/images/Stand3.jpg
-    thumb: /assets/images/thumbs/Stand3.jpg
-    caption: "Post-baking in the powder-coating oven"
-  - type: image
-    src: /assets/images/Scan1.jpg
-    thumb: /assets/images/thumbs/Scan1.jpg
-    caption: "WIP laser scanning example"
-  - type: image
-    src: /assets/images/Scan2.jpg
-    thumb: /assets/images/thumbs/Scan2.jpg
-    caption: "WIP laser scanning example"
+    src: /assets/images/ProxmoxScripts3.jpg
+    thumb: /assets/images/thumbs/ProxmoxScripts3.jpg
+    caption: "Invoking a script through the single-line online bootstrap command"
 
 {% endproject %}
 
-## **High-Performance Computing and Systems Infrastructure**
 <!-- Hyper-Converged Infrastructure -->
 {% project %}
 name: Server Infrastructure
@@ -1785,22 +1930,23 @@ dates: "2019 - Now"
 contributors: "Solo Implementation, Management, and Operation"
 
 description: |-
-  Designed and implemented 20-node hyper-converged ProxmoxVE cluster, concurrently hosting up to 3,000-4,000 virtual machines and containers:
+  Designed and implemented 20-node hyper-converged ProxmoxVE cluster, scaled from ~80 to 3,500+ concurrent virtual machine and container instances at 99.9%+ measured uptime:
 
   Specifications for this infrastructure:
   - Scalable Compute Resources:
     - Aggregate Capacity: 1,464 CPU cores and 10.8TiB RAM
     - Per-Node: Up to 80 CPU cores and 784GiB RAM
     - Accelerators: Select nodes equipped with NVIDIA RTX 8000 GPUs for GPU-accelerated tasks
-    - Customization: Users can request private compute infrastructures of up to 20-nodes, with Slurm-ready configurations
+    - Customization: Internal users and research groups can be provisioned isolated VM and container environments, including Slurm-ready multi-node configurations when required
   - Tiered Storage Solutions:
     - Ceph-backed dynamic scaling across three performance tiers:
       - SSD Base
       - SSD Low-Latency
       - HDD Base
     - Total Capacity: ~211.52TiB with automated data distribution and resilience
+    - Custom CRUSH topology mapping pools across SATA-SSD, SAS-SSD, and SAS-HDD media for cost/performance tiering
   - High-Speed Networking:
-    - Bandwidth: Two 25 GbE links per server (50 GbE aggregate) configured with 802.3ad LACP and MC-LAG for redundancy
+    - Bandwidth: Two 25 GbE links per server (50 GbE aggregate) configured with 802.3ad LACP and MC-LAG for redundancy; ~200 Gbps aggregate core bandwidth
     - Features:  RDMA, SDN, jumbo frames, and traffic prioritization
   - Customization and security:
     - Full user control over the software stack and container/VM images
@@ -1812,6 +1958,8 @@ description: |-
     - Redundant network paths and daily backup/snapshot schedules
     - Designed for security testing, scientific simulations, and parallel computing for data analysis and GPU-intensive applications
     - Preconfigured templates for nested multi-machine clusters with SLURM
+  - Observability:
+    - Prometheus + Grafana for metrics and dashboards, Zabbix for host/service monitoring and alerting
 
 slides:
   - type: image
@@ -1878,6 +2026,108 @@ slides:
     src: /assets/images/ProxmoxScripts1.jpg
     thumb: /assets/images/thumbs/ProxmoxScripts1.jpg
     caption: "Example output of the cluster automation"
+
+  - type: image
+    src: /assets/images/Servers19.jpg
+    thumb: /assets/images/thumbs/Servers19.jpg
+    caption: "Cluster rack-side view during a maintenance window"
+
+{% endproject %}
+
+<!-- pAWS - Proxmox Automated Web Services -->
+{% project %}
+name: ProxmoxAutomatedWebServices
+
+summary: "pAWS: Self-Hosted Cloud on Proxmox VE"
+
+links:
+  - name: GitHub
+    url: https://github.com/coelacant1/Proxmox-Automated-Web-Services
+
+dates: "2025 - Now"
+
+contributors: "Solo Project"
+
+description: |-
+  pAWS (Proxmox Automated Web Services) is a self-hosted, AWS-like infrastructure platform built on Proxmox VE. It provides multi-tenant compute, networking, storage, backups, and monitoring through a unified web UI and REST API, turning a Proxmox cluster into a managed cloud-style environment.
+
+  Implemented capabilities:
+  - Compute: VMs and LXC containers from templates with full lifecycle management, browser-based console (noVNC/xterm.js), snapshots, and import/export
+  - Networking: VPCs with subnets, security groups, service endpoints, and DNS
+  - Storage: S3-compatible object storage backed by Ceph RadosGW, with file browser, sharing, and presigned URLs
+  - Backups: Proxmox Backup Server integration with scheduled plans and point-in-time restore
+  - Monitoring: per-resource metrics, alarms, and log aggregation
+  - Auth: local accounts (JWT) plus OAuth2/OIDC, with RBAC roles (Admin/Operator/Member/Viewer)
+  - Admin: user management, template catalog, quotas, and audit logging
+
+  Stack:
+  - Frontend: React 19, TypeScript, Vite, Tailwind CSS v4
+  - Backend: Python 3.11+, FastAPI, async SQLAlchemy 2, Pydantic v2
+  - Data: PostgreSQL 16, Redis 7, Celery
+  - Infrastructure: Proxmox VE 8+, Ceph RadosGW, Proxmox Backup Server
+  - Cluster credentials are AES-256-GCM encrypted at rest using a stable master key
+
+slides:
+  - type: image
+    src: /assets/images/pAWS1.jpg
+    thumb: /assets/images/thumbs/pAWS1.jpg
+    caption: "pAWS dashboard giving a single view of compute, storage, and cluster health"
+  - type: image
+    src: /assets/images/pAWS2.jpg
+    thumb: /assets/images/thumbs/pAWS2.jpg
+    caption: "Container/VM overview with lifecycle controls"
+  - type: image
+    src: /assets/images/pAWS3.jpg
+    thumb: /assets/images/thumbs/pAWS3.jpg
+    caption: "Browser-based VNC console for direct VM access"
+  - type: image
+    src: /assets/images/pAWS4.jpg
+    thumb: /assets/images/thumbs/pAWS4.jpg
+    caption: "Administration panel for users, infrastructure connections, and templates"
+
+{% endproject %}
+
+<!-- Proxmox Load Balancer -->
+{% project %}
+name: PVELoadBalancer
+
+summary: "Proxmox VE Load Balancer"
+
+links:
+  - name: GitHub
+    url: https://github.com/coelacant1/ProxmoxLoadBalancer
+
+dates: "2025 - Now"
+
+contributors: "Solo Project"
+
+description: |-
+  ProxmoxLoadBalancer is a Python tool that balances memory across Proxmox VE cluster nodes. It has two modes of operation:
+
+  - Simulation Mode: Test and visualize load-balancing algorithms in a controlled environment without touching the live cluster.
+  - Live Mode: Uses the Proxmox API to monitor memory usage and migrate VMs to balance load.
+
+  This software is built as a stand-in until ProxmoxVE ships with a built-in cluster load balancer.
+
+iframe: https://coelacant.com/ProxmoxScripts/
+
+slides:
+  - type: image
+    src: /assets/images/PVELoadBalancer3.jpg
+    thumb: /assets/images/thumbs/PVELoadBalancer3.jpg
+    caption: "Example simulated load balance of a 12-node ProxmoxVE cluster with different amounts of memory"
+  - type: image
+    src: /assets/images/PVELoadBalancer1.jpg
+    thumb: /assets/images/thumbs/PVELoadBalancer1.jpg
+    caption: "Example moves from the simulation to balance to equally shared memory"
+  - type: image
+    src: /assets/images/PVELoadBalancer2.jpg
+    thumb: /assets/images/thumbs/PVELoadBalancer2.jpg
+    caption: "Second example of a simulated load-balance but with more extremes in initial conditions"
+  - type: image
+    src: /assets/images/PVELoadBalancer4.jpg
+    thumb: /assets/images/thumbs/PVELoadBalancer4.jpg
+    caption: "Combined simulation of initial load, final load, and moves to get to final load"
 
 {% endproject %}
 
@@ -1978,28 +2228,18 @@ slides:
 
 {% endproject %}
 
-<!-- Tools and Platforms -->
-## **Tools and Platforms**
-- Electronics and CAD: Altium Designer, KiCad, Autodesk Fusion 360, MATLAB
-- Server and Virtualization: Proxmox VE, Ceph, VMWare vSphere, Windows Server, Hyper-V, Ansible, PDQ Deploy
-- Programming Languages: C/C++, Python, JavaScript, C# (WPF, Unity), Bash, PowerShell, Make
-- Environments and Administration: Linux and Windows administration, embedded platforms (ARM, RISC), GitHub Automation
-- Miscellaneous: Blender, Adobe Suite (Photoshop, Illustrator, After Effects, Substance Painter), GIMP/Inkscape
 
-<!-- This Website-->
-### **Information on coela.dev**
-{% project %}
-name: CoelaDev
+## **Education**
 
-summary: "Coela.dev Website"
+- **M.S. Electrical Engineering** - 2018-2020, GPA 3.91 - Thesis: 4-axis MEMS IMU calibration gimbal - IEEE-HKN member
+- **B.S. Software Engineering** - 2014-2018 - Capstone: tilt-rotor quadcopter - control systems, simulation, embedded C++
 
-dates: "2025 - Now"
+## **Other Areas**
 
-links:
-  - name: Github
-    url: https://github.com/coelacant1/coela.dev
+*Areas where I've done significant work that isn't represented by a public project here, either because it's not shareable or because the work doesn't lend itself to a portfolio entry.*
 
-description: |-
-  The site's backend uses Ruby and Jekyll to compile Markdown and Liquid templates into a static site on push. A GitHub CI workflow rebuilds and deploys the site on changes to the main branch. On the front end, an HTML5 Canvas script animates sine-wave effects, and CSS with JavaScript handles glitch-text animations for headings.
-
-{% endproject %}
+- **Control modeling and simulation** - MATLAB / Simulink for control-loop modeling, system identification, and tuning; kinematic and IK modeling
+- **Hardware security analysis** - Performed side-channel and fault-injection work with NewAE ChipWhisperer-class tooling, including JTAG / UART probing, voltage and clock glitching, and firmware reverse engineering on non-public hardware in addition to the RT-950 work shown above
+- **Embedded Linux and real-time C/C++ firmware** - Developed bring-up, validation, and operational firmware on embedded Linux with real-time-capable kernels for constrained, mixed-criticality power-electronics hardware where bare-metal isn't an option
+- **Formal test, calibration, and HIL** - Designed automated calibration and verification routines, supported hardware-in-the-loop testing, and developed firmware against formal interface control documents and environmental qualification requirements
+- **Engineering process** - V&V test planning, ICD-driven firmware development, automated regression and acceptance test infrastructure

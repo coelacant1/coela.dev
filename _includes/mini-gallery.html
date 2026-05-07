@@ -28,6 +28,12 @@
                 allowfullscreen>
               </iframe>
             </div>
+          {% elsif slide.type == "video_local" %}
+            <div class="video-container">
+              <video controls preload="none" playsinline {% if slide.thumb %}poster="{{ slide.thumb }}"{% endif %}>
+                <source src="{{ slide.src }}" type="video/mp4">
+              </video>
+            </div>
           {% elsif slide.type == "pdf" %}
             <div class="pdf-container">
               <iframe
@@ -53,6 +59,8 @@
       {%- assign thumb_url = "https://img.youtube.com/vi/" 
           | append: slide.video_id 
           | append: "/hqdefault.jpg" -%}
+    {% elsif slide.type == "video_local" %}
+        {%- assign thumb_url = slide.thumb | default: "/assets/icons/pdf-icon.png" -%}
     {% elsif slide.type == "pdf" %}
         {%- assign thumb_url = slide.thumb | default: "/assets/icons/pdf-icon.png" -%}
     {% else %}
