@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom CoreXY Pick n Place</title>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+
+    <style>
+      html, body {
+        margin: 0; padding: 0;
+        width: 100%; height: 100%;
+        overflow: hidden;
+        background: #070809;
+      }
+
+      /* Outer frame — defines the visible margins around the deck */
+      #pnp-outer {
+        position: fixed;
+        top: 36px; left: 56px; right: 56px; bottom: 36px;
+        overflow: hidden;
+        border: 1px solid #1e2428;
+        border-radius: 3px;
+      }
+
+      .reveal {
+        width: 100%;
+        height: 100%;
+        /* Override theme's 42px without relying on CSS custom-property cascade */
+        font-size: 26px !important;
+      }
+
+      :root {
+        --r-main-font-size:         26px;
+        --r-background-color:       #121517;
+        --r-main-color:             #aaaaaa;
+        --r-heading-color:          #cccccc;
+        --r-link-color:             #d8d8d8;
+        --r-link-color-hover:       #f0f0f0;
+        --r-main-font:              Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        --r-heading-font:           Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        --r-heading-text-transform: none;
+        --r-heading-font-weight:    600;
+      }
+
+      /*
+       * Sections MUST have an explicit height so overflow:hidden actually clips.
+       * height:100% resolves against .slides which reveal.js sets to exactly 675px.
+       * box-sizing:border-box keeps padding inside that 675px envelope.
+       * The flex column lets h2 claim its natural height; .cols fills the rest.
+       */
+      .reveal .slides > section {
+        text-align: left;
+        height: 100% !important;
+        box-sizing: border-box;
+        overflow: hidden;
+        padding: 28px 44px 22px;
+        display: flex !important;
+        flex-direction: column;
+      }
+
+      /* h2 never shrinks — it is the fixed anchor at the top */
+      .reveal .slides > section > h2 {
+        flex-shrink: 0;
+      }
+
+      /* Title slide: centre everything */
+      .reveal .slides section.title-slide {
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Typography */
+      .reveal h1 { font-size: 1.7em;  color: #ffffff; margin-bottom: .4em; }
+      .reveal h2 { font-size: 1.2em;  color: #cccccc; border-bottom: 2px solid #d8d8d8; padding-bottom: .2em; margin-bottom: .5em; }
+      .reveal h3 { font-size: .88em;  color: #d8d8d8; margin: .4em 0 .2em; }
+      .reveal p  { font-size: .78em;  line-height: 1.45; color: #aaaaaa; }
+      .reveal strong { color: #ffffff; }
+      .reveal a  { color: #d8d8d8; text-decoration: none; }
+      .reveal code { background: #1e2226; color: #d8d8d8; padding: .1em .3em; border-radius: 3px; font-size: .8em; }
+
+      /* Bullets — suppress double markers from theme */
+      .reveal ul {
+        list-style: none !important;
+        padding: 0 !important;
+        margin: 0 0 .2em !important;
+      }
+      .reveal li {
+        position: relative;
+        padding-left: 1.1em;
+        margin-bottom: .28em;
+        font-size: .78em;
+        line-height: 1.4;
+        color: #aaaaaa;
+      }
+      .reveal li::before {
+        content: "▸";
+        position: absolute;
+        left: 0;
+        color: #d8d8d8;
+        font-size: .68em;
+        top: .22em;
+      }
+
+      /*
+       * Grid.
+       * flex:1 + min-height:0 on .cols allows it to fill remaining slide height
+       * after h2 while shrinking (not expanding) when content is too tall.
+       */
+      .cols {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.2em;
+        align-items: start;
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+      }
+      .cols.wide-left  { grid-template-columns: 3fr 2fr; }
+      .cols.wide-right { grid-template-columns: 2fr 3fr; }
+
+      /* Grid cells must shrink but NOT clip — spec-block expands beyond cell boundary */
+      .cols > div {
+        min-height: 0;
+        overflow: visible;
+      }
+
+      /* Spec blocks */
+      .spec-block {
+        background: #1a1e22;
+        border-left: 3px solid #d8d8d8;
+        padding: .35em .65em;
+        margin: .2em 0;
+        font-size: .72em;
+        color: #aaa;
+        line-height: 1.55;
+        border-radius: 0 3px 3px 0;
+      }
+      .spec-block .key { color: #d8d8d8; }
+
+      .img-wrap {
+        overflow: hidden;
+        border-radius: 4px;
+      }
+      .img-wrap img {
+        display: block !important;
+        max-width: 100% !important;
+        width: auto !important;
+        height: auto !important;
+        max-height: 220px !important;
+        border-radius: 4px;
+      }
+      .img-wrap.tall img {
+        max-height: 300px !important;
+      }
+
+      /* 16:9 video wrapper — padding-top approach works inside CSS transforms */
+      .yt-wrap {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%;
+        background: transparent;
+        border-radius: 4px;
+        overflow: hidden;
+        border: none;
+      }
+      .yt-wrap iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        outline: none;
+        display: block;
+      }
+
+      /* Media captions */
+      .caption {
+        font-size: .58em;
+        color: #555;
+        text-align: center;
+        margin: .22em 0 .35em;
+        line-height: 1.3;
+      }
+
+      /* Nav controls */
+      .reveal .controls { color: #d8d8d8; }
+      .reveal .controls button { color: #d8d8d8 !important; opacity: 0.5; }
+      .reveal .controls button.enabled { opacity: 0.75; }
+      .reveal .controls button:hover  { opacity: 1; }
+
+      /* Slide number bottom-left — no overlap with bottom-right controls */
+      .reveal .slide-number {
+        font-size: .52em;
+        background: transparent;
+        color: #3a3f44;
+        left:  0.6em !important;
+        right: auto !important;
+        bottom: 0.35em;
+      }
+
+      .reveal .progress { color: #d8d8d8; height: 2px; }
+    </style>
+  </head>
+
+  <body>
+    <div id="pnp-outer">
+      <div class="reveal">
+        <div class="slides">
+          <style>
+details.spec-details { margin-top: .45em; }
+details.spec-details > summary {
+  cursor: pointer;
+  list-style: none;
+  color: #d8d8d8;
+  font-size: .68em;
+  padding: .22em .55em;
+  background: #131720;
+  border: 1px solid #2a2f33;
+  border-radius: 3px;
+  user-select: none;
+  display: block;
+}
+details.spec-details > summary::-webkit-details-marker { display: none; }
+details.spec-details > summary::before { content: "▸  Specifications"; }
+details.spec-details[open] > summary::before { content: "▾  Specifications"; }
+details.spec-details[open] > summary { border-radius: 3px 3px 0 0; }
+details.spec-details[open] > .spec-block { margin-top: 0; border-radius: 0 0 3px 3px; max-height: 220px; overflow-y: auto; }
+</style>
+
+<!-- SLIDE 1 - TITLE -->
+<section class="title-slide">
+  <h1>Custom CoreXY Pick n Place</h1>
+  <p style="font-size:.9em; color:#cccccc; margin:.4em 0 1em;">In-House SMT Manufacturing</p>
+  <hr style="border:none;border-top:1px solid #2a2f33;width:35%;margin:0 auto 1em;">
+  <p style="font-size:.7em; color:#555;">
+    Hardware Design / Embedded Firmware / Motion Control / Machine Vision
+  </p>
+</section>
+
+<!-- SLIDE 1.5 - THE PRODUCT -->
+<section>
+  <h2>The Product</h2>
+  <div class="cols">
+    <div>
+      <div class="yt-wrap">
+        <iframe frameborder="0" src="https://www.youtube.com/embed/ZeVx6tGL9nI?rel=0&enablejsapi=1"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
+      </div>
+      <p class="caption">Custom wearable headset in use</p>
+    </div>
+    <div>
+      <div class="img-wrap">
+        <img src="/assets/images/Electronics29.jpg" alt="Custom LED display board assembled">
+      </div>
+      <p class="caption">Custom display boards</p>
+      <h3>Custom Wearable Headsets for Live Performances</h3>
+      <ul>
+        <li>Full custom LED display headsets - worn during live music performances</li>
+        <li>WS2812B / APA102 addressable LEDs - hundreds per custom display panel</li>
+        <li>Multiple microcontrollers per headset - vision passthrough, LED control, power management</li>
+        <li>All PCBs designed in-house: display boards and controller boards</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 2 - THE PROBLEM -->
+<section>
+  <h2>The Problem</h2>
+  <div class="cols">
+    <div>
+      <h3>LED Failure at External Manufacturers</h3>
+      <ul>
+        <li>~25% chip failure rate from every external manufacturer</li>
+        <li>Latent defect - passes visual inspection</li>
+        <li>Every vendor uses the same IR oven process</li>
+        <li>Components sourced direct at $0.06 each; JLCPCB / PCBWay charged $0.15+</li>
+      </ul>
+      <h3>The Hard Wall</h3>
+      <ul>
+        <li>JLCPCB attempts: 100% failure rate</li>
+        <li>Hand-placing one display board: ~3 hours</li>
+        <li>Controllers could be hand-soldered; display boards required machine placement</li>
+        <li>Closest viable option: Neoden4 at ~$8,000 + size constraint</li>
+        <li>Only path forward: build in-house to own the reflow stage</li>
+      </ul>
+    </div>
+    <div>
+      <div class="img-wrap tall">
+        <img src="/assets/images/PnP7.jpg" alt="Custom LED display board">
+      </div>
+      <p class="caption">Custom LED display board - WS2812B / APA102</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4 - THE CONTROL PROBLEM -->
+<section>
+  <h2>The Control Problem</h2>
+  <div class="cols">
+    <div>
+      <h3>What Makes This Hard</h3>
+      <ul>
+        <li>Sub-millimeter placement accuracy - thousands of cycles without drift</li>
+        <li>Every pick from a tape feeder lands slightly differently</li>
+        <li>Thermal drift: machine warms -> mechanical tolerances shift -> recalibration required</li>
+        <li>Speed and accuracy oppose each other - faster moves increase settle error</li>
+        <li>Step loss is silent - all placements uniformly offset</li>
+      </ul>
+      <h3>The Full Pipeline</h3>
+      <ul>
+        <li>Stenciling - solder paste through a laser-cut stencil</li>
+        <li>Pick and place - every SMT component placed by the machine</li>
+        <li>Reflow - controlled heating profile</li>
+      </ul>
+    </div>
+    <div>
+      <div class="img-wrap">
+        <img src="/assets/images/BadPlacement.jpg" alt="Bad component placement">
+      </div>
+      <p class="caption">Misaligned placement</p>
+      <div class="img-wrap">
+        <img src="/assets/images/BadPlacement2.jpg" alt="Bad component placement detail">
+      </div>
+      <p class="caption">Placement error detail</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 6 - V1: EMERGENCY CARTESIAN BUILD -->
+<section>
+  <h2>V1 - Emergency Cartesian Build <span style="color:#555;font-size:.7em;font-weight:400;">(~7 days)</span></h2>
+  <div class="cols wide-right">
+    <div>
+      <div class="yt-wrap">
+        <iframe frameborder="0" src="https://www.youtube.com/embed/5-n5m6Ypd6U?rel=0&enablejsapi=1"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
+      </div>
+      <p class="caption">V1 - assembled from existing hardware</p>
+    </div>
+    <div>
+      <h3>Situation</h3>
+      <ul>
+        <li>Production blocked - needed to start</li>
+        <li>Large Cartesian machine assembled from 3D printer hardware on hand</li>
+        <li>1000x1000mm frame - intentionally oversized so extrusion didn't need cutting</li>
+        <li>Ran Marlin with dummy sensor configurations to bypass watchdogs</li>
+        <li>Custom tape feeder driven by a stepper motor - no position feedback</li>
+      </ul>
+      <h3>Goal</h3>
+      <ul>
+        <li>Start production</li>
+        <li>Build board overage to buy runway for a proper V2 redesign</li>
+      </ul>
+      <details class="spec-details">
+        <summary></summary>
+        <div class="spec-block">
+          <span class="key">Operating ceiling:</span> ~100 mm/s, 0.25 m/s²<br>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 7 - V1: CUSTOM CONTROLLER PCB -->
+<section>
+  <h2>V1 - Custom Controller PCB</h2>
+  <div class="cols wide-right">
+    <div>
+      <div class="img-wrap tall">
+        <img src="/assets/images/Electronics12.jpg" alt="V1 custom controller PCB">
+      </div>
+      <p class="caption">V1 primary controller PCB - Altium design</p>
+    </div>
+    <div>
+      <h3>Why Custom</h3>
+      <ul>
+        <li>No off-the-shelf board handled: solenoid drive + multi-axis + level shifting</li>
+        <li>Designed in Altium with V2 in mind</li>
+        <li>4-axes for external drivers, 2 for stepstick/pololu</li>
+      </ul>
+      <details class="spec-details">
+        <summary></summary>
+        <div class="spec-block">
+          <span class="key">MCU:</span> Teensy 4.1, ARM Cortex-M7 @ 600 MHz<br>
+          <span class="key">PCB files:</span> version controlled on Altium 365<br>
+          <span class="key">Solenoid drive:</span> 12-channel x 2A MOSFET<br>
+          <span class="key">Level shifting:</span> octal bus transceivers - 3.3V -> 5V for STEP/DIR<br>
+          <span class="key">Axis control:</span> 6-axis capable<br>
+          <span class="key">Driver interface:</span> 4x external driver breakouts + 2x onboard Stepstick footprints
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 8 - AETHERCONTROL -->
+<section>
+  <h2>AetherControl</h2>
+  <div class="cols wide-right">
+    <div>
+      <div class="yt-wrap">
+        <iframe frameborder="0" src="https://www.youtube.com/embed/CeZdBrVZPds?rel=0&enablejsapi=1"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
+      </div>
+      <p class="caption">Stewart platform - early motion test</p>
+    </div>
+    <div>
+      <h3>What It Is</h3>
+      <ul>
+        <li>Real-time motion controller firmware - G-code serial interface, 1 MHz hardware ISR</li>
+        <li>Pluggable kinematics module compiled in per deployment</li>
+        <li>All changes tracked on GitHub - <a href="https://github.com/coelacant1/AetherControl">github.com/coelacant1/AetherControl</a></li>
+      </ul>
+      <h3>Why Custom</h3>
+      <ul>
+        <li>Concurrent project: 6-axis flight simulator - 1000W AC servos, human occupant, Stewart platform kinematics</li>
+        <li>One codebase for both; PnP validated it first before deploying on the occupied platform</li>
+      </ul>
+      <details class="spec-details">
+        <summary></summary>
+        <div class="spec-block">
+          <span class="key">MCU:</span> Teensy 4.1, ARM Cortex-M7 @ 600 MHz<br>
+          <span class="key">ISR rate:</span> 1 MHz (1 µs IntervalTimer)<br>
+          <span class="key">Step pulse:</span> 10 µs HIGH<br>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 10 - AETHERCONTROL: AEROSPACE RESEARCH -->
+<section>
+  <h2>AetherControl - Aerospace Research</h2>
+  <div class="cols wide-right">
+    <div>
+      <div class="yt-wrap">
+        <iframe frameborder="0" src="https://www.youtube.com/embed/DOIEZTeIsqk?rel=0&enablejsapi=1"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
+      </div>
+      <p class="caption">Stewart platform with payload</p>
+    </div>
+    <div>
+      <h3>Deployment</h3>
+      <ul>
+        <li>After validation on the PnP, AetherControl recompiled with StewartPlatform kinematics and deployed on the flight simulator</li>
+        <li>Sole firmware and hardware developer - researchers owned requirements, test apparatus, and experiment execution</li>
+      </ul>
+      <h3>Research Projects Supported</h3>
+      <ul>
+        <li>Structural mount testing - durability and materials validation for metal printed aircraft seat mounts</li>
+        <li>Pilot crash recovery - drop the controls or hold them when attempting to restabilize after an incident?</li>
+        <li>ASEE / ASME / MECC / VFS: 8+ additional projects across engineering and vertical flight forums</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 11 - V1: PRODUCTION & ROOT CAUSE -->
+<section>
+  <h2>V1 - Production &amp; Root Cause</h2>
+  <div class="cols wide-right">
+    <div>
+      <div class="yt-wrap">
+        <iframe frameborder="0" src="https://www.youtube.com/embed/dAlEuQoLluQ?rel=0&enablejsapi=1"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
+      </div>
+      <p class="caption">V1 in operation</p>
+    </div>
+    <div>
+      <h3>What V1 Delivered</h3>
+      <ul>
+        <li>Production unblocked - ~40 display boards; controllers hand-soldered in parallel</li>
+        <li>Board overage built - bought runway for V2</li>
+        <li>~25% LED failure rate -> near-zero by owning the reflow stage</li>
+      </ul>
+      <h3>Why It Couldn't Scale</h3>
+      <ul>
+        <li>Cartesian: Y motors carried the entire X gantry (~2kg+) - high inertia</li>
+        <li>Open-loop: step loss undetected in real time - placements uniformly offset</li>
+        <li>Step loss worsened as motors heated</li>
+        <li>Reducing speed bought reliability but killed throughput</li>
+        <li>Required two fixes: closed-loop drives + lighter machine architecture</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 12 - V2: WHAT CHANGED & WHY -->
+<section>
+  <h2>V2 - What Changed &amp; Why</h2>
+  <div class="cols wide-right">
+    <div>
+      <div class="yt-wrap">
+        <iframe frameborder="0" src="https://www.youtube.com/embed/wRKHLm215EY?rel=0&enablejsapi=1"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
+      </div>
+      <p class="caption">V2 production run</p>
+    </div>
+    <div>
+      <h3>Problem -> Solution</h3>
+      <ul>
+        <li>Heavy Cartesian Y-axis gantry -> CoreXY</li>
+        <li>Open-loop step loss -> closed-loop XY drives (CL42T + integrated encoder)</li>
+        <li>Solid heavy X-axis -> LDO Voron-spec skeletonized aluminum rail</li>
+        <li>Aluminum Extrusion V-Rails -> Linear Rails</li>
+        <li>Large metal end-effector -> CF/ASA Z/R mount</li>
+        <li>Multiple cable runs -> single MTP USB 2.0 (24V + data)</li>
+        <li>No optics -> dual-camera vision pipeline with per-pick correction</li>
+        <li>Custom 3D printed stepper feeder -> Yamaha pneumatic feeders</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 13 - V2: COREXY ARCHITECTURE -->
+<section>
+  <h2>V2 - CoreXY Architecture</h2>
+  <div class="cols wide-right">
+    <div>
+      <div class="yt-wrap">
+        <iframe frameborder="0" src="https://www.youtube.com/embed/4LFMXw97F7c?rel=0&enablejsapi=1"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
+      </div>
+      <p class="caption">V2 XY motion speed test</p>
+    </div>
+    <div>
+      <h3>Why CoreXY Changes the Dynamics</h3>
+      <ul>
+        <li>Both motors fixed to the frame - zero moving motor mass; only the lightweight carriage moves</li>
+        <li>A = X+Y, B = X-Y - both motors engage on every move</li>
+        <li>Y-axis motion is the dominant axis on this machine; in a Cartesian one motor drives it alone</li>
+        <li>With CoreXY both motors drive it simultaneously, doubling available torque on the primary axis</li>
+        <li>Lower inertia + full dual-motor torque -> significantly higher achievable acceleration</li>
+      </ul>
+      <details class="spec-details">
+        <summary></summary>
+        <div class="spec-block">
+          <span class="key">A motor:</span> X + Y (diagonal belt path)<br>
+          <span class="key">B motor:</span> X - Y (diagonal belt path)<br>
+          <span class="key">Work area:</span> 270 x 415 mm (firmware) / 267 x 419 mm (OpenPNP soft limits)<br>
+          <span class="key">XY step resolution:</span> 160 steps/mm (1/32 microstep) = 0.00625 mm/step<br>
+          <span class="key">Firmware accel (A/B):</span> 20 m/s² configured; 20 m/s² max<br>
+          <span class="key">Max speed:</span> 800 mm/s validated; 1000 mm/s firmware limit
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 14 - V2: CLOSED-LOOP DRIVE SELECTION -->
+<section>
+  <h2>V2 - Closed-Loop Drive Selection</h2>
+  <div class="cols wide-right">
+    <div>
+      <div class="img-wrap tall">
+        <img src="/assets/images/PnP12.jpg" alt="OMC TP-series + CL42T driver">
+      </div>
+      <p class="caption">OMC TP-series motor + CL42T closed-loop driver</p>
+    </div>
+    <div>
+      <h3>Why CL42T Closed-Loop Stepper</h3>
+      <ul>
+        <li>NEMA 17 form factor - mechanical drop-in for V1 steppers</li>
+        <li>Integrated encoder: position loop closed at the driver, not in firmware</li>
+        <li>AetherControl still issues step/dir commands; driver handles correction internally</li>
+        <li>Simpler integration than a full servo - no outer position loop in firmware required</li>
+      </ul>
+      <h3>Why Maximum Voltage</h3>
+      <ul>
+        <li>Higher bus voltage -> faster coil current rise per step pulse</li>
+        <li>Faster rise -> higher step rates before back-EMF limits torque</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 15 - V2: RS232 DRIVER TUNING -->
+<section>
+  <h2>V2 - RS232 Driver Tuning</h2>
+  <div class="cols wide-left">
+    <div>
+      <h3>Driver Defaults Not Stable</h3>
+      <ul>
+        <li>Default CL42T parameters left the system unstable under real production load</li>
+        <li>Manual RS232 configuration via MotionStudio over several days of iteration</li>
+        <li>Physical current knob set to 0 - required to unlock software parameter override</li>
+      </ul>
+      <h3>Tuning Process</h3>
+      <ul>
+        <li>Peak Current, Position/Velocity Gain</li>
+        <li>Primary failure mode: fault trips when pushing peak acceleration</li>
+        <li>Following-error window widened to accommodate acceleration transients without false fault trips</li>
+        <li>No oscillation - gains tuned for stability before pushing speed</li>
+        <li>Result: stable production with no step-loss events at full operating speed</li>
+      </ul>
+    </div>
+    <div>
+      <div class="yt-wrap">
+        <iframe frameborder="0" src="https://www.youtube.com/embed/4LFMXw97F7c?rel=0&enablejsapi=1"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
+      </div>
+      <p class="caption">V2 XY motion at full speed</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 16 - V2: MECHANICAL MASS REDUCTION -->
+<section>
+  <h2>V2 - Mechanical: Mass Reduction</h2>
+  <div class="cols wide-right">
+    <div>
+      <div class="img-wrap tall">
+        <img src="/assets/images/PnP14.jpg" alt="Skeletonized X-axis and CF/ASA end-effector mount">
+      </div>
+      <p class="caption">Skeletonized X-axis + CF/ASA end-effector mount</p>
+    </div>
+    <div>
+      <h3>Why Mass Matters</h3>
+      <ul>
+        <li>F = ma - lower moving mass -> higher acceleration for the same motor torque</li>
+        <li>In CoreXY, X-axis carriage mass is coupled to both motors on every move</li>
+        <li>Lower inertia -> faster settle after deceleration -> higher placement rate</li>
+      </ul>
+      <h3>Changes Made</h3>
+      <ul>
+        <li>X-axis: solid extrusion -> LDO Voron-spec skeletonized aluminum rail</li>
+        <li>End-effector motors: NEMA 17 + NEMA 11 -> NEMA 11 + NEMA 14</li>
+        <li>Z/R mount: steel/aluminum -> CF/ASA - stiff, light, heat-stable</li>
+        <li>All structural parts: aluminum where possible</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 17 - V2: END-EFFECTOR SUBMODULE -->
+<section>
+  <h2>V2 - End-Effector Submodule</h2>
+  <div class="cols wide-right">
+    <div>
+      <div class="yt-wrap">
+        <iframe frameborder="0" src="https://www.youtube.com/embed/LeFAltqtTKM?rel=0&enablejsapi=1"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
+      </div>
+      <p class="caption">V2 end-effector close-up</p>
+    </div>
+    <div>
+      <h3>Why a Self-Contained Submodule</h3>
+      <ul>
+        <li>Moves Z and R control physically onto the end-effector itself</li>
+        <li>Single MTP USB 2.0 cable: 24V power + USB data - eliminates cable mass across gantry</li>
+        <li>AetherControl recompiled with PickPlaceHead configuration - independent instance</li>
+      </ul>
+      <details class="spec-details">
+        <summary></summary>
+        <div class="spec-block">
+          <span class="key">MCU:</span> Teensy 4.0, ARM Cortex-M7<br>
+          <span class="key">Stepper drivers:</span> TMC2208 x 2 (Z + R), I²C config<br>
+          <span class="key">USB hub:</span> USB2541B<br>
+          <span class="key">Power:</span> L78M05 - 24V -> 5V logic<br>
+          <span class="key">Serial:</span> CP2104 UART-to-USB bridge<br>
+          <span class="key">Z:</span> 80 steps/mm, 0-48 mm range, 1.2 m/s² accel<br>
+          <span class="key">R:</span> 8.889 steps/deg, ±720°
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 18 - MULTI-CONTROLLER INTEGRATION -->
+<section>
+  <h2>Multi-Controller Integration</h2>
+  <div class="cols">
+    <div>
+      <h3>Two Independent AetherControl Instances</h3>
+      <ul>
+        <li>Gantry controller (Teensy 4.1): XY movement + pneumatic feeder actuation + ring light control</li>
+        <li>End-effector submodule (Teensy 4.0): Z pick/place + R nozzle rotation + camera ring light</li>
+        <li>Both registered as separate devices in OpenPNP</li>
+        <li>OpenPNP owns all sequencing - controllers never communicate directly</li>
+      </ul>
+      <h3>Async Parallel Operation</h3>
+      <ul>
+        <li>OpenPNP dispatches to both simultaneously where safe</li>
+        <li>XY gantry move and Z/R can execute in parallel</li>
+        <li>E-stop kills both controllers simultaneously</li>
+      </ul>
+    </div>
+    <div>
+      <details class="spec-details">
+        <summary></summary>
+        <div class="spec-block">
+          <span class="key">Gantry:</span> Teensy 4.1 - XY + pneumatics + LEDs (AetherControl #1)<br>
+          <span class="key">End-effector:</span> Teensy 4.0 - Z + R + LEDs (AetherControl #2)<br>
+          <span class="key">Interface:</span> G-code, 115200 baud, independent serial ports<br>
+          <span class="key">Parallel:</span> XY move + Z/R can run simultaneously<br>
+          <span class="key">Coordination:</span> OpenPNP sequencing - no inter-MCU comms<br>
+          <span class="key">E-stop:</span> kills both controllers simultaneously
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 19 - OPENPNP & PARTS LIBRARY -->
+<section>
+  <h2>OpenPNP &amp; Parts Library</h2>
+  <div class="cols wide-left">
+    <div>
+      <h3>Host-Side Control</h3>
+      <ul>
+        <li>OpenPNP: open-source pick-and-place machine controller</li>
+        <li>GcodeAsyncDriver with ModeratedConstantAcceleration; 32-step interpolation at 1ms timestep</li>
+        <li>Both AetherControl instances registered as independent machine heads</li>
+      </ul>
+      <h3>Parts Library</h3>
+      <ul>
+        <li>Per-component entry: footprint, pad dimensions, vision pipeline configuration</li>
+        <li>Display boards: WS2812B / APA102 + 0402 passives - 1 feeder loaded</li>
+        <li>Controller boards: 10 unique SMT parts, all 10 feeders loaded; connectors placed by hand</li>
+        <li>Machine config, board files, and component libraries version controlled on GitHub</li>
+      </ul>
+      <details class="spec-details">
+        <summary></summary>
+        <div class="spec-block">
+          <span class="key">Software:</span> OpenPNP (open-source, Java)<br>
+          <span class="key">Driver:</span> GcodeAsyncDriver, ModeratedConstantAcceleration<br>
+          <span class="key">Serial:</span> 115200 baud, RtsCts flow control<br>
+          <span class="key">Junction deviation:</span> 0.02 mm<br>
+          <span class="key">Interpolation:</span> 32 steps, 1ms timestep<br>
+          <span class="key">Display board feeder count:</span> 1 (3000 components/spool)<br>
+          <span class="key">Controller board feeder count:</span> 10
+        </div>
+      </details>
+    </div>
+    <div>
+      <div class="yt-wrap">
+        <iframe frameborder="0" src="https://www.youtube.com/embed/wRKHLm215EY?rel=0&enablejsapi=1"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
+      </div>
+      <p class="caption">V2 production run</p>
+      <div class="yt-wrap" style="margin-top:.5em;">
+        <iframe frameborder="0" src="https://www.youtube.com/embed/2Rnxu-sZ-2k?rel=0&enablejsapi=1"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
+      </div>
+      <p class="caption">Part vision pipeline</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 20 - VISION & CALIBRATION -->
+<section>
+  <h2>Vision &amp; Calibration</h2>
+  <div class="cols wide-right">
+    <div>
+      <div class="yt-wrap">
+        <iframe frameborder="0" src="https://www.youtube.com/embed/moOtE-V9jf4?rel=0&enablejsapi=1"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
+      </div>
+      <p class="caption">V2 3D nozzle calibration</p>
+    </div>
+    <div>
+      <h3>Two-Camera Setup + Custom Ring Lights</h3>
+      <ul>
+        <li>Downward (gantry): fiducial detection, board XY calibration + homing</li>
+        <li>Upward (fixed): part centering + rotation correction before every placement</li>
+        <li>Both cameras: custom WS2812B RGB ring lights</li>
+      </ul>
+      <h3>Startup Calibration - Every Run</h3>
+      <ul>
+        <li>Room temperature variation requires recalibration</li>
+        <li>End-effector offset through optical homing</li>
+        <li>Gantry camera to nozzle offset</li>
+        <li>Fixed part camera offset via nozzle position</li>
+      </ul>
+      <h3>Full Calibration Procedure</h3>
+      <ul>
+        <li>4-pass optical backlash sweep at 5 probing speeds (25%-100% feedrate)</li>
+        <li>3D nozzle offset calibration: tip X, Y, Z relative to camera axis</li>
+      </ul>
+      <details class="spec-details">
+        <summary></summary>
+        <div class="spec-block">
+          <span class="key">X backlash:</span> 0.0331 mm · <span class="key">Y backlash:</span> 0.0211 mm<br>
+          <span class="key">Backlash methods:</span> DirectionalCompensation (X), DirectionalSneakUp @ 25% (Y)<br>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 21 - PLACEMENT ACCURACY -->
+<section>
+  <h2>Placement Accuracy</h2>
+  <div class="cols wide-left">
+    <div>
+      <h3>Target: ≤20% of Pad Dimension</h3>
+      <ul>
+        <li>Step resolution is the floor: 0.00625 mm (160 steps/mm, 1/32 microstep)</li>
+        <li>Per-pick vision correction compensates for pick variation before every placement</li>
+        <li>R-axis rotation correction - essential for QFN and fine-pitch alignment</li>
+      </ul>
+      <h3>Hard Vision Cases</h3>
+      <ul>
+        <li>WS2812B / APA102: white plastic package, shiny pads - required custom HSV pipeline tuning</li>
+        <li>SN74HCT374 / SN74HCT245: narrow lead pitch, dedicated pipeline</li>
+        <li>QFN 0.4mm pitch, 0.2mm pad width - tightest constraint; 10% = 0.04mm tolerance</li>
+      </ul>
+      <details class="spec-details">
+        <summary></summary>
+        <div class="spec-block">
+          <span class="key">XY step resolution:</span> 0.00625 mm (160 steps/mm, 1/32 microstep)<br>
+          <span class="key">Z step resolution:</span> 0.0125 mm (80 steps/mm)<br>
+          <span class="key">Target tolerance:</span> ≤20% of pad dimension<br>
+          <span class="key">0402 (0.5mm pad):</span> ≤0.1 mm<br>
+          <span class="key">QFN (0.2mm pad):</span> ≤0.04 mm - tightest constraint<br>
+          <span class="key">X backlash corrected:</span> 0.0331 mm per startup<br>
+          <span class="key">Y backlash corrected:</span> 0.0211 mm per startup<br>
+          <span class="key">Vision correction:</span> per-pick centering + rotation before every place
+        </div>
+      </details>
+    </div>
+    <div>
+      <div class="img-wrap">
+        <img src="/assets/images/PlacementAccuracy.jpg" alt="Good component placement">
+      </div>
+      <p class="caption">Accurate placement</p>
+      <div class="img-wrap">
+        <img src="/assets/images/PlacementInaccuracy.jpg" alt="Inaccurate component placement">
+      </div>
+      <p class="caption">Placement error</p>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 22 - RESULTS -->
+<section>
+  <h2>Results</h2>
+  <div class="cols wide-right">
+    <div>
+      <div class="yt-wrap">
+        <iframe frameborder="0" src="https://www.youtube.com/embed/nXmGRJHBArY?rel=0&enablejsapi=1"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen loading="lazy"></iframe>
+      </div>
+      <p class="caption">V2 - production run</p>
+    </div>
+    <div>
+      <h3>V1 -> V2 by the Numbers</h3>
+      <ul>
+        <li>Speed: ~100 mm/s -> 800 mm/s &nbsp;<strong>(8x)</strong></li>
+        <li>Acceleration: 0.25 m/s² -> 20 m/s² &nbsp;<strong>(80x)</strong></li>
+        <li>Step resolution: 0.0125 mm -> 0.00625 mm &nbsp;<strong>(2x)</strong></li>
+        <li>Cycle time: ~2-3 hours/board -> ~25 min/board &nbsp;<strong>(5-7x)</strong></li>
+        <li>Step loss events in production: eliminated</li>
+      </ul>
+      <h3>Production Outcome</h3>
+      <ul>
+        <li>~25% LED failure rate -> near-zero by owning reflow</li>
+        <li>V1: ~40 display boards &nbsp;->&nbsp; V2: 400+ display + 200+ controller boards</li>
+        <li>Rework rate: ~1 in 20 (mostly component spool changeovers)</li>
+        <li>V1 built from parts on hand - V2 funded from V1 production; total V2 cost ~$3,000</li>
+        <li>Freed capacity for one-off board designs beyond the original product line</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 23 - LESSONS LEARNED -->
+<section>
+  <h2>Lessons Learned</h2>
+  <div class="cols">
+    <div>
+      <h3>Controls</h3>
+      <ul>
+        <li>Open-loop is a valid triage choice</li>
+        <li>Driver-level tuning makes the feedback loop stable across operating conditions</li>
+        <li>CoreXY's fixed motors removed an issue that tuning could not fix</li>
+        <li>Calibration - backlash, nozzle offset, thermal drift - is ongoing operations, not a one-time setup</li>
+      </ul>
+      <h3>Engineering Process</h3>
+      <ul>
+        <li>V1 shortcuts were deliberate risk management</li>
+        <li>Building for two systems simultaneously produced firmware that supported research</li>
+        <li>Precision systems demand the full stack: architecture + drives + tuning + calibration + vision</li>
+      </ul>
+    </div>
+    <div>
+      <h3>Scope</h3>
+      <ul>
+        <li>Hardware design (Altium) -> firmware -> software integration -> production operation</li>
+        <li>Custom embedded firmware built to be kinematics-agnostic</li>
+        <li>Async multi-controller coordination with deterministic sequencing</li>
+        <li>Precision calibration pipelines maintained as ongoing operations, not a one-time setup</li>
+        <li>From blocked production to 400+ boards: the machine paid for itself many times over</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 23 - Q&A -->
+<section class="title-slide">
+  <h1>Questions?</h1>
+</section>
+
+
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        embedded:        true,
+        hash:            true,
+        slideNumber:     'c/t',
+        transition:      'slide',
+        transitionSpeed: 'fast',
+        controlsLayout:  'bottom-right',
+        controls:        true,
+        progress:        true,
+        history:         true,
+        center:          false,
+        width:           1200,
+        height:          675,
+        margin:          0.05,
+        minScale:        0.2,
+        maxScale:        2.0,
+        keyboard:        true,
+      });
+
+      Reveal.on('slidechanged', ({ previousSlide }) => {
+        if (!previousSlide) return;
+        previousSlide.querySelectorAll('iframe').forEach(fr => {
+          try {
+            fr.contentWindow.postMessage(
+              JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }), '*'
+            );
+          } catch (_) {}
+        });
+      });
+    </script>
+  </body>
+</html>
