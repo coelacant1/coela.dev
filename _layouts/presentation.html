@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title | default: site.title }}</title>
+    <link rel="icon" type="image/svg+xml" href="{{ '/assets/favicon.svg' | relative_url }}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reset.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+
+    <style>
+      html, body {
+        margin: 0; padding: 0;
+        width: 100%; height: 100%;
+        overflow: hidden;
+        background: #070809;
+      }
+
+      /* Outer frame — defines the visible margins around the deck */
+      #pnp-outer {
+        position: fixed;
+        top: 36px; left: 56px; right: 56px; bottom: 36px;
+        overflow: hidden;
+        border: 1px solid #1e2428;
+        border-radius: 3px;
+      }
+
+      .reveal {
+        width: 100%;
+        height: 100%;
+        /* Override theme's 42px without relying on CSS custom-property cascade */
+        font-size: 26px !important;
+      }
+
+      :root {
+        --r-main-font-size:         26px;
+        --r-background-color:       #121517;
+        --r-main-color:             #aaaaaa;
+        --r-heading-color:          #cccccc;
+        --r-link-color:             #d8d8d8;
+        --r-link-color-hover:       #f0f0f0;
+        --r-main-font:              Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        --r-heading-font:           Consolas, "Liberation Mono", Menlo, Courier, monospace;
+        --r-heading-text-transform: none;
+        --r-heading-font-weight:    600;
+      }
+
+      /*
+       * Sections MUST have an explicit height so overflow:hidden actually clips.
+       * height:100% resolves against .slides which reveal.js sets to exactly 675px.
+       * box-sizing:border-box keeps padding inside that 675px envelope.
+       * The flex column lets h2 claim its natural height; .cols fills the rest.
+       */
+      .reveal .slides > section {
+        text-align: left;
+        height: 100% !important;
+        box-sizing: border-box;
+        overflow: hidden;
+        padding: 28px 44px 22px;
+        display: flex !important;
+        flex-direction: column;
+      }
+
+      /* h2 never shrinks — it is the fixed anchor at the top */
+      .reveal .slides > section > h2 {
+        flex-shrink: 0;
+      }
+
+      /* Title slide: centre everything */
+      .reveal .slides section.title-slide {
+        text-align: center;
+        align-items: center;
+        justify-content: center;
+      }
+
+      /* Typography */
+      .reveal h1 { font-size: 1.7em;  color: #ffffff; margin-bottom: .4em; }
+      .reveal h2 { font-size: 1.2em;  color: #cccccc; border-bottom: 2px solid #d8d8d8; padding-bottom: .2em; margin-bottom: .5em; }
+      .reveal h3 { font-size: .88em;  color: #d8d8d8; margin: .4em 0 .2em; }
+      .reveal p  { font-size: .78em;  line-height: 1.45; color: #aaaaaa; }
+      .reveal strong { color: #ffffff; }
+      .reveal a  { color: #d8d8d8; text-decoration: none; }
+      .reveal code { background: #1e2226; color: #d8d8d8; padding: .1em .3em; border-radius: 3px; font-size: .8em; }
+
+      /* Bullets — suppress double markers from theme */
+      .reveal ul {
+        list-style: none !important;
+        padding: 0 !important;
+        margin: 0 0 .2em !important;
+      }
+      .reveal li {
+        position: relative;
+        padding-left: 1.1em;
+        margin-bottom: .28em;
+        font-size: .78em;
+        line-height: 1.4;
+        color: #aaaaaa;
+      }
+      .reveal li::before {
+        content: "▸";
+        position: absolute;
+        left: 0;
+        color: #d8d8d8;
+        font-size: .68em;
+        top: .22em;
+      }
+
+      /*
+       * Grid.
+       * flex:1 + min-height:0 on .cols allows it to fill remaining slide height
+       * after h2 while shrinking (not expanding) when content is too tall.
+       */
+      .cols {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.2em;
+        align-items: start;
+        flex: 1;
+        min-height: 0;
+        overflow: hidden;
+      }
+      .cols.wide-left  { grid-template-columns: 3fr 2fr; }
+      .cols.wide-right { grid-template-columns: 2fr 3fr; }
+
+      /* Grid cells must shrink but NOT clip — spec-block expands beyond cell boundary */
+      .cols > div {
+        min-height: 0;
+        overflow: visible;
+      }
+
+      /* Spec blocks */
+      .spec-block {
+        background: #1a1e22;
+        border-left: 3px solid #d8d8d8;
+        padding: .35em .65em;
+        margin: .2em 0;
+        font-size: .72em;
+        color: #aaa;
+        line-height: 1.55;
+        border-radius: 0 3px 3px 0;
+      }
+      .spec-block .key { color: #d8d8d8; }
+
+      .img-wrap {
+        overflow: hidden;
+        border-radius: 4px;
+      }
+      .img-wrap img {
+        display: block !important;
+        max-width: 100% !important;
+        width: auto !important;
+        height: auto !important;
+        max-height: 220px !important;
+        border-radius: 4px;
+      }
+      .img-wrap.tall img {
+        max-height: 300px !important;
+      }
+
+      /* 16:9 video wrapper — padding-top approach works inside CSS transforms */
+      .yt-wrap {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%;
+        background: transparent;
+        border-radius: 4px;
+        overflow: hidden;
+        border: none;
+      }
+      .yt-wrap iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+        outline: none;
+        display: block;
+      }
+
+      /* Media captions */
+      .caption {
+        font-size: .58em;
+        color: #555;
+        text-align: center;
+        margin: .22em 0 .35em;
+        line-height: 1.3;
+      }
+
+      /* Nav controls */
+      .reveal .controls { color: #d8d8d8; }
+      .reveal .controls button { color: #d8d8d8 !important; opacity: 0.5; }
+      .reveal .controls button.enabled { opacity: 0.75; }
+      .reveal .controls button:hover  { opacity: 1; }
+
+      /* Slide number bottom-left — no overlap with bottom-right controls */
+      .reveal .slide-number {
+        font-size: .52em;
+        background: transparent;
+        color: #3a3f44;
+        left:  0.6em !important;
+        right: auto !important;
+        bottom: 0.35em;
+      }
+
+      .reveal .progress { color: #d8d8d8; height: 2px; }
+    </style>
+  </head>
+
+  <body>
+    <div id="pnp-outer">
+      <div class="reveal">
+        <div class="slides">
+          {{ content }}
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+    <script>
+      Reveal.initialize({
+        embedded:        true,
+        hash:            true,
+        slideNumber:     'c/t',
+        transition:      'slide',
+        transitionSpeed: 'fast',
+        controlsLayout:  'bottom-right',
+        controls:        true,
+        progress:        true,
+        history:         true,
+        center:          false,
+        width:           1200,
+        height:          675,
+        margin:          0.05,
+        minScale:        0.2,
+        maxScale:        2.0,
+        keyboard:        true,
+      });
+
+      Reveal.on('slidechanged', ({ previousSlide }) => {
+        if (!previousSlide) return;
+        previousSlide.querySelectorAll('iframe').forEach(fr => {
+          try {
+            fr.contentWindow.postMessage(
+              JSON.stringify({ event: 'command', func: 'pauseVideo', args: [] }), '*'
+            );
+          } catch (_) {}
+        });
+      });
+    </script>
+  </body>
+</html>
